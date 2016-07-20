@@ -1,0 +1,15 @@
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\bin\Debug\AbrakBot.exe.config
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\bin\Debug\AbrakBot.exe
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\bin\Debug\AbrakBot.pdb
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\obj\Debug\AbrakBot.csprojResolveAssemblyReference.cache
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\obj\Debug\AbrakBot.exe
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\obj\Debug\AbrakBot.pdb
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\bin\Debug\Newtonsoft.Json.dll
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\bin\Debug\Newtonsoft.Json.xml
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\bin\Debug\ICSharpCode.SharpZipLib.dll
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\bin\Debug\log4net.dll
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\bin\Debug\SwfDotNet.IO.dll
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\bin\Debug\log4net.xml
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\obj\Debug\AbrakBot.Forms.Home.resources
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\obj\Debug\AbrakBot.csproj.GenerateResource.Cache
+d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\obj\Debug\AbrakBot.Properties.Resources.resources

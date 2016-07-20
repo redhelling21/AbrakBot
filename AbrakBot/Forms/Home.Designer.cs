@@ -35,11 +35,11 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.mainTabPanel = new System.Windows.Forms.TabControl();
             this.mainTab = new System.Windows.Forms.TabPage();
-            this.invtab = new System.Windows.Forms.TabPage();
-            this.tabImages = new System.Windows.Forms.ImageList(this.components);
-            this.debugTab = new System.Windows.Forms.TabPage();
             this.mainBox = new System.Windows.Forms.RichTextBox();
+            this.invtab = new System.Windows.Forms.TabPage();
+            this.debugTab = new System.Windows.Forms.TabPage();
             this.debugBox = new System.Windows.Forms.RichTextBox();
+            this.tabImages = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1.SuspendLayout();
             this.mainTabPanel.SuspendLayout();
             this.mainTab.SuspendLayout();
@@ -103,6 +103,18 @@
             this.mainTab.Text = "Principal";
             this.mainTab.UseVisualStyleBackColor = true;
             // 
+            // mainBox
+            // 
+            this.mainBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mainBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mainBox.Location = new System.Drawing.Point(3, 3);
+            this.mainBox.Name = "mainBox";
+            this.mainBox.Size = new System.Drawing.Size(752, 321);
+            this.mainBox.TabIndex = 0;
+            this.mainBox.Text = "";
+            // 
             // invtab
             // 
             this.invtab.ImageIndex = 1;
@@ -113,14 +125,6 @@
             this.invtab.TabIndex = 1;
             this.invtab.Text = "Inventaire";
             this.invtab.UseVisualStyleBackColor = true;
-            // 
-            // tabImages
-            // 
-            this.tabImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("tabImages.ImageStream")));
-            this.tabImages.TransparentColor = System.Drawing.Color.Transparent;
-            this.tabImages.Images.SetKeyName(0, "favicon.ico");
-            this.tabImages.Images.SetKeyName(1, "backpack_icon.ico");
-            this.tabImages.Images.SetKeyName(2, "debug-bug-icon.png");
             // 
             // debugTab
             // 
@@ -135,18 +139,6 @@
             this.debugTab.UseVisualStyleBackColor = true;
             this.debugTab.UseWaitCursor = true;
             // 
-            // mainBox
-            // 
-            this.mainBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mainBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.mainBox.Location = new System.Drawing.Point(3, 3);
-            this.mainBox.Name = "mainBox";
-            this.mainBox.Size = new System.Drawing.Size(752, 321);
-            this.mainBox.TabIndex = 0;
-            this.mainBox.Text = "";
-            // 
             // debugBox
             // 
             this.debugBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -155,10 +147,18 @@
             this.debugBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.debugBox.Location = new System.Drawing.Point(3, 3);
             this.debugBox.Name = "debugBox";
-            this.debugBox.ReadOnly = true;
             this.debugBox.Size = new System.Drawing.Size(752, 321);
             this.debugBox.TabIndex = 0;
             this.debugBox.Text = "";
+            this.debugBox.UseWaitCursor = true;
+            // 
+            // tabImages
+            // 
+            this.tabImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("tabImages.ImageStream")));
+            this.tabImages.TransparentColor = System.Drawing.Color.Transparent;
+            this.tabImages.Images.SetKeyName(0, "favicon.ico");
+            this.tabImages.Images.SetKeyName(1, "backpack_icon.ico");
+            this.tabImages.Images.SetKeyName(2, "debug-bug-icon.png");
             // 
             // Home
             // 
@@ -170,6 +170,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "Home";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Home_FormClosed);
             this.Load += new System.EventHandler(this.Home_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

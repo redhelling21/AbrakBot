@@ -27,12 +27,19 @@ namespace AbrakBot.Forms
             else
             {
                 connectButton.Text = "Connexion";
+                TCPPacketHandler.close();
             }
         }
 
         private void Home_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void Home_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            TCPPacketHandler.close();
+            Environment.Exit(0);
         }
     }
 }

@@ -51,10 +51,19 @@ namespace AbrakBot
             }
         }
 
-        public static void updateTSLabel(string pseudo, int level)
+        public static void updateCharName(string charName)
         {
-            Home.updateTSLabel(mainForm.charNameLabel, pseudo);
-            Home.updateTSLabel(mainForm.lvlLabel, "Lv." + level.ToString());
+            Home.updateTSLabel(mainForm.charNameLabel, charName);
+        }
+
+        public static void updateLevel(string lvl)
+        {
+            Home.updateTSLabel(mainForm.lvlLabel, lvl);
+        }
+
+        public static void updateKamas(string kamas)
+        {
+            Home.updateTSLabel(mainForm.kamasLabel, kamas);
         }
     }
 

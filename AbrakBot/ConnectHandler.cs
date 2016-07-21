@@ -146,7 +146,6 @@ public static void ReceiveData(Queue<string> pck_queue)
                                 string[] player_stats = Data.Split('|');
                                 Player.pseudo = player_stats[2];
                                 Player.level = Int32.Parse(player_stats[3]);
-                                Globals.updateTSLabel(Player.pseudo, Player.level);
                                 Globals.isConnected = true;
                                 string[] inv = player_stats[10].Split(';');
                                 foreach (string item in inv)

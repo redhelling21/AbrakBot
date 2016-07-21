@@ -127,6 +127,36 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bolt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\favorite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\balance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hearts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coins.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hearts1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\favorite1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\balance1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bolt1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coins1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

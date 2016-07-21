@@ -47,13 +47,7 @@ public static void ReceiveData(Queue<string> pck_queue)
                                 TCPPacketHandler.send("Af");
                                 break;
 
-                            /*case "AH":
-                                Thread.Sleep(100);
-                                
-                                TCPPacketHandler.send("Ax");
-                                break;*/
-
-                            case "Ax":
+                            case "Ax": //Reception de la liste des serveurs
                                 Thread.Sleep(2000);
                                 if (server_id == "")
                                 {
@@ -72,13 +66,13 @@ public static void ReceiveData(Queue<string> pck_queue)
                                 TCPPacketHandler.send("AX" + server_id);
                                 break;
 
-                            case "Ad":
+                            case "Ad": //?
                                 Thread.Sleep(100);
 
                                 TCPPacketHandler.send("Ax");
                                 break;
 
-                            case "AY":
+                            case "AY": //Reception des infos de connexion du serveur choisi
                                 Thread.Sleep(100);
                                 string ip, port, coupe = "";
                                 coupe = Data.Substring(3);
@@ -96,20 +90,20 @@ public static void ReceiveData(Queue<string> pck_queue)
                                 Thread.Sleep(100);
                                 break;
 
-                            case "HG":
+                            case "HG"://?
                                 Thread.Sleep(100);
 
                                 TCPPacketHandler.send("AT" + GUID);
                                 break;
 
-                            case "AT":
+                            case "AT"://?
                                 Thread.Sleep(100);
 
                                 TCPPacketHandler.send("Ak0");
                                 TCPPacketHandler.send("AV");
                                 break;
 
-                            case "AV":
+                            case "AV"://?
                                 Thread.Sleep(100);
 
                                 TCPPacketHandler.send("Agfr");
@@ -117,7 +111,7 @@ public static void ReceiveData(Queue<string> pck_queue)
                                 TCPPacketHandler.send("Af");
                                 break;
 
-                            case "AL":
+                            case "AL"://Reception de la liste des persos
                                 Thread.Sleep(100);
                                 Globals.writeToMainBox("Connecté au serveur de jeu\n", Color.Green);
                                 Globals.writeToDebugBox("Selection personnage\n", Color.Blue);
@@ -141,7 +135,7 @@ public static void ReceiveData(Queue<string> pck_queue)
 
                                 break;
 
-                            case "AS":
+                            case "AS"://Reception des infos générales du perso (nom, lvl, inventaire...)
                                 Thread.Sleep(100);
                                 string[] player_stats = Data.Split('|');
                                 Player.pseudo = player_stats[2];
@@ -161,7 +155,6 @@ public static void ReceiveData(Queue<string> pck_queue)
                                     }
                                     
                                 }
-                                //TCPPacketHandler.send("GC1");
                                 break;
                            
                             default:

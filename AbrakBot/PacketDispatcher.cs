@@ -38,7 +38,7 @@ namespace AbrakBot
                                 string subcat = Data.Substring(2, 3);
                                 switch (subcat)
                                 {
-                                    case "M":
+                                    case "M"://Reception des infos sur la map actuelle
                                         if (!Globals.isInGame)
                                         {
                                             Globals.isInGame = true;
@@ -51,14 +51,14 @@ namespace AbrakBot
                                         break;
                                 }
                                 break;
-                            case "Ow":
+                            case "Ow"://Infos sur les pods
                                 Thread.Sleep(100);
                                 string[] elems = Data.Substring(2).Split('|');
                                 Player.pods_max = Int32.Parse(elems[1]);
                                 Player.pods = Int32.Parse(elems[0]);
                                 
                                 break;
-                            case "As":
+                            case "As"://Infos détaillées sur le perso
                                 Thread.Sleep(100);
                                 string[] player_stats = Data.Substring(2).Split('|');
                                 string[] xp_stats = player_stats[0].Split(',');
@@ -77,13 +77,13 @@ namespace AbrakBot
                                 
 
                                 break;
-                            case "al":
+                            case "al"://?
                                 TCPPacketHandler.send("GC1");
                                 break;
-                            case "fC":
+                            case "fC"://Nombre de combats sur la map actuelle //A REMPLIR
                                 TCPPacketHandler.send("BD");
                                 break;
-                            case "GA":
+                            case "GA"://Autorisation de se déplacer
                                 Globals.writeToDebugBox(Data.Substring(2, 4) + "\n", Color.Orange);
                                 if (Data.Substring(2, 4) == "0;")
                                 {

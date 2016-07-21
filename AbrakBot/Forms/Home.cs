@@ -12,6 +12,7 @@ namespace AbrakBot.Forms
 {
     public partial class Home : Form
     {
+        delegate void appendBoxDelegate(RichTextBox box, string text, Color color);
         public Home()
         {
             InitializeComponent();
@@ -40,6 +41,38 @@ namespace AbrakBot.Forms
         {
             TCPPacketHandler.close();
             Environment.Exit(0);
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public static void appendBox(RichTextBox box, string text, Color color)
+        {
+            if (box.InvokeRequired)
+            {
+                box.Invoke(new appendBoxDelegate(appendBox), new object[] { box, text, color });
+                return;
+            }
+            box.AppendText(text, color);
+        }
+
+        public static void updateBar(ToolStripProgressBar bar, ToolStripStatusLabel label, int valeur)
+        {
+            bar.Value = valeur;
+            label.Text = valeur + "%";
+
+        }
+
+        public static void updateTSLabel(ToolStripStatusLabel label, string valeur)
+        {
+            label.Text = valeur;
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

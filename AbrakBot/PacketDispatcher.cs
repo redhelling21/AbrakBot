@@ -56,6 +56,7 @@ namespace AbrakBot
                                 string[] elems = Data.Substring(2).Split('|');
                                 Player.pods = Int32.Parse(elems[0]);
                                 Player.pods_max = Int32.Parse(elems[1]);
+                                Globals.updateBars(-1, -1, (int)Math.Round(((float)(Player.pods) / Player.pods_max) * 100), -1);
                                 break;
                             case "As":
                                 Thread.Sleep(100);
@@ -64,14 +65,17 @@ namespace AbrakBot
                                 Player.xp = Int32.Parse(xp_stats[0]);
                                 Player.xp_bas = Int32.Parse(xp_stats[1]);
                                 Player.xp_max = Int32.Parse(xp_stats[2]);
+                                Globals.updateBars(-1, (int)Math.Round(((float)(Player.xp - Player.xp_bas) / (Player.xp_max - Player.xp_bas)) * 100), -1, -1);
                                 Player.kamas = Int32.Parse(player_stats[1]);
                                 string[] pdv_stats = player_stats[5].Split(',');
                                 Player.pdv = Int32.Parse(pdv_stats[0]);
                                 Player.pdv_max = Int32.Parse(pdv_stats[1]);
+                                Globals.updateBars((int)Math.Round(((float)(Player.pdv) / (Player.pdv_max)) * 100), -1, -1, -1);
                                 string[] en_stats = player_stats[6].Split(',');
                                 Player.energie = Int32.Parse(en_stats[0]);
                                 Player.energie_max = Int32.Parse(en_stats[1]);
-                                
+                                Globals.updateBars(-1, -1, -1, (int)Math.Round(((float)(Player.energie) / (Player.energie_max)) * 100));
+
                                 break;
                             case "al":
                                 TCPPacketHandler.send("GC1");

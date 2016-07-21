@@ -23,12 +23,38 @@ namespace AbrakBot
 
         public static void writeToMainBox(string text, Color color)
         {
-            mainForm.mainBox.AppendText(text, color);
+            Home.appendBox(mainForm.mainBox, text, color);
         }
 
         public static void writeToDebugBox(string text, Color color)
         {
-            mainForm.debugBox.AppendText(text, color);
+            Home.appendBox(mainForm.debugBox, text, color);
+        }
+
+        public static void updateBars(int pdv, int xp, int pods, int energie)
+        {
+            if(pdv >= 0)
+            {
+                Home.updateBar(mainForm.pdvBar, mainForm.pdvLabel, pdv);
+            }
+            if (xp >= 0)
+            {
+                Home.updateBar(mainForm.xpBar, mainForm.xpLabel, xp);
+            }
+            if (pods >= 0)
+            {
+                Home.updateBar(mainForm.podsBar, mainForm.podsLabel, pods);
+            }
+            if (energie >= 0)
+            {
+                Home.updateBar(mainForm.enerBar, mainForm.enerLabel, energie);
+            }
+        }
+
+        public static void updateTSLabel(string pseudo, int level)
+        {
+            Home.updateTSLabel(mainForm.charNameLabel, pseudo);
+            Home.updateTSLabel(mainForm.lvlLabel, "Lv." + level.ToString());
         }
     }
 

@@ -60,6 +60,7 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectButton = new System.Windows.Forms.ToolStripButton();
+            this.sendMessageBox = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.mainTabPanel.SuspendLayout();
@@ -186,6 +187,7 @@
             // 
             // mainTab
             // 
+            this.mainTab.Controls.Add(this.sendMessageBox);
             this.mainTab.Controls.Add(this.mainBox);
             this.mainTab.ImageIndex = 0;
             this.mainTab.Location = new System.Drawing.Point(4, 23);
@@ -204,7 +206,7 @@
             this.mainBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mainBox.Location = new System.Drawing.Point(3, 3);
             this.mainBox.Name = "mainBox";
-            this.mainBox.Size = new System.Drawing.Size(932, 325);
+            this.mainBox.Size = new System.Drawing.Size(932, 304);
             this.mainBox.TabIndex = 0;
             this.mainBox.Text = "";
             // 
@@ -366,6 +368,15 @@
             this.connectButton.Text = "Connexion";
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
+            // sendMessageBox
+            // 
+            this.sendMessageBox.Location = new System.Drawing.Point(3, 310);
+            this.sendMessageBox.Name = "sendMessageBox";
+            this.sendMessageBox.Size = new System.Drawing.Size(932, 20);
+            this.sendMessageBox.TabIndex = 2;
+            this.sendMessageBox.Text = "Envoyer un message...";
+            this.sendMessageBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sendMessageBox_KeyPress);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -384,6 +395,7 @@
             this.statusStrip.PerformLayout();
             this.mainTabPanel.ResumeLayout(false);
             this.mainTab.ResumeLayout(false);
+            this.mainTab.PerformLayout();
             this.invtab.ResumeLayout(false);
             this.invTable.ResumeLayout(false);
             this.invTable.PerformLayout();
@@ -425,5 +437,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
         public System.Windows.Forms.ToolStripStatusLabel kamasLabel;
         public System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.TextBox sendMessageBox;
     }
 }

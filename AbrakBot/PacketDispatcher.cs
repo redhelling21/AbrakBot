@@ -89,6 +89,46 @@ namespace AbrakBot
                                     TCPPacketHandler.send("GKK0");
                                 }
                                 break;
+                            case "rp"://Pas trop sur, je crois que c'est un genre de ping régulier
+                                if (Data.Substring(2, 3) == "ong")
+                                {
+                                    TCPPacketHandler.send("rpong");
+                                }
+                                break;
+                            case "cM"://Message chat //A TERMINER AVEC L'INSERTION D'ITEMS
+                                switch (Data.Substring(2, 1))
+                                {
+                                    case "K":
+                                        string sub = Data.Substring(3, 1);
+                                        string[] parts = Data.Split('|');
+                                        switch (sub)
+                                        {
+                                            case ":":
+                                                Globals.writeToMainBox("[" + DateTime.Now.ToString("h:mm") + "] (Commerce) " + parts[2] + " : " + parts[3] + "\n", Color.SaddleBrown);
+                                                break;
+                                            case "?":
+                                                Globals.writeToMainBox("[" + DateTime.Now.ToString("h:mm") + "] (Recrutement) " + parts[2] + " : " + parts[3] + "\n", Color.LightGray);
+                                                break;
+                                            case "F":
+                                                Globals.writeToMainBox("[" + DateTime.Now.ToString("h:mm") + "] de " + parts[2] + " : " + parts[3] + "\n", Color.DeepSkyBlue);
+                                                break;
+                                            case "T":
+                                                Globals.writeToMainBox("[" + DateTime.Now.ToString("h:mm") + "] a " + parts[2] + " : " + parts[3] + "\n", Color.DeepSkyBlue);
+                                                break;
+                                            default:
+                                                Globals.writeToMainBox("[" + DateTime.Now.ToString("h:mm") + "] " + parts[2] + " : " + parts[3] + "\n", Color.Black);
+                                                break;
+                                        }
+                                        break;
+                                    case "E":
+                                        if(Data.Substring(3, 1) == "f")
+                                        {
+                                            Globals.writeToMainBox("Le joueur n'existe pas ou n'est pas en ligne", Color.Firebrick);
+                                        }
+                                        break;
+                                }
+                                
+                                break;
                             default:
                                 Globals.writeToDebugBox("Case inconnu\n", Color.Blue);
                                 break;

@@ -92,7 +92,7 @@ namespace AbrakBot
 
         public static void close()
         {
-            if (tcpclient.Connected)
+            if (tcpclient != null && tcpclient.Connected)
             {
                 tcpclient.Close();
                 nstream.Close();

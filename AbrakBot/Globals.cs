@@ -65,6 +65,33 @@ namespace AbrakBot
         {
             Home.updateTSLabel(mainForm.statusStrip, mainForm.kamasLabel, kamas);
         }
+
+        public static void sendMessage(string message)
+        {
+            if(message.Substring(0, 1) == "/")
+            {
+                switch(message.Substring(1, 1))
+                {
+                    case "w":
+                        string temp = message.Substring(3);
+                        string temp2 = temp.Substring(temp.IndexOf(" "));
+                        TCPPacketHandler.send("BM" + temp.Substring(0, temp.IndexOf(" ")) + "|" + temp2 + "|");
+                        break;
+                    case "b":
+                        TCPPacketHandler.send("BM:" + message.Substring(3) + "|");
+                        break;
+                    case "r":
+                        TCPPacketHandler.send("BM?" + message.Substring(3) + "|");
+                        break;
+                    default:
+                        writeToMainBox("Type de message iconnu", Color.Firebrick);
+                        break;
+                }
+            }else
+            {
+                TCPPacketHandler.send("BM*|" + message + "|");
+            }
+        }
     }
 
     public static class RichTextBoxExtensions

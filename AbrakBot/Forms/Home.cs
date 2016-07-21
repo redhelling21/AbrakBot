@@ -87,5 +87,14 @@ namespace AbrakBot.Forms
         {
 
         }
+
+        private void sendMessageBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                Globals.sendMessage(sendMessageBox.Text);
+                sendMessageBox.Clear();
+            }
+        }
     }
 }

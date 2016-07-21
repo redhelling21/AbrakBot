@@ -27,7 +27,7 @@ public static void ReceiveData(Queue<string> pck_queue)
                     {
                         Globals.writeToDebugBox("rcv : ", Color.Red);
                         Globals.writeToDebugBox(Data + "\n", Color.Black);
-                        string donnée = "", pass = "fibonacci21", key = "";
+                        string donnée = "", pass = Config.mdp, key = "";
                         try
                         {
                             donnée = Data.Substring(0, 2);
@@ -43,7 +43,7 @@ public static void ReceiveData(Queue<string> pck_queue)
 
                                 key = Data.Substring(2, 32);
                                 TCPPacketHandler.send("1.29.1");
-                                TCPPacketHandler.send("amibot" + "\n" + CryptPassword(key, pass));
+                                TCPPacketHandler.send(Config.username + "\n" + CryptPassword(key, pass));
                                 TCPPacketHandler.send("Af");
                                 break;
 

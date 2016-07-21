@@ -15,15 +15,19 @@ namespace AbrakBot
         public static int? defaultServerId;
         [JsonProperty]
         public static int? defaultCharacterId;
-        //public string username;
-        //public string mdp;
+        [JsonProperty]
+        public static string username;
+        [JsonProperty]
+        public static string mdp;
 
-        public Config(String serv, int port, int? defserv, int? defchar)
+        public Config(String serv, int port, int? defserv, int? defchar, string us, string md)
         {
             serverIp = serv;
             serverPort = port;
             defaultServerId = defserv;
             defaultCharacterId = defchar;
+            username = us;
+            mdp = md;
         }
 
         public static void load()

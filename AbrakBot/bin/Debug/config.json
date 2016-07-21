@@ -2,5 +2,7 @@
 	"serverIp":"164.132.201.117",
 	"serverPort":5547,
 	"defaultServerId":6002,
-	"defaultCharacterId":339087
+	"defaultCharacterId":339087,
+	"username":"amibot",
+	"mdp":"fibonacci21"
 }

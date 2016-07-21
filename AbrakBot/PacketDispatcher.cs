@@ -84,8 +84,7 @@ namespace AbrakBot
                                 TCPPacketHandler.send("BD");
                                 break;
                             case "GA"://Autorisation de se déplacer
-                                Globals.writeToDebugBox(Data.Substring(2, 4) + "\n", Color.Orange);
-                                if (Data.Substring(2, 4) == "0;")
+                                if (Data.Substring(2, 2) == "0;")
                                 {
                                     TCPPacketHandler.send("GKK0");
                                 }

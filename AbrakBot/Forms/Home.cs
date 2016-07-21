@@ -13,6 +13,9 @@ namespace AbrakBot.Forms
     public partial class Home : Form
     {
         delegate void appendBoxDelegate(RichTextBox box, string text, Color color);
+        delegate void updateTSLabelDelegate(ToolStrip ts, ToolStripStatusLabel label, string valeur);
+        delegate void updateBarDelegate(ToolStrip ts, ToolStripProgressBar bar, ToolStripStatusLabel label, int valeur);
+
         public Home()
         {
             InitializeComponent();
@@ -58,15 +61,25 @@ namespace AbrakBot.Forms
             box.AppendText(text, color);
         }
 
-        public static void updateBar(ToolStripProgressBar bar, ToolStripStatusLabel label, int valeur)
+        public static void updateBar(ToolStrip ts, ToolStripProgressBar bar, ToolStripStatusLabel label, int valeur)
         {
+            if (ts.InvokeRequired)
+            {
+                ts.Invoke(new updateBarDelegate(updateBar), new object[] { ts, bar, label, valeur });
+                return;
+            }
             bar.Value = valeur;
             label.Text = valeur + "%";
 
         }
 
-        public static void updateTSLabel(ToolStripStatusLabel label, string valeur)
+        public static void updateTSLabel(ToolStrip ts, ToolStripStatusLabel label, string valeur)
         {
+            if (ts.InvokeRequired)
+            {
+                ts.Invoke(new updateTSLabelDelegate(updateTSLabel), new object[] { ts, label, valeur });
+                return;
+            }
             label.Text = valeur;
         }
 

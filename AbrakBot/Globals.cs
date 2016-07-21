@@ -35,35 +35,35 @@ namespace AbrakBot
         {
             if(pdv >= 0)
             {
-                Home.updateBar(mainForm.pdvBar, mainForm.pdvLabel, pdv);
+                Home.updateBar(mainForm.statusStrip, mainForm.pdvBar, mainForm.pdvLabel, pdv);
             }
             if (xp >= 0)
             {
-                Home.updateBar(mainForm.xpBar, mainForm.xpLabel, xp);
+                Home.updateBar(mainForm.statusStrip, mainForm.xpBar, mainForm.xpLabel, xp);
             }
             if (pods >= 0)
             {
-                Home.updateBar(mainForm.podsBar, mainForm.podsLabel, pods);
+                Home.updateBar(mainForm.statusStrip, mainForm.podsBar, mainForm.podsLabel, pods);
             }
             if (energie >= 0)
             {
-                Home.updateBar(mainForm.enerBar, mainForm.enerLabel, energie);
+                Home.updateBar(mainForm.statusStrip, mainForm.enerBar, mainForm.enerLabel, energie);
             }
         }
 
         public static void updateCharName(string charName)
         {
-            Home.updateTSLabel(mainForm.charNameLabel, charName);
+            Home.updateTSLabel(mainForm.statusStrip, mainForm.charNameLabel, charName);
         }
 
         public static void updateLevel(string lvl)
         {
-            Home.updateTSLabel(mainForm.lvlLabel, lvl);
+            Home.updateTSLabel(mainForm.statusStrip, mainForm.lvlLabel, lvl);
         }
 
         public static void updateKamas(string kamas)
         {
-            Home.updateTSLabel(mainForm.kamasLabel, kamas);
+            Home.updateTSLabel(mainForm.statusStrip, mainForm.kamasLabel, kamas);
         }
     }
 

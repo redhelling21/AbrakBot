@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.pdvBar = new System.Windows.Forms.ToolStripProgressBar();
             this.pdvLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.xpBar = new System.Windows.Forms.ToolStripProgressBar();
@@ -61,7 +61,7 @@
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.mainTabPanel.SuspendLayout();
             this.mainTab.SuspendLayout();
             this.invtab.SuspendLayout();
@@ -79,9 +79,9 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel5,
             this.kamasLabel,
             this.toolStripStatusLabel1,
@@ -98,14 +98,14 @@
             this.enerBar,
             this.enerLabel,
             this.charNameLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 404);
-            this.statusStrip1.MaximumSize = new System.Drawing.Size(0, 25);
-            this.statusStrip1.MinimumSize = new System.Drawing.Size(0, 25);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(973, 25);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
+            this.statusStrip.Location = new System.Drawing.Point(0, 404);
+            this.statusStrip.MaximumSize = new System.Drawing.Size(0, 25);
+            this.statusStrip.MinimumSize = new System.Drawing.Size(0, 25);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(973, 25);
+            this.statusStrip.TabIndex = 1;
+            this.statusStrip.Text = "statusStrip";
+            this.statusStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
             // 
             // pdvBar
             // 
@@ -372,7 +372,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(973, 429);
             this.Controls.Add(this.mainTabPanel);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
             this.Name = "Home";
             this.Text = "Form1";
@@ -380,8 +380,8 @@
             this.Load += new System.EventHandler(this.Home_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.mainTabPanel.ResumeLayout(false);
             this.mainTab.ResumeLayout(false);
             this.invtab.ResumeLayout(false);
@@ -397,7 +397,6 @@
 
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton connectButton;
-        private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.TabPage mainTab;
         private System.Windows.Forms.TabPage invtab;
         private System.Windows.Forms.TabControl mainTabPanel;
@@ -425,5 +424,6 @@
         public System.Windows.Forms.ToolStripProgressBar enerBar;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
         public System.Windows.Forms.ToolStripStatusLabel kamasLabel;
+        public System.Windows.Forms.StatusStrip statusStrip;
     }
 }

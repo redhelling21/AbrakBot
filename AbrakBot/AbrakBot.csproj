@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cell.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ConnectHandler.cs" />
     <Compile Include="Forms\Home.cs">
@@ -89,7 +90,10 @@
     </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Item.cs" />
+    <Compile Include="MapHandler.cs" />
+    <Compile Include="MoveHandler.cs" />
     <Compile Include="PacketDispatcher.cs" />
+    <Compile Include="Pathfinding.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

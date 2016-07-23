@@ -31,11 +31,12 @@ public static void ReceiveData(Queue<string> pck_queue)
                         try
                         {
                             donnée = Data.Substring(0, 2);
-                        }
-                        catch
+                        }catch(NullReferenceException e)
                         {
-                            Globals.writeToDebugBox("erreur parse case\n", Color.Red);
+                            Globals.writeToDebugBox("Aucune données recues", Color.Firebrick);
                         }
+                        
+                        
                         switch (donnée)
                         {
                             case "HC": //Debut de la connexion
@@ -62,6 +63,7 @@ public static void ReceiveData(Queue<string> pck_queue)
                                     server_id = Console.ReadLine();
                                 }
                                 Globals.writeToMainBox("Connecté avec succès\n", Color.Green);
+                                Globals.writeToDebugBox("Connecté avec succès\n", Color.Green);
                                 Globals.writeToMainBox("Serveur choisi : n°" + server_id + "\n", Color.Green);
                                 TCPPacketHandler.send("AX" + server_id);
                                 break;
@@ -85,6 +87,7 @@ public static void ReceiveData(Queue<string> pck_queue)
 
                                 TCPPacketHandler.close();
                                 Globals.writeToMainBox("Connexion au serveur de jeu...\n", Color.Green);
+                                Globals.writeToDebugBox("Connexion au serveur de jeu...\n", Color.Green);
                                 TCPPacketHandler.Handle(ip, Int32.Parse(port));
                              
                                 Thread.Sleep(100);

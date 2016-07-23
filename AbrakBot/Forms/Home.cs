@@ -96,5 +96,10 @@ namespace AbrakBot.Forms
                 sendMessageBox.Clear();
             }
         }
+
+        private void testButton_Click(object sender, EventArgs e)
+        {
+            Globals.doSomethingToTest();
+        }
     }
 }

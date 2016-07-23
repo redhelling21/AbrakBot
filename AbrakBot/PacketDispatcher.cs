@@ -18,24 +18,17 @@ namespace AbrakBot
                 {
                     string Data = pck_queue.Dequeue();
                     string donnee = "";
-                    if (Data != "")
+                    if (Data != null && Data != "")
                     {
                         Globals.writeToDebugBox("rcv : ", Color.Red);
                         Globals.writeToDebugBox(Data + "\n", Color.Black);
-                        try
-                        {
-                            donnee = Data.Substring(0, 2);
-                        }
-                        catch
-                        {
-                            Globals.writeToDebugBox("erreur parse case\n", Color.Red);
-                        }
+                        donnee = Data.Substring(0, 2);
                         //Console.WriteLine("Donnee " + donnee);
                         switch (donnee)
                         {
                             case "GD": //Debut de la connexion
                                 Thread.Sleep(100);
-                                string subcat = Data.Substring(2, 3);
+                                string subcat = Data.Substring(2, 1);
                                 switch (subcat)
                                 {
                                     case "M"://Reception des infos sur la map actuelle
@@ -43,20 +36,29 @@ namespace AbrakBot
                                         {
                                             Globals.isInGame = true;
                                             Globals.writeToMainBox("En jeu.\n", Color.Green);
+                                            Globals.writeToDebugBox("En jeu.\n", Color.Green);
                                         }
                                         string[] map_datas = Data.Split('|');
                                         Globals.currentMapId = Int32.Parse(map_datas[1]);
-                                        //TODO recup cells
+                                        //TimerLaunch.Enabled = False
+                                        string indice = map_datas[2];
+                                        string clef = map_datas[3];
+                                        //TabUtilisateur.ListPlayers.Items.Clear()
+                                        //TabUtilisateur.ListMonster.Items.Clear()
+                                        MapHandler.LoadMap(Globals.currentMapId, indice, clef);
                                         TCPPacketHandler.send("GI");
                                         break;
                                 }
+                                break;
+                            case "GM":
+                                MoveHandler.handleMove(Data);
                                 break;
                             case "Ow"://Infos sur les pods
                                 Thread.Sleep(100);
                                 string[] elems = Data.Substring(2).Split('|');
                                 Player.pods_max = Int32.Parse(elems[1]);
                                 Player.pods = Int32.Parse(elems[0]);
-                                
+
                                 break;
                             case "As"://Infos détaillées sur le perso
                                 Thread.Sleep(100);
@@ -65,16 +67,16 @@ namespace AbrakBot
                                 Player.xp_bas = Int32.Parse(xp_stats[1]);
                                 Player.xp_max = Int32.Parse(xp_stats[2]);
                                 Player.xp = Int32.Parse(xp_stats[0]);
-                                
+
                                 Player.kamas = Int32.Parse(player_stats[1]);
                                 string[] pdv_stats = player_stats[5].Split(',');
                                 Player.pdv_max = Int32.Parse(pdv_stats[1]);
                                 Player.pdv = Int32.Parse(pdv_stats[0]);
-                                
+
                                 string[] en_stats = player_stats[6].Split(',');
                                 Player.energie_max = Int32.Parse(en_stats[1]);
                                 Player.energie = Int32.Parse(en_stats[0]);
-                                
+
 
                                 break;
                             case "al"://?
@@ -86,7 +88,7 @@ namespace AbrakBot
                             case "GA"://Autorisation de se déplacer
                                 if (Data.Substring(2, 2) == "0;")
                                 {
-                                    TCPPacketHandler.send("GKK0");
+                                    Globals.isMoving = true;
                                 }
                                 break;
                             case "rp"://Pas trop sur, je crois que c'est un genre de ping régulier
@@ -121,19 +123,23 @@ namespace AbrakBot
                                         }
                                         break;
                                     case "E":
-                                        if(Data.Substring(3, 1) == "f")
+                                        if (Data.Substring(3, 1) == "f")
                                         {
                                             Globals.writeToMainBox("Le joueur n'existe pas ou n'est pas en ligne", Color.Firebrick);
                                         }
                                         break;
                                 }
-                                
+
                                 break;
                             default:
                                 Globals.writeToDebugBox("Case inconnu\n", Color.Blue);
                                 break;
 
                         }
+                    }
+                    else
+                    {
+                        Globals.writeToDebugBox("Aucune données reçues\n", Color.Firebrick);
                     }
                 }
             }

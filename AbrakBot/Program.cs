@@ -22,7 +22,9 @@ namespace AbrakBot
         static void Main(string[] args)
         {
             Config.load();
+            Globals.setExecutionPath();
             ResourceLoader.load();
+            Globals.InitializeCells();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Globals.mainForm = new Forms.Home();

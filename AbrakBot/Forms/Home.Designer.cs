@@ -31,19 +31,28 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.connectButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.kamasLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.pdvBar = new System.Windows.Forms.ToolStripProgressBar();
             this.pdvLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lvlLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.xpBar = new System.Windows.Forms.ToolStripProgressBar();
             this.xpLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.podsBar = new System.Windows.Forms.ToolStripProgressBar();
             this.podsLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.enerBar = new System.Windows.Forms.ToolStripProgressBar();
             this.enerLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.charNameLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lvlLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.mapCoordLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainTabPanel = new System.Windows.Forms.TabControl();
             this.mainTab = new System.Windows.Forms.TabPage();
+            this.sendMessageBox = new System.Windows.Forms.TextBox();
             this.mainBox = new System.Windows.Forms.RichTextBox();
             this.invtab = new System.Windows.Forms.TabPage();
             this.invTable = new System.Windows.Forms.TableLayoutPanel();
@@ -53,14 +62,7 @@
             this.debugTab = new System.Windows.Forms.TabPage();
             this.debugBox = new System.Windows.Forms.RichTextBox();
             this.tabImages = new System.Windows.Forms.ImageList(this.components);
-            this.kamasLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.connectButton = new System.Windows.Forms.ToolStripButton();
-            this.sendMessageBox = new System.Windows.Forms.TextBox();
+            this.testButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.mainTabPanel.SuspendLayout();
@@ -73,12 +75,22 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.connectButton});
+            this.connectButton,
+            this.testButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(973, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // connectButton
+            // 
+            this.connectButton.Image = ((System.Drawing.Image)(resources.GetObject("connectButton.Image")));
+            this.connectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(84, 22);
+            this.connectButton.Text = "Connexion";
+            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
             // statusStrip
             // 
@@ -98,7 +110,8 @@
             this.toolStripStatusLabel4,
             this.enerBar,
             this.enerLabel,
-            this.charNameLabel});
+            this.charNameLabel,
+            this.mapCoordLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 404);
             this.statusStrip.MaximumSize = new System.Drawing.Size(0, 25);
             this.statusStrip.MinimumSize = new System.Drawing.Size(0, 25);
@@ -107,6 +120,28 @@
             this.statusStrip.TabIndex = 1;
             this.statusStrip.Text = "statusStrip";
             this.statusStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
+            // 
+            // toolStripStatusLabel5
+            // 
+            this.toolStripStatusLabel5.Image = global::AbrakBot.Properties.Resources.coins;
+            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(16, 20);
+            // 
+            // kamasLabel
+            // 
+            this.kamasLabel.Name = "kamasLabel";
+            this.kamasLabel.Size = new System.Drawing.Size(13, 20);
+            this.kamasLabel.Text = "0";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripStatusLabel1.Image = global::AbrakBot.Properties.Resources.hearts;
+            this.toolStripStatusLabel1.Margin = new System.Windows.Forms.Padding(15, 3, 0, 2);
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(16, 20);
+            this.toolStripStatusLabel1.Text = "Vie";
             // 
             // pdvBar
             // 
@@ -122,6 +157,20 @@
             this.pdvLabel.Size = new System.Drawing.Size(23, 20);
             this.pdvLabel.Text = "0%";
             // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripStatusLabel2.Image = global::AbrakBot.Properties.Resources.favorite;
+            this.toolStripStatusLabel2.Margin = new System.Windows.Forms.Padding(15, 3, 0, 2);
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(16, 20);
+            // 
+            // lvlLabel
+            // 
+            this.lvlLabel.Name = "lvlLabel";
+            this.lvlLabel.Size = new System.Drawing.Size(27, 20);
+            this.lvlLabel.Text = "Lv.0";
+            // 
             // xpBar
             // 
             this.xpBar.Name = "xpBar";
@@ -134,6 +183,13 @@
             this.xpLabel.Size = new System.Drawing.Size(23, 20);
             this.xpLabel.Text = "0%";
             // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Image = global::AbrakBot.Properties.Resources.balance;
+            this.toolStripStatusLabel3.Margin = new System.Windows.Forms.Padding(15, 3, 0, 2);
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(16, 20);
+            // 
             // podsBar
             // 
             this.podsBar.Name = "podsBar";
@@ -145,6 +201,13 @@
             this.podsLabel.Name = "podsLabel";
             this.podsLabel.Size = new System.Drawing.Size(23, 20);
             this.podsLabel.Text = "0%";
+            // 
+            // toolStripStatusLabel4
+            // 
+            this.toolStripStatusLabel4.Image = global::AbrakBot.Properties.Resources.bolt;
+            this.toolStripStatusLabel4.Margin = new System.Windows.Forms.Padding(15, 3, 0, 2);
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(16, 20);
             // 
             // enerBar
             // 
@@ -163,11 +226,11 @@
             this.charNameLabel.Name = "charNameLabel";
             this.charNameLabel.Size = new System.Drawing.Size(0, 20);
             // 
-            // lvlLabel
+            // mapCoordLabel
             // 
-            this.lvlLabel.Name = "lvlLabel";
-            this.lvlLabel.Size = new System.Drawing.Size(27, 20);
-            this.lvlLabel.Text = "Lv.0";
+            this.mapCoordLabel.Name = "mapCoordLabel";
+            this.mapCoordLabel.Size = new System.Drawing.Size(33, 20);
+            this.mapCoordLabel.Text = "[0, 0]";
             // 
             // mainTabPanel
             // 
@@ -197,6 +260,15 @@
             this.mainTab.TabIndex = 0;
             this.mainTab.Text = "Principal";
             this.mainTab.UseVisualStyleBackColor = true;
+            // 
+            // sendMessageBox
+            // 
+            this.sendMessageBox.Location = new System.Drawing.Point(3, 310);
+            this.sendMessageBox.Name = "sendMessageBox";
+            this.sendMessageBox.Size = new System.Drawing.Size(932, 20);
+            this.sendMessageBox.TabIndex = 2;
+            this.sendMessageBox.Text = "Envoyer un message...";
+            this.sendMessageBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sendMessageBox_KeyPress);
             // 
             // mainBox
             // 
@@ -315,67 +387,14 @@
             this.tabImages.Images.SetKeyName(1, "backpack_icon.ico");
             this.tabImages.Images.SetKeyName(2, "debug-bug-icon.png");
             // 
-            // kamasLabel
+            // testButton
             // 
-            this.kamasLabel.Name = "kamasLabel";
-            this.kamasLabel.Size = new System.Drawing.Size(13, 20);
-            this.kamasLabel.Text = "0";
-            // 
-            // toolStripStatusLabel5
-            // 
-            this.toolStripStatusLabel5.Image = global::AbrakBot.Properties.Resources.coins;
-            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(16, 20);
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripStatusLabel1.Image = global::AbrakBot.Properties.Resources.hearts;
-            this.toolStripStatusLabel1.Margin = new System.Windows.Forms.Padding(15, 3, 0, 2);
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(16, 20);
-            this.toolStripStatusLabel1.Text = "Vie";
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripStatusLabel2.Image = global::AbrakBot.Properties.Resources.favorite;
-            this.toolStripStatusLabel2.Margin = new System.Windows.Forms.Padding(15, 3, 0, 2);
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(16, 20);
-            // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.Image = global::AbrakBot.Properties.Resources.balance;
-            this.toolStripStatusLabel3.Margin = new System.Windows.Forms.Padding(15, 3, 0, 2);
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(16, 20);
-            // 
-            // toolStripStatusLabel4
-            // 
-            this.toolStripStatusLabel4.Image = global::AbrakBot.Properties.Resources.bolt;
-            this.toolStripStatusLabel4.Margin = new System.Windows.Forms.Padding(15, 3, 0, 2);
-            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(16, 20);
-            // 
-            // connectButton
-            // 
-            this.connectButton.Image = ((System.Drawing.Image)(resources.GetObject("connectButton.Image")));
-            this.connectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(84, 22);
-            this.connectButton.Text = "Connexion";
-            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
-            // 
-            // sendMessageBox
-            // 
-            this.sendMessageBox.Location = new System.Drawing.Point(3, 310);
-            this.sendMessageBox.Name = "sendMessageBox";
-            this.sendMessageBox.Size = new System.Drawing.Size(932, 20);
-            this.sendMessageBox.TabIndex = 2;
-            this.sendMessageBox.Text = "Envoyer un message...";
-            this.sendMessageBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sendMessageBox_KeyPress);
+            this.testButton.Image = ((System.Drawing.Image)(resources.GetObject("testButton.Image")));
+            this.testButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(176, 22);
+            this.testButton.Text = "Bouton pour tester des trucs";
+            this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
             // Home
             // 
@@ -438,5 +457,7 @@
         public System.Windows.Forms.ToolStripStatusLabel kamasLabel;
         public System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.TextBox sendMessageBox;
+        public System.Windows.Forms.ToolStripStatusLabel mapCoordLabel;
+        private System.Windows.Forms.ToolStripButton testButton;
     }
 }

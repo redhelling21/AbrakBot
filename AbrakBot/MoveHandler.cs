@@ -15,7 +15,7 @@ namespace AbrakBot
         public static void SeDeplacer(int caseFin)
         {
             Thread ThreadDeplac = new Thread(SeDeplace);
-            int CaseDuDeplacement = caseFin;
+            CaseDuDeplacement = caseFin;
             ThreadDeplac.IsBackground = true;
             ThreadDeplac.Start();
 
@@ -134,7 +134,6 @@ namespace AbrakBot
 
                 //changeDeMap = 0;
                 bloqueGA = 0;
-                Globals.isMoving = false;
 
             }
 

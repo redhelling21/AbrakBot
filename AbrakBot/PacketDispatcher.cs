@@ -38,6 +38,8 @@ namespace AbrakBot
                                             Globals.writeToMainBox("En jeu.\n", Color.Green);
                                             Globals.writeToDebugBox("En jeu.\n", Color.Green);
                                         }
+
+                                        Globals.isMoving = false;
                                         string[] map_datas = Data.Split('|');
                                         Globals.currentMapId = Int32.Parse(map_datas[1]);
                                         //TimerLaunch.Enabled = False

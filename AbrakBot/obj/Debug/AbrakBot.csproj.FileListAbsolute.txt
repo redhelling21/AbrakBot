@@ -14,8 +14,6 @@ d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\obj\Debug\AbrakBot.Fo
 d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\obj\Debug\AbrakBot.csproj.GenerateResource.Cache
 d:\documents\visual studio 2015\Projects\AbrakBot\AbrakBot\obj\Debug\AbrakBot.Properties.Resources.resources
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\bin\Debug\AbrakBot.exe.config
-C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\obj\Debug\AbrakBot.exe
-C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\obj\Debug\AbrakBot.pdb
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\bin\Debug\AbrakBot.exe
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\bin\Debug\AbrakBot.pdb
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\bin\Debug\ICSharpCode.SharpZipLib.dll
@@ -26,5 +24,8 @@ C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\bin\Debug\log4net.xml
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\obj\Debug\AbrakBot.csprojResolveAssemblyReference.cache
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\obj\Debug\AbrakBot.Forms.Home.resources
+C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\obj\Debug\AbrakBot.Forms.Remote.resources
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\obj\Debug\AbrakBot.Properties.Resources.resources
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\obj\Debug\AbrakBot.csproj.GenerateResource.Cache
+C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\obj\Debug\AbrakBot.exe
+C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBot\obj\Debug\AbrakBot.pdb

@@ -37,7 +37,7 @@ namespace AbrakBot.Forms
 
         private void Home_Load(object sender, EventArgs e)
         {
-
+            trajetsList.Items.AddRange(Globals.getTrajetList());
         }
 
         private void Home_FormClosed(object sender, FormClosedEventArgs e)
@@ -100,6 +100,32 @@ namespace AbrakBot.Forms
         private void testButton_Click(object sender, EventArgs e)
         {
             Globals.doSomethingToTest();
+        }
+
+        private void trajetsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Globals.setActiveTrajet((string)trajetsList.SelectedItem);
+        }
+
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            if (startButton.Text == "Lancer")
+            {
+                startButton.Text = "Arrêter";
+                Globals.isRunning = true;
+                ThreadTrajet.handleTrajet();
+            }
+            else
+            {
+                startButton.Text = "Lancer";
+                Globals.isRunning = false;
+            }
+        }
+
+        private void remoteControlButton_Click(object sender, EventArgs e)
+        {
+            Remote rem= new Forms.Remote();
+            rem.Show();
         }
     }
 }

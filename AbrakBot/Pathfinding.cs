@@ -7,6 +7,25 @@ using System.Threading.Tasks;
 
 namespace AbrakBot
 {
+    /* principe de l'algo A*Star
+     * 
+     * Chaque case a trois poids : 
+     *  - La distance avec la case de départ
+     *  - La distance avec la case d'arrivée
+     *  - le poids résultant de la somme des deux
+     *  
+     *  Chaque case a en plus un parent.
+     *  
+     *  On a deux listes : la openlist et la closelist
+     *  Déroulement d'une boucle
+     *  
+     *  On récupère les 9 cases qui entourent la case sélectionnée, on enlève celle qui appartiennent à la closelist
+     *  On calcule le poid de celles qui restent
+     *  On choisit celle qui a le poids total le plus faible
+     *  Elle aura pour parent la case au centre des 9
+     *  On ajoute la case au centre à la closelist
+     *  On recommence avec cette nouvelle case
+     */
     class Pathfinding
     {
 
@@ -21,6 +40,7 @@ namespace AbrakBot
 
         private int nombreDePM;
 
+        //initialisation des listes
         private void loadCell()
         {
             for (int i = 0; i <= 1024; i++)
@@ -33,14 +53,14 @@ namespace AbrakBot
 
         }
 
-
+        //Ajout des obstacles de la map à la closelist
         private void loadSprites(Cell[] mapHandler, bool eviterChangeurs)
         {
             for (int i = 0; i < 1000; i++)
             {
                 if(mapHandler[i] != null)
                 {
-                    if (mapHandler[i].movement == 0)
+                    if (mapHandler[i].movement == 0 || mapHandler[i].movement == 1)
                     {
                         closelist.Add(i);
                     }
@@ -59,23 +79,22 @@ namespace AbrakBot
 
         }
 
+        //Lancement de l'algo de pathfinding
         public string pathing(Cell[] mapHandler, int nCellBegin, int nCellEnd, bool eviterChangeurs = false, bool isfight = false, int numberPM = 9999)
         {
            
-                loadCell();
+            loadCell();
+            loadSprites(mapHandler, eviterChangeurs);
+            closelist.Remove(nCellEnd);
 
-                loadSprites(mapHandler, eviterChangeurs);
-                closelist.Remove(nCellEnd);
-
-                fight = isfight;
-                nombreDePM = numberPM;
-                string returnPath = findpath(nCellBegin, nCellEnd);
+            fight = isfight;
+            nombreDePM = numberPM;
+            string returnPath = findpath(nCellBegin, nCellEnd);
 
             return cleanPath(returnPath);
-            //return returnPath;
-            
         }
 
+        //calcul du chemin entre les deux cases
         private string findpath(int cell1, int cell2)
         {
             int current = 0;
@@ -83,12 +102,14 @@ namespace AbrakBot
 
             openlist.Add(cell1);
 
+            //Tant qu'on est pas arrivé à la case de fin
             while (!(openlist.Contains(cell2)))
             {
                 i += 1;
                 if (i > 1000)
                     return "";
 
+                
                 current = getFpoint();
                 if (current == cell2)
                     break; // TODO: might not be correct. Was : Exit Do

@@ -15,7 +15,7 @@ namespace AbrakBot
         private static string server_id = Config.defaultServerId.HasValue ? Config.defaultServerId.Value.ToString(CultureInfo.InvariantCulture) : "";
         private static string character_id = Config.defaultCharacterId.HasValue ? Config.defaultCharacterId.Value.ToString(CultureInfo.InvariantCulture) : "";
 
-public static void ReceiveData(Queue<string> pck_queue)
+        public static void ReceiveData(Queue<string> pck_queue)
         {
             if (pck_queue.Count != 0)
             {

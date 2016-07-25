@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.connectButton = new System.Windows.Forms.ToolStripButton();
+            this.testButton = new System.Windows.Forms.ToolStripButton();
+            this.startButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.kamasLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -59,10 +61,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.reportTab = new System.Windows.Forms.TabPage();
             this.debugTab = new System.Windows.Forms.TabPage();
             this.debugBox = new System.Windows.Forms.RichTextBox();
             this.tabImages = new System.Windows.Forms.ImageList(this.components);
-            this.testButton = new System.Windows.Forms.ToolStripButton();
+            this.explTrajets = new System.Windows.Forms.OpenFileDialog();
+            this.trajetsList = new System.Windows.Forms.ToolStripComboBox();
+            this.remoteControlButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.mainTabPanel.SuspendLayout();
@@ -76,21 +81,42 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectButton,
-            this.testButton});
+            this.testButton,
+            this.trajetsList,
+            this.startButton,
+            this.remoteControlButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(973, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(975, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // connectButton
             // 
-            this.connectButton.Image = ((System.Drawing.Image)(resources.GetObject("connectButton.Image")));
+            this.connectButton.Image = global::AbrakBot.Properties.Resources.link;
             this.connectButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.connectButton.Name = "connectButton";
             this.connectButton.Size = new System.Drawing.Size(84, 22);
             this.connectButton.Text = "Connexion";
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
+            // 
+            // testButton
+            // 
+            this.testButton.Image = global::AbrakBot.Properties.Resources.flask;
+            this.testButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.testButton.Name = "testButton";
+            this.testButton.Size = new System.Drawing.Size(176, 22);
+            this.testButton.Text = "Bouton pour tester des trucs";
+            this.testButton.Click += new System.EventHandler(this.testButton_Click);
+            // 
+            // startButton
+            // 
+            this.startButton.Image = global::AbrakBot.Properties.Resources.rocket;
+            this.startButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(62, 22);
+            this.startButton.Text = "Lancer";
+            this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
             // statusStrip
             // 
@@ -112,11 +138,11 @@
             this.enerLabel,
             this.charNameLabel,
             this.mapCoordLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 404);
+            this.statusStrip.Location = new System.Drawing.Point(0, 423);
             this.statusStrip.MaximumSize = new System.Drawing.Size(0, 25);
             this.statusStrip.MinimumSize = new System.Drawing.Size(0, 25);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(973, 25);
+            this.statusStrip.Size = new System.Drawing.Size(975, 25);
             this.statusStrip.TabIndex = 1;
             this.statusStrip.Text = "statusStrip";
             this.statusStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
@@ -239,13 +265,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainTabPanel.Controls.Add(this.mainTab);
             this.mainTabPanel.Controls.Add(this.invtab);
+            this.mainTabPanel.Controls.Add(this.reportTab);
             this.mainTabPanel.Controls.Add(this.debugTab);
             this.mainTabPanel.ImageList = this.tabImages;
             this.mainTabPanel.Location = new System.Drawing.Point(12, 28);
             this.mainTabPanel.Multiline = true;
             this.mainTabPanel.Name = "mainTabPanel";
             this.mainTabPanel.SelectedIndex = 0;
-            this.mainTabPanel.Size = new System.Drawing.Size(949, 361);
+            this.mainTabPanel.Size = new System.Drawing.Size(951, 380);
             this.mainTabPanel.TabIndex = 2;
             // 
             // mainTab
@@ -256,16 +283,19 @@
             this.mainTab.Location = new System.Drawing.Point(4, 23);
             this.mainTab.Name = "mainTab";
             this.mainTab.Padding = new System.Windows.Forms.Padding(3);
-            this.mainTab.Size = new System.Drawing.Size(941, 334);
+            this.mainTab.Size = new System.Drawing.Size(943, 353);
             this.mainTab.TabIndex = 0;
             this.mainTab.Text = "Principal";
             this.mainTab.UseVisualStyleBackColor = true;
             // 
             // sendMessageBox
             // 
-            this.sendMessageBox.Location = new System.Drawing.Point(3, 310);
+            this.sendMessageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.sendMessageBox.Location = new System.Drawing.Point(3, 327);
             this.sendMessageBox.Name = "sendMessageBox";
-            this.sendMessageBox.Size = new System.Drawing.Size(932, 20);
+            this.sendMessageBox.Size = new System.Drawing.Size(934, 20);
             this.sendMessageBox.TabIndex = 2;
             this.sendMessageBox.Text = "Envoyer un message...";
             this.sendMessageBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sendMessageBox_KeyPress);
@@ -278,7 +308,7 @@
             this.mainBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mainBox.Location = new System.Drawing.Point(3, 3);
             this.mainBox.Name = "mainBox";
-            this.mainBox.Size = new System.Drawing.Size(932, 304);
+            this.mainBox.Size = new System.Drawing.Size(934, 323);
             this.mainBox.TabIndex = 0;
             this.mainBox.Text = "";
             // 
@@ -289,7 +319,7 @@
             this.invtab.Location = new System.Drawing.Point(4, 23);
             this.invtab.Name = "invtab";
             this.invtab.Padding = new System.Windows.Forms.Padding(3);
-            this.invtab.Size = new System.Drawing.Size(941, 334);
+            this.invtab.Size = new System.Drawing.Size(943, 353);
             this.invtab.TabIndex = 1;
             this.invtab.Text = "Inventaire";
             this.invtab.UseVisualStyleBackColor = true;
@@ -353,6 +383,16 @@
             this.label2.Text = "Nom";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // reportTab
+            // 
+            this.reportTab.ImageIndex = 3;
+            this.reportTab.Location = new System.Drawing.Point(4, 23);
+            this.reportTab.Name = "reportTab";
+            this.reportTab.Size = new System.Drawing.Size(943, 353);
+            this.reportTab.TabIndex = 0;
+            this.reportTab.Text = "Rapport";
+            this.reportTab.UseVisualStyleBackColor = true;
+            // 
             // debugTab
             // 
             this.debugTab.Controls.Add(this.debugBox);
@@ -360,7 +400,7 @@
             this.debugTab.Location = new System.Drawing.Point(4, 23);
             this.debugTab.Name = "debugTab";
             this.debugTab.Padding = new System.Windows.Forms.Padding(3);
-            this.debugTab.Size = new System.Drawing.Size(941, 334);
+            this.debugTab.Size = new System.Drawing.Size(943, 353);
             this.debugTab.TabIndex = 2;
             this.debugTab.Text = "Debug";
             this.debugTab.UseVisualStyleBackColor = true;
@@ -386,26 +426,38 @@
             this.tabImages.Images.SetKeyName(0, "favicon.ico");
             this.tabImages.Images.SetKeyName(1, "backpack_icon.ico");
             this.tabImages.Images.SetKeyName(2, "debug-bug-icon.png");
+            this.tabImages.Images.SetKeyName(3, "graph.png");
             // 
-            // testButton
+            // explTrajets
             // 
-            this.testButton.Image = ((System.Drawing.Image)(resources.GetObject("testButton.Image")));
-            this.testButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.testButton.Name = "testButton";
-            this.testButton.Size = new System.Drawing.Size(176, 22);
-            this.testButton.Text = "Bouton pour tester des trucs";
-            this.testButton.Click += new System.EventHandler(this.testButton_Click);
+            this.explTrajets.FileName = "openFileDialog1";
+            this.explTrajets.InitialDirectory = "Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)";
+            // 
+            // trajetsList
+            // 
+            this.trajetsList.Name = "trajetsList";
+            this.trajetsList.Size = new System.Drawing.Size(121, 25);
+            this.trajetsList.SelectedIndexChanged += new System.EventHandler(this.trajetsList_SelectedIndexChanged);
+            // 
+            // remoteControlButton
+            // 
+            this.remoteControlButton.Image = ((System.Drawing.Image)(resources.GetObject("remoteControlButton.Image")));
+            this.remoteControlButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.remoteControlButton.Name = "remoteControlButton";
+            this.remoteControlButton.Size = new System.Drawing.Size(109, 22);
+            this.remoteControlButton.Text = "Télécommande";
+            this.remoteControlButton.Click += new System.EventHandler(this.remoteControlButton_Click);
             // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(973, 429);
+            this.ClientSize = new System.Drawing.Size(975, 448);
             this.Controls.Add(this.mainTabPanel);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
             this.Name = "Home";
-            this.Text = "Form1";
+            this.Text = "AbrakBot v0.1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Home_FormClosed);
             this.Load += new System.EventHandler(this.Home_Load);
             this.toolStrip1.ResumeLayout(false);
@@ -459,5 +511,10 @@
         private System.Windows.Forms.TextBox sendMessageBox;
         public System.Windows.Forms.ToolStripStatusLabel mapCoordLabel;
         private System.Windows.Forms.ToolStripButton testButton;
+        private System.Windows.Forms.TabPage reportTab;
+        private System.Windows.Forms.ToolStripButton startButton;
+        private System.Windows.Forms.OpenFileDialog explTrajets;
+        public System.Windows.Forms.ToolStripComboBox trajetsList;
+        private System.Windows.Forms.ToolStripButton remoteControlButton;
     }
 }

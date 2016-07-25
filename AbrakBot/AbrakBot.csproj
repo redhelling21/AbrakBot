@@ -88,6 +88,12 @@
     <Compile Include="Forms\Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Remote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Remote.Designer.cs">
+      <DependentUpon>Remote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Globals.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="MapHandler.cs" />
@@ -105,6 +111,7 @@
     <Compile Include="ResourceLoader.cs" />
     <Compile Include="SwfUnpacker.cs" />
     <Compile Include="TCPPacketHandler.cs" />
+    <Compile Include="ThreadTrajet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -125,6 +132,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Remote.resx">
+      <DependentUpon>Remote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -160,6 +170,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\coins1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\flask.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\route.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\flask1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\space-rocket-launch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\right-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\left-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\up-chevron.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\down-chevron.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

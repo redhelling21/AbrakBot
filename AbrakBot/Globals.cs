@@ -20,12 +20,17 @@ namespace AbrakBot
         public static bool isInGame = false;
         public static bool isMoving = false;
         public static bool isHarvesting = false;
+        public static bool isRunning = false;
 
         public static int caseActuelle;
         public static int currentMapId = 0;
         public static int tpHaut, tpBas, tpDroite, tpGauche;
         public static Cell[] mapDataActuelle;
         public static string[] cases = new string[2500];
+
+        public static Dictionary<string, bool[]> listMovements = new Dictionary<string, bool[]>();
+        public static Dictionary<string, bool[]> listFight = new Dictionary<string, bool[]>();
+        public static Dictionary<string, bool[]> listHarvest = new Dictionary<string, bool[]>();
 
         public static Dictionary<Int32, string> objects = new Dictionary<Int32, string>();
         public static Dictionary<Int32, string> ressources = new Dictionary<Int32, string>();
@@ -159,6 +164,121 @@ namespace AbrakBot
 
             }
 
+        }
+
+        public static string[] getTrajetList()
+        {
+            List<string> trajets = new List<string>();
+            string[] array = Directory.GetFiles(execPath + "/Trajets").Where(name => name.EndsWith(".txt")).ToArray<string>();
+            foreach(string str in array)
+            {
+                string[] split = str.Split('\\');
+                trajets.Add(split[split.Length -1]);
+            }
+            return trajets.ToArray();
+        }
+
+        public static void setActiveTrajet(string nom)
+        {
+            StreamReader reader = new StreamReader(execPath + "/Trajets/" + nom);
+            listMovements.Clear();
+            listFight.Clear();
+            listHarvest.Clear();
+            string line;
+            bool movement = false;
+            bool fight = false;
+            bool harvest = false;
+            while ((line = reader.ReadLine()) != null)
+            {
+                switch(line.Substring(0, 1))
+                {
+                    case "#":
+                        break;
+                    case "%":
+                        switch (line.Split('%')[1])
+                        {
+                            case "Mouvement":
+                                movement = true;
+                                fight = false;
+                                harvest = false;
+                                break;
+                            case "Combat":
+                                movement = false;
+                                fight = true;
+                                harvest = false;
+                                break;
+                            case "Recolte":
+                                movement = false;
+                                fight = false;
+                                harvest = true;
+                                break;
+                        }
+                        break;
+                    case "[":
+                        string coords = line.Substring(1).Split(']')[0];
+                        string[] commandes = line.Split('>')[1].Split('|');
+                        Dictionary<string, bool[]> list = listMovements;
+                        if(fight)
+                        {
+                            list = listFight;
+                        }else if (harvest)
+                        {
+                            list = listHarvest;
+                        }
+                        list.Add(coords, new bool[4]);
+                        foreach (string com in commandes)
+                        {
+                            switch (com)
+                            {
+                                case "haut":
+                                    list[coords][0] = true;
+                                    break;
+                                case "bas":
+                                    list[coords][1] = true;
+                                    break;
+                                case "gauche":
+                                    list[coords][2] = true;
+                                    break;
+                                case "droite":
+                                    list[coords][3] = true;
+                                    break;
+                            }
+                        }
+                        break;
+                }
+                
+            }
+            writeToMainBox("Trajet " + nom + " chargé\n", Color.Orange);
+            reader.Close();
+        }
+
+        public static void makeAMove(int laCase, bool isMap)
+        {
+            if (!isMoving)
+            {
+                if (isMap)
+                {
+                    MoveHandler.SeDeplacerMap(laCase);
+                }
+                else
+                {
+                    if (mapDataActuelle[laCase].movement > 2)
+                    {
+                        MoveHandler.SeDeplacer(laCase);
+                    }
+                    else
+                    {
+                        writeToMainBox("La case est inatteignable, ou il s'agit d'un changeur de map\n", Color.Firebrick);
+                    }
+                    
+                }
+            }
+            else
+            {
+                
+                writeToMainBox("Le personnage est déjà en mouvement\n", Color.Firebrick);
+            }
+            
         }
     }
 

@@ -1,0 +1,10 @@
+#Commentaire
+%Mouvement%
+[5,-21]->bas
+[5,-20]->bas
+[5,-19]->gauche
+[4,-19]->gauche
+[3,-19]->haut
+[3,-20]->haut
+[3,-21]->droite
+[4,-21]->droite

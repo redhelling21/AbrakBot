@@ -159,6 +159,37 @@ namespace AbrakBot
                                     
                                 }
                                 break;
+                            case "Al": //Merde, un truc s'est mal passé
+                                switch(Data.Substring(2, 2))
+                                {
+                                    case "Ef":
+                                        Globals.writeToMainBox("Mot de passe incorrect\n", Color.Firebrick);
+                                        break;
+                                    case "Eb":
+                                        Globals.writeToMainBox("Votre compte a été banni\n", Color.Firebrick);
+                                        break;
+                                    case "En":
+                                        Globals.writeToMainBox("La connexion ne s'est pas terminée\n", Color.Firebrick);
+                                        break;
+                                    case "Ea":
+                                        Globals.writeToMainBox("Vous êtes déjà en cours de connexion\n", Color.Firebrick);
+                                        break;
+                                    case "Ec":
+                                        Globals.writeToMainBox("Vous êtes déjà connecté au serveur de jeu\n", Color.Firebrick);
+                                        break;
+                                    case "Ed":
+                                        Globals.writeToMainBox("Ce compte était déjà en ligne, vous venez de le déconnecter\n", Color.Firebrick);
+                                        break;
+                                    case "Ew":
+                                        Globals.writeToMainBox("Serveur plein\n", Color.Firebrick);
+                                        break;
+                                    default:
+                                        Globals.writeToMainBox("Une erreur inconnue s'est produite lors de la connexion\n", Color.Firebrick);
+                                        break;
+                                }
+                                TCPPacketHandler.close();
+                                Globals.disconnect();
+                                break;
                            
                             default:
                                 Globals.writeToDebugBox("Case inconnu\n", Color.Blue);

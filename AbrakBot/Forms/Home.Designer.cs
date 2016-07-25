@@ -33,7 +33,9 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.connectButton = new System.Windows.Forms.ToolStripButton();
             this.testButton = new System.Windows.Forms.ToolStripButton();
+            this.trajetsList = new System.Windows.Forms.ToolStripComboBox();
             this.startButton = new System.Windows.Forms.ToolStripButton();
+            this.remoteControlButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.kamasLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -66,8 +68,6 @@
             this.debugBox = new System.Windows.Forms.RichTextBox();
             this.tabImages = new System.Windows.Forms.ImageList(this.components);
             this.explTrajets = new System.Windows.Forms.OpenFileDialog();
-            this.trajetsList = new System.Windows.Forms.ToolStripComboBox();
-            this.remoteControlButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.mainTabPanel.SuspendLayout();
@@ -109,6 +109,12 @@
             this.testButton.Text = "Bouton pour tester des trucs";
             this.testButton.Click += new System.EventHandler(this.testButton_Click);
             // 
+            // trajetsList
+            // 
+            this.trajetsList.Name = "trajetsList";
+            this.trajetsList.Size = new System.Drawing.Size(121, 25);
+            this.trajetsList.SelectedIndexChanged += new System.EventHandler(this.trajetsList_SelectedIndexChanged);
+            // 
             // startButton
             // 
             this.startButton.Image = global::AbrakBot.Properties.Resources.rocket;
@@ -117,6 +123,15 @@
             this.startButton.Size = new System.Drawing.Size(62, 22);
             this.startButton.Text = "Lancer";
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
+            // 
+            // remoteControlButton
+            // 
+            this.remoteControlButton.Image = ((System.Drawing.Image)(resources.GetObject("remoteControlButton.Image")));
+            this.remoteControlButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.remoteControlButton.Name = "remoteControlButton";
+            this.remoteControlButton.Size = new System.Drawing.Size(109, 22);
+            this.remoteControlButton.Text = "Télécommande";
+            this.remoteControlButton.Click += new System.EventHandler(this.remoteControlButton_Click);
             // 
             // statusStrip
             // 
@@ -433,21 +448,6 @@
             this.explTrajets.FileName = "openFileDialog1";
             this.explTrajets.InitialDirectory = "Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)";
             // 
-            // trajetsList
-            // 
-            this.trajetsList.Name = "trajetsList";
-            this.trajetsList.Size = new System.Drawing.Size(121, 25);
-            this.trajetsList.SelectedIndexChanged += new System.EventHandler(this.trajetsList_SelectedIndexChanged);
-            // 
-            // remoteControlButton
-            // 
-            this.remoteControlButton.Image = ((System.Drawing.Image)(resources.GetObject("remoteControlButton.Image")));
-            this.remoteControlButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.remoteControlButton.Name = "remoteControlButton";
-            this.remoteControlButton.Size = new System.Drawing.Size(109, 22);
-            this.remoteControlButton.Text = "Télécommande";
-            this.remoteControlButton.Click += new System.EventHandler(this.remoteControlButton_Click);
-            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -479,7 +479,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton connectButton;
         private System.Windows.Forms.TabPage mainTab;
         private System.Windows.Forms.TabPage invtab;
         private System.Windows.Forms.TabControl mainTabPanel;
@@ -516,5 +515,6 @@
         private System.Windows.Forms.OpenFileDialog explTrajets;
         public System.Windows.Forms.ToolStripComboBox trajetsList;
         private System.Windows.Forms.ToolStripButton remoteControlButton;
+        public System.Windows.Forms.ToolStripButton connectButton;
     }
 }

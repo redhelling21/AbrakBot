@@ -280,6 +280,11 @@ namespace AbrakBot
             }
             
         }
+
+        public static void disconnect()
+        {
+            mainForm.connectButton.Text = "Connexion";
+        }
     }
 
     public static class RichTextBoxExtensions

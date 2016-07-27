@@ -15,6 +15,7 @@ namespace AbrakBot
     {
         public static string execPath;
 
+
         public static bool isConnected = false;
         public static bool isFighting = false;
         public static bool isInGame = false;
@@ -22,16 +23,23 @@ namespace AbrakBot
         public static bool isHarvesting = false;
         public static bool isRunning = false;
 
+        public static TCPPacketHandler connect;
+        public static TCPPacketHandler game;
+
         public static int caseActuelle;
         public static int currentMapId = 0;
         public static int tpHaut, tpBas, tpDroite, tpGauche;
         public static Cell[] mapDataActuelle;
         public static string[] cases = new string[2500];
+        public static int bloqueGA = 0;
 
         public static Dictionary<string, bool[]> listMovements = new Dictionary<string, bool[]>();
         public static Dictionary<string, bool[]> listFight = new Dictionary<string, bool[]>();
         public static Dictionary<string, bool[]> listHarvest = new Dictionary<string, bool[]>();
 
+        public static Dictionary<Int32, Int32> actualResources = new Dictionary<Int32, Int32>();
+        public static Dictionary<Int32, Int32> idResourcesTranslate = new Dictionary<Int32, Int32>();
+        public static Dictionary<Int32, Int32[]> mapchangers = new Dictionary<Int32, Int32[]>();
         public static Dictionary<Int32, string> objects = new Dictionary<Int32, string>();
         public static Dictionary<Int32, string> ressources = new Dictionary<Int32, string>();
         public static Dictionary<Int32, string> sorts = new Dictionary<Int32, string>();
@@ -40,6 +48,7 @@ namespace AbrakBot
 
         public static int nombreDeCombat = 0;
         public static int lastChangementMap = 0;
+        public static int tempsRecolte;
 
         public static void setExecutionPath()
         {
@@ -50,31 +59,31 @@ namespace AbrakBot
 
         public static void writeToMainBox(string text, Color color)
         {
-            Home.appendBox(mainForm.mainBox, text, color);
+            mainForm.appendBox(mainForm.mainBox, text, color);
         }
 
         public static void writeToDebugBox(string text, Color color)
         {
-            Home.appendBox(mainForm.debugBox, text, color);
+            mainForm.appendBox(mainForm.debugBox, text, color);
         }
 
         public static void updateBars(int pdv, int xp, int pods, int energie)
         {
             if(pdv >= 0)
             {
-                Home.updateBar(mainForm.statusStrip, mainForm.pdvBar, mainForm.pdvLabel, pdv);
+                Home.updateTSBar(mainForm.statusStrip, mainForm.pdvBar, mainForm.pdvLabel, pdv);
             }
             if (xp >= 0)
             {
-                Home.updateBar(mainForm.statusStrip, mainForm.xpBar, mainForm.xpLabel, xp);
+                Home.updateTSBar(mainForm.statusStrip, mainForm.xpBar, mainForm.xpLabel, xp);
             }
             if (pods >= 0)
             {
-                Home.updateBar(mainForm.statusStrip, mainForm.podsBar, mainForm.podsLabel, pods);
+                Home.updateTSBar(mainForm.statusStrip, mainForm.podsBar, mainForm.podsLabel, pods);
             }
             if (energie >= 0)
             {
-                Home.updateBar(mainForm.statusStrip, mainForm.enerBar, mainForm.enerLabel, energie);
+                Home.updateTSBar(mainForm.statusStrip, mainForm.enerBar, mainForm.enerLabel, energie);
             }
         }
 
@@ -98,6 +107,44 @@ namespace AbrakBot
             Home.updateTSLabel(mainForm.statusStrip, mainForm.mapCoordLabel, coords);
         }
 
+        public static void updateNomMetiers()
+        {
+            switch (Player.metiers.Count)
+            {
+                case 1:
+                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[0].nom);
+                    break;
+                case 2:
+                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[0].nom);
+                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[1].nom);
+                    break;
+                case 3:
+                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[0].nom);
+                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[1].nom);
+                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[2].nom);
+                    break;
+            }
+        }
+
+        public static void updateXPMetiers()
+        {
+            if(Player.metiers.Count >= 1)
+            {
+                Home.updateLabel(mainForm.metierLabelLvl1, "Lvl. " + Player.metiers[0].level.ToString());
+                Home.updateBar(mainForm.metierBar1, (int)Math.Round(((float)(Player.metiers[0].xp - Player.metiers[0].xp_min) / (Player.metiers[0].xp_max - Player.metiers[0].xp_min)) * 100));
+            }
+            if (Player.metiers.Count >= 2)
+            {
+                Home.updateLabel(mainForm.metierLabelLvl2, "Lvl. " + Player.metiers[1].level.ToString());
+                Home.updateBar(mainForm.metierBar2, (int)Math.Round(((float)(Player.metiers[1].xp - Player.metiers[1].xp_min) / (Player.metiers[1].xp_max - Player.metiers[2].xp_min)) * 100));
+            }
+            if (Player.metiers.Count >= 3)
+            {
+                Home.updateLabel(mainForm.metierLabelLvl3, "Lvl. " + Player.metiers[2].level.ToString());
+                Home.updateBar(mainForm.metierBar3, (int)Math.Round(((float)(Player.metiers[2].xp - Player.metiers[2].xp_min) / (Player.metiers[2].xp_max - Player.metiers[2].xp_min)) * 100));
+            }
+        }
+
         public static void sendMessage(string message)
         {
             if(message.Substring(0, 1) == "/")
@@ -107,13 +154,13 @@ namespace AbrakBot
                     case "w":
                         string temp = message.Substring(3);
                         string temp2 = temp.Substring(temp.IndexOf(" "));
-                        TCPPacketHandler.send("BM" + temp.Substring(0, temp.IndexOf(" ")) + "|" + temp2 + "|");
+                        Globals.game.send("BM" + temp.Substring(0, temp.IndexOf(" ")) + "|" + temp2 + "|");
                         break;
                     case "b":
-                        TCPPacketHandler.send("BM:" + message.Substring(3) + "|");
+                        Globals.game.send("BM:" + message.Substring(3) + "|");
                         break;
                     case "r":
-                        TCPPacketHandler.send("BM?" + message.Substring(3) + "|");
+                        Globals.game.send("BM?" + message.Substring(3) + "|");
                         break;
                     default:
                         writeToMainBox("Type de message inconnu", Color.Firebrick);
@@ -121,7 +168,7 @@ namespace AbrakBot
                 }
             }else
             {
-                TCPPacketHandler.send("BM*|" + message + "|");
+                Globals.game.send("BM*|" + message + "|");
             }
         }
 
@@ -283,7 +330,29 @@ namespace AbrakBot
 
         public static void disconnect()
         {
-            mainForm.connectButton.Text = "Connexion";
+
+            Home.updateTSButtonText(mainForm.statusStrip, mainForm.connectButton, "Connexion");
+        }
+
+        public static void clearResourceTable()
+        {
+            mainForm.resourceTable.Controls.Clear();
+            mainForm.resourceTable.RowCount = 0;
+        }
+
+        public static void addRowResourceTable(int id, string nom, int cellid)
+        {
+            Label lab1 = new Label();
+            Label lab2 = new Label();
+            Label lab3 = new Label();
+            lab1.Text = id.ToString();
+            lab2.Text = nom;
+            lab3.Text = cellid.ToString();
+            mainForm.resourceTable.RowCount = mainForm.resourceTable.RowCount + 1;
+            mainForm.resourceTable.Controls.Add(lab1, 0, mainForm.resourceTable.RowCount - 1);
+            mainForm.resourceTable.Controls.Add(lab2, 1, mainForm.resourceTable.RowCount - 1);
+            mainForm.resourceTable.Controls.Add(lab3, 2, mainForm.resourceTable.RowCount - 1);
+            mainForm.resourceTable.Height = mainForm.resourceTable.RowCount * 35;
         }
     }
 
@@ -291,6 +360,7 @@ namespace AbrakBot
     {
         public static void AppendText(this RichTextBox box, string text, Color color)
         {
+            
             box.SelectionStart = box.TextLength;
             box.SelectionLength = 0;
 

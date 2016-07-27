@@ -11,11 +11,11 @@ namespace AbrakBot
     {
 
         private static int CaseDuDeplacement;
-        private static int bloqueGA;
         public static void SeDeplacer(int caseFin)
         {
             Thread ThreadDeplac = new Thread(SeDeplace);
             CaseDuDeplacement = caseFin;
+            ThreadDeplac.Name = "DeplacementThread";
             ThreadDeplac.IsBackground = true;
             ThreadDeplac.Start();
 
@@ -25,11 +25,9 @@ namespace AbrakBot
         private static void SeDeplace()
         {
             int caseFin = CaseDuDeplacement;
-            if ((bloqueGA == 0))
+            if ((Globals.bloqueGA == 0))
             {
-                bloqueGA = 1;
-
-                Globals.writeToDebugBox("Moving from " + Globals.caseActuelle + " to " + caseFin + "\n", System.Drawing.Color.Orange);
+                Globals.bloqueGA = 1;
 
                 string path = "";
                 Pathfinding pather = new Pathfinding();
@@ -37,7 +35,7 @@ namespace AbrakBot
 
                 if (!string.IsNullOrEmpty(path))
                 {
-                    TCPPacketHandler.send("GA001" + path);
+                    Globals.game.send("GA001" + path);
                     Globals.isMoving = true;
 
                     if ((distance(Globals.caseActuelle, caseFin) < 6))
@@ -49,7 +47,7 @@ namespace AbrakBot
                         Globals.wait((long)distance(Globals.caseActuelle, caseFin) * 250);
                     }
 
-                    TCPPacketHandler.send("GKK0");
+                    Globals.game.send("GKK0");
 
 
                 }
@@ -58,15 +56,14 @@ namespace AbrakBot
                     Globals.writeToDebugBox("Error on path from " + Globals.caseActuelle + " to " + caseFin + " !\n", System.Drawing.Color.Red);
                     //TabUtilisateur.ListPlayers.Items.Clear();
                     //TabUtilisateur.ListMonster.Items.Clear();
-                    TCPPacketHandler.send("GI");
+                    Globals.game.send("GI");
 
                 }
 
                 Globals.wait(500);
 
-                bloqueGA = 0;
+                Globals.bloqueGA = 0;
                 Globals.isMoving = false;
-
             }
 
         }
@@ -75,6 +72,7 @@ namespace AbrakBot
         public static void SeDeplacerMap(int caseFin)
         {
             Thread ThreadMap = new Thread(SeDeplaceMap);
+            ThreadMap.Name = "ThreadMap";
             CaseDuDeplacement = caseFin;
             ThreadMap.IsBackground = true;
             ThreadMap.Start();
@@ -85,9 +83,9 @@ namespace AbrakBot
         private static void SeDeplaceMap()
         {
             int caseFin = CaseDuDeplacement;
-            if ((bloqueGA == 0))
+            if ((Globals.bloqueGA == 0))
             {
-                bloqueGA = 1;
+                Globals.bloqueGA = 1;
 
                 Random Rand = new Random();
 
@@ -97,8 +95,7 @@ namespace AbrakBot
                 }*/
 
                 Globals.wait(Rand.Next(500, 1000));
-
-                Globals.writeToDebugBox("Moving from " + Globals.caseActuelle + " to " + caseFin + "\n", System.Drawing.Color.Orange);
+                
 
                 string path = "";
                 Pathfinding pather = new Pathfinding();
@@ -107,7 +104,7 @@ namespace AbrakBot
 
                 if (!string.IsNullOrEmpty(path))
                 {
-                    TCPPacketHandler.send("GA001" + path);
+                    Globals.game.send("GA001" + path);
                     Globals.isMoving = true;
 
                     if ((distance(Globals.caseActuelle, caseFin) < 6))
@@ -119,21 +116,21 @@ namespace AbrakBot
                         Globals.wait((long)distance(Globals.caseActuelle, caseFin) * 250);
                     }
 
-                    TCPPacketHandler.send("GKK0");
+                    Globals.game.send("GKK0");
 
 
                 }
                 else
                 {
                     Globals.writeToDebugBox("Error on path from " + Globals.caseActuelle + " to " + caseFin + " !", System.Drawing.Color.Red);
-                    TCPPacketHandler.send("GI");
+                    Globals.game.send("GI");
 
                 }
 
                 Globals.wait(500);
 
                 //changeDeMap = 0;
-                bloqueGA = 0;
+                Globals.bloqueGA = 0;
 
             }
 
@@ -312,7 +309,6 @@ namespace AbrakBot
                             if ((id == Config.defaultCharacterId.ToString()))
                             {
                                 Globals.caseActuelle = cell;
-                                Globals.writeToDebugBox("Basic cell " + cell + " found", System.Drawing.Color.Orange);
                             }
 
                             int lvlCrypt = Int32.Parse(aligmentData[3]);

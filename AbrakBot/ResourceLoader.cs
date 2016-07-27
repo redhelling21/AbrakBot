@@ -43,6 +43,22 @@ namespace AbrakBot
                 Globals.sorts.Add(Int32.Parse(line.Split(':')[0]), line.Split(':')[1]);
             }
             file.Close();
+
+            file = new StreamReader(uri.LocalPath + "mapchangers.txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] splitLine = line.Split(';');
+                Globals.mapchangers.Add(Int32.Parse(splitLine[0]), new Int32[] { Int32.Parse(splitLine[1]), Int32.Parse(splitLine[2]), Int32.Parse(splitLine[3]), Int32.Parse(splitLine[4]) });
+            }
+            file.Close();
+
+            file = new StreamReader(uri.LocalPath + "harvestEquals.txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] splitLine = line.Split(':');
+                Globals.idResourcesTranslate.Add(Int32.Parse(splitLine[0]), Int32.Parse(splitLine[1]));
+            }
+            file.Close();
         }
     }
 }

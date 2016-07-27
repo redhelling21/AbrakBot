@@ -76,7 +76,26 @@ namespace AbrakBot
                     num++;
                 }
                 while (Globals.mapDataActuelle[num+1] != null && num <= 500);
-                //LoadRessources(Globals.mapDataActuelle);
+            if (Globals.mapchangers.ContainsKey(Globals.currentMapId))
+            {
+                if (Globals.tpHaut == -1)
+                {
+                    Globals.tpHaut = Globals.mapchangers[Globals.currentMapId][0];
+                }
+                if (Globals.tpBas == -1)
+                {
+                    Globals.tpBas = Globals.mapchangers[Globals.currentMapId][1];
+                }
+                if (Globals.tpGauche == -1)
+                {
+                    Globals.tpGauche = Globals.mapchangers[Globals.currentMapId][2];
+                }
+                if (Globals.tpDroite == -1)
+                {
+                    Globals.tpDroite = Globals.mapchangers[Globals.currentMapId][3];
+                }
+            }
+                LoadRessources(Globals.mapDataActuelle);
             
         }
 
@@ -113,17 +132,21 @@ namespace AbrakBot
             }
             reader.Close();
             int num = 0;
-            //perso.TabUtilisateur.ListeRessources.Items.Clear();
+            Globals.clearResourceTable();
+            Globals.actualResources.Clear();
             int num3 = 0;
             do
             {
+                if(spritesHandler[num3] == null)
+                {
+                    break;
+                }
                 if (list.Contains(spritesHandler[num3].layerObject2Num))
                 {
-                    //Affichage des ressources
-                    /*perso.TabUtilisateur.ListeRessources.Items.Add(list3[list.IndexOf(spritesHandler[num3].layerObject2Num)]);
-                    perso.TabUtilisateur.ListeRessources.Items[num].SubItems.Add(num3.ToString());
-                    perso.TabUtilisateur.ListeRessources.Items[num].SubItems.Add("Non coup\x00e9");*/
-                    spritesHandler[num3].object2Movement = list2[list.IndexOf(spritesHandler[num3].layerObject2Num)-1];
+                    Globals.actualResources.Add(num3, Globals.idResourcesTranslate[spritesHandler[num3].layerObject2Num]);
+                    Globals.addRowResourceTable(spritesHandler[num3].layerObject2Num, list3[list.IndexOf(spritesHandler[num3].layerObject2Num)], num3);
+                    //perso.TabUtilisateur.ListeRessources.Items[num].SubItems.Add("Non coup\x00e9");
+                    spritesHandler[num3].object2Movement = list2[list.IndexOf(spritesHandler[num3].layerObject2Num)];
                     num++;
                 }
                 num3++;

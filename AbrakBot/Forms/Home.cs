@@ -14,8 +14,10 @@ namespace AbrakBot.Forms
     {
         delegate void appendBoxDelegate(RichTextBox box, string text, Color color);
         delegate void updateTSLabelDelegate(ToolStrip ts, ToolStripStatusLabel label, string valeur);
-        delegate void updateBarDelegate(ToolStrip ts, ToolStripProgressBar bar, ToolStripStatusLabel label, int valeur);
-
+        delegate void updateLabelDelegate(Label label, string valeur);
+        delegate void updateTSBarDelegate(ToolStrip ts, ToolStripProgressBar bar, ToolStripStatusLabel label, int valeur);
+        delegate void updateTSButtonTextDelegate(ToolStrip ts, ToolStripButton button, string text);
+        delegate void updateBarDelegate(ProgressBar bar, int valeur);
         public Home()
         {
             InitializeComponent();
@@ -26,12 +28,14 @@ namespace AbrakBot.Forms
             if(connectButton.Text == "Connexion")
             {
                 connectButton.Text = "Déconnexion";
-                TCPPacketHandler.Handle(Config.serverIp, Config.serverPort);
+                Globals.connect = new TCPPacketHandler();
+                Globals.connect.Handle(Config.serverIp, Config.serverPort);
             }
             else
             {
                 connectButton.Text = "Connexion";
-                TCPPacketHandler.close();
+                Globals.connect.close();
+                Globals.connect.shouldStop = true;
             }
         }
 
@@ -42,7 +46,8 @@ namespace AbrakBot.Forms
 
         private void Home_FormClosed(object sender, FormClosedEventArgs e)
         {
-            TCPPacketHandler.close();
+            Globals.connect.close();
+            Globals.connect.shouldStop = true;
             Environment.Exit(0);
         }
 
@@ -51,21 +56,32 @@ namespace AbrakBot.Forms
 
         }
 
-        public static void appendBox(RichTextBox box, string text, Color color)
+        public void appendBox(RichTextBox box, string text, Color color)
         {
+            
             if (box.InvokeRequired)
             {
                 box.Invoke(new appendBoxDelegate(appendBox), new object[] { box, text, color });
                 return;
             }
             box.AppendText(text, color);
+            box.ScrollToCaret();
         }
 
-        public static void updateBar(ToolStrip ts, ToolStripProgressBar bar, ToolStripStatusLabel label, int valeur)
+        public static void updateTSButtonText(ToolStrip ts, ToolStripButton button, string text)
         {
             if (ts.InvokeRequired)
             {
-                ts.Invoke(new updateBarDelegate(updateBar), new object[] { ts, bar, label, valeur });
+                ts.Invoke(new updateTSButtonTextDelegate(updateTSButtonText), new object[] { ts, button, text });
+                return;
+            }
+        }
+
+        public static void updateTSBar(ToolStrip ts, ToolStripProgressBar bar, ToolStripStatusLabel label, int valeur)
+        {
+            if (ts.InvokeRequired)
+            {
+                ts.Invoke(new updateTSBarDelegate(updateTSBar), new object[] { ts, bar, label, valeur });
                 return;
             }
             bar.Value = valeur;
@@ -81,6 +97,26 @@ namespace AbrakBot.Forms
                 return;
             }
             label.Text = valeur;
+        }
+
+        public static void updateLabel(Label label, string valeur)
+        {
+            if (label.InvokeRequired)
+            {
+                label.Invoke(new updateLabelDelegate(updateLabel), new object[] { label, valeur });
+                return;
+            }
+            label.Text = valeur;
+        }
+
+        public static void updateBar(ProgressBar bar, int valeur)
+        {
+            if (bar.InvokeRequired)
+            {
+                bar.Invoke(new updateBarDelegate(updateBar), new object[] { bar, valeur });
+                return;
+            }
+            bar.Value = valeur;
         }
 
         private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -99,7 +135,10 @@ namespace AbrakBot.Forms
 
         private void testButton_Click(object sender, EventArgs e)
         {
-            Globals.doSomethingToTest();
+            foreach (KeyValuePair<Int32, Int32> entry in Globals.actualResources)
+            {
+                HarvestHandler.Recolter(entry.Key);
+            }
         }
 
         private void trajetsList_SelectedIndexChanged(object sender, EventArgs e)

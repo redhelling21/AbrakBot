@@ -12,15 +12,17 @@ namespace AbrakBot
 {
     class TCPPacketHandler
     {
-        private static TcpClient tcpclient ;
+        private TcpClient tcpclient ;
         //private static string Data = null;
-        
-        private static NetworkStream nstream = null;
-        private static Queue<string> pck_queue = new Queue<string>();
-        private static System.Threading.Thread rcv_th = null;
-        private static Config config;
+        public bool shouldStop = false;
+        private NetworkStream nstream = null;
+        private Queue<string> pck_queue = new Queue<string>();
+        private System.Threading.Thread rcv_th = null;
+        private Config config;
+        public ConnectHandler connectHandler = new ConnectHandler();
+        private PacketDispatcher dispatcher = new PacketDispatcher();
 
-        public static void Handle(string ip_s, int port)
+        public void Handle(string ip_s, int port)
         {
             tcpclient = new TcpClient();
             try
@@ -30,9 +32,11 @@ namespace AbrakBot
                 {
                     Environment.Exit(0);
                 }
+                shouldStop = false;
                 nstream = tcpclient.GetStream();
                 rcv_th = new System.Threading.Thread(new System.Threading.ThreadStart(rcv));
-
+                rcv_th.IsBackground = true;
+                rcv_th.Name = "PacketThread";
                 rcv_th.Start();
             }
             catch (Exception expt1)
@@ -41,11 +45,15 @@ namespace AbrakBot
             }
         }
 
-        public static void rcv()
+        public void rcv()
         {
             while (tcpclient.Connected)
             {
                 Thread.Sleep(200);
+                if (shouldStop)
+                {
+                    break;
+                }
                 Byte[] databyt = new Byte[tcpclient.Available];
                 try
                 {
@@ -68,7 +76,7 @@ namespace AbrakBot
             }
         }
 
-        public static void send(string DataS)
+        public void send(string DataS)
         {
 
             DataS += "\n\0"; //on rajoute les caractères "0A" et "00" à la fin des données
@@ -80,17 +88,17 @@ namespace AbrakBot
             Globals.writeToDebugBox("snd : " + DataS + "\n", System.Drawing.Color.Violet);
         }
 
-         public static void ReceiveData()
+         public void ReceiveData()
         {
             if (!Globals.isConnected)
             {
-                ConnectHandler.ReceiveData(pck_queue);
+                connectHandler.ReceiveData(pck_queue);
             } else {
-                PacketDispatcher.ReceiveData(pck_queue);
+                dispatcher.ReceiveData(pck_queue);
             }
         }
 
-        public static void close()
+        public void close()
         {
             if (tcpclient != null && tcpclient.Connected)
             {

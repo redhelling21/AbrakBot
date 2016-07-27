@@ -11,11 +11,11 @@ namespace AbrakBot
 {
     class ConnectHandler
     {
-        private static string GUID = "";
-        private static string server_id = Config.defaultServerId.HasValue ? Config.defaultServerId.Value.ToString(CultureInfo.InvariantCulture) : "";
-        private static string character_id = Config.defaultCharacterId.HasValue ? Config.defaultCharacterId.Value.ToString(CultureInfo.InvariantCulture) : "";
+        public string GUID = "";
+        private string server_id = Config.defaultServerId.HasValue ? Config.defaultServerId.Value.ToString(CultureInfo.InvariantCulture) : "";
+        private string character_id = Config.defaultCharacterId.HasValue ? Config.defaultCharacterId.Value.ToString(CultureInfo.InvariantCulture) : "";
 
-        public static void ReceiveData(Queue<string> pck_queue)
+        public void ReceiveData(Queue<string> pck_queue)
         {
             if (pck_queue.Count != 0)
             {
@@ -43,9 +43,9 @@ namespace AbrakBot
                                 Thread.Sleep(100);
 
                                 key = Data.Substring(2, 32);
-                                TCPPacketHandler.send("1.29.1");
-                                TCPPacketHandler.send(Config.username + "\n" + CryptPassword(key, pass));
-                                TCPPacketHandler.send("Af");
+                                Globals.connect.send("1.29.1");
+                                Globals.connect.send(Config.username + "\n" + CryptPassword(key, pass));
+                                Globals.connect.send("Af");
                                 break;
 
                             case "Ax": //Reception de la liste des serveurs
@@ -65,13 +65,13 @@ namespace AbrakBot
                                 Globals.writeToMainBox("Connecté avec succès\n", Color.Green);
                                 Globals.writeToDebugBox("Connecté avec succès\n", Color.Green);
                                 Globals.writeToMainBox("Serveur choisi : n°" + server_id + "\n", Color.Green);
-                                TCPPacketHandler.send("AX" + server_id);
+                                Globals.connect.send("AX" + server_id);
                                 break;
 
                             case "Ad": //?
                                 Thread.Sleep(100);
 
-                                TCPPacketHandler.send("Ax");
+                                Globals.connect.send("Ax");
                                 break;
 
                             case "AY": //Reception des infos de connexion du serveur choisi
@@ -84,11 +84,13 @@ namespace AbrakBot
                                 Globals.writeToDebugBox("IP : " + ip + "\n", Color.Purple);
                                 Globals.writeToDebugBox("Port : " + port + "\n", Color.Purple);
                                 Globals.writeToDebugBox("GUID : " + GUID + "\n", Color.Purple);
-
-                                TCPPacketHandler.close();
+                                Globals.game = new TCPPacketHandler();
+                                Globals.game.connectHandler.GUID = GUID;
+                                Globals.connect.close();
+                                Globals.connect.shouldStop = true;
                                 Globals.writeToMainBox("Connexion au serveur de jeu...\n", Color.Green);
                                 Globals.writeToDebugBox("Connexion au serveur de jeu...\n", Color.Green);
-                                TCPPacketHandler.Handle(ip, Int32.Parse(port));
+                                Globals.game.Handle(ip, Int32.Parse(port));
                              
                                 Thread.Sleep(100);
                                 break;
@@ -96,22 +98,22 @@ namespace AbrakBot
                             case "HG"://?
                                 Thread.Sleep(100);
 
-                                TCPPacketHandler.send("AT" + GUID);
+                                Globals.game.send("AT" + GUID);
                                 break;
 
                             case "AT"://?
                                 Thread.Sleep(100);
 
-                                TCPPacketHandler.send("Ak0");
-                                TCPPacketHandler.send("AV");
+                                Globals.game.send("Ak0");
+                                Globals.game.send("AV");
                                 break;
 
                             case "AV"://?
                                 Thread.Sleep(100);
 
-                                TCPPacketHandler.send("Agfr");
-                                TCPPacketHandler.send("AL");
-                                TCPPacketHandler.send("Af");
+                                Globals.game.send("Agfr");
+                                Globals.game.send("AL");
+                                Globals.game.send("Af");
                                 break;
 
                             case "AL"://Reception de la liste des persos
@@ -133,8 +135,8 @@ namespace AbrakBot
                                     Console.WriteLine("Quel perso ?");
                                     character_id = Console.ReadLine();
                                 }
-                                TCPPacketHandler.send("AS" + character_id);
-                                TCPPacketHandler.send("Af");
+                                Globals.game.send("AS" + character_id);
+                                Globals.game.send("Af");
 
                                 break;
 
@@ -183,12 +185,19 @@ namespace AbrakBot
                                     case "Ew":
                                         Globals.writeToMainBox("Serveur plein\n", Color.Firebrick);
                                         break;
+                                    case "K0":
+                                        break;
                                     default:
                                         Globals.writeToMainBox("Une erreur inconnue s'est produite lors de la connexion\n", Color.Firebrick);
                                         break;
                                 }
-                                TCPPacketHandler.close();
-                                Globals.disconnect();
+                                if(Data.Substring(2, 2) != "K0")
+                                {
+                                    Globals.connect.close();
+                                    Globals.connect.shouldStop = true;
+                                    Globals.disconnect();
+                                }
+                                
                                 break;
                            
                             default:
@@ -201,7 +210,7 @@ namespace AbrakBot
             }
         }
 
-        static string CryptPassword(string Key, string Password)
+        private string CryptPassword(string Key, string Password)
         {
             char[] chArray = new char[] {
                    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
@@ -222,7 +231,7 @@ namespace AbrakBot
             return str;
         }
 
-        static string CryptIp(string sExtraData)
+        private string CryptIp(string sExtraData)
         {
             string loc8, loc9, loc7, loc5 = "";
             loc8 = sExtraData.Substring(0, 8);

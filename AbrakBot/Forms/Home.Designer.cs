@@ -58,6 +58,26 @@
             this.mainTab = new System.Windows.Forms.TabPage();
             this.sendMessageBox = new System.Windows.Forms.TextBox();
             this.mainBox = new System.Windows.Forms.RichTextBox();
+            this.resourcesTab = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.resourceTable = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.metierBar1 = new System.Windows.Forms.ProgressBar();
+            this.metierBar2 = new System.Windows.Forms.ProgressBar();
+            this.metierBar3 = new System.Windows.Forms.ProgressBar();
+            this.metierLabel1 = new System.Windows.Forms.Label();
+            this.metierLabel2 = new System.Windows.Forms.Label();
+            this.metierLabel3 = new System.Windows.Forms.Label();
+            this.metierLabelLvl1 = new System.Windows.Forms.Label();
+            this.metierLabelLvl2 = new System.Windows.Forms.Label();
+            this.metierLabelLvl3 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.invtab = new System.Windows.Forms.TabPage();
             this.invTable = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
@@ -68,10 +88,18 @@
             this.debugBox = new System.Windows.Forms.RichTextBox();
             this.tabImages = new System.Windows.Forms.ImageList(this.components);
             this.explTrajets = new System.Windows.Forms.OpenFileDialog();
+            this.resourcesCheckBox = new System.Windows.Forms.CheckedListBox();
             this.toolStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.mainTabPanel.SuspendLayout();
             this.mainTab.SuspendLayout();
+            this.resourcesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.invtab.SuspendLayout();
             this.invTable.SuspendLayout();
             this.debugTab.SuspendLayout();
@@ -126,7 +154,7 @@
             // 
             // remoteControlButton
             // 
-            this.remoteControlButton.Image = ((System.Drawing.Image)(resources.GetObject("remoteControlButton.Image")));
+            this.remoteControlButton.Image = global::AbrakBot.Properties.Resources.console;
             this.remoteControlButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.remoteControlButton.Name = "remoteControlButton";
             this.remoteControlButton.Size = new System.Drawing.Size(109, 22);
@@ -279,6 +307,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainTabPanel.Controls.Add(this.mainTab);
+            this.mainTabPanel.Controls.Add(this.resourcesTab);
             this.mainTabPanel.Controls.Add(this.invtab);
             this.mainTabPanel.Controls.Add(this.reportTab);
             this.mainTabPanel.Controls.Add(this.debugTab);
@@ -327,6 +356,277 @@
             this.mainBox.TabIndex = 0;
             this.mainBox.Text = "";
             // 
+            // resourcesTab
+            // 
+            this.resourcesTab.Controls.Add(this.splitContainer1);
+            this.resourcesTab.ImageIndex = 4;
+            this.resourcesTab.Location = new System.Drawing.Point(4, 23);
+            this.resourcesTab.Name = "resourcesTab";
+            this.resourcesTab.Padding = new System.Windows.Forms.Padding(3);
+            this.resourcesTab.Size = new System.Drawing.Size(943, 353);
+            this.resourcesTab.TabIndex = 3;
+            this.resourcesTab.Text = "Ressources";
+            this.resourcesTab.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 3);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.resourceTable);
+            this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.resourcesCheckBox);
+            this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel2);
+            this.splitContainer1.Panel2.Controls.Add(this.label9);
+            this.splitContainer1.Panel2.Controls.Add(this.label8);
+            this.splitContainer1.Size = new System.Drawing.Size(943, 350);
+            this.splitContainer1.SplitterDistance = 530;
+            this.splitContainer1.TabIndex = 2;
+            // 
+            // resourceTable
+            // 
+            this.resourceTable.BackColor = System.Drawing.Color.Transparent;
+            this.resourceTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.resourceTable.ColumnCount = 4;
+            this.resourceTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.resourceTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.resourceTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.resourceTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.resourceTable.Location = new System.Drawing.Point(6, 41);
+            this.resourceTable.MaximumSize = new System.Drawing.Size(800, 390);
+            this.resourceTable.MinimumSize = new System.Drawing.Size(381, 0);
+            this.resourceTable.Name = "resourceTable";
+            this.resourceTable.RowCount = 1;
+            this.resourceTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.resourceTable.Size = new System.Drawing.Size(434, 35);
+            this.resourceTable.TabIndex = 3;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.DimGray;
+            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(434, 32);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(306, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 32);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Cell";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(371, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 32);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Etat";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(25, 32);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Id";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(68, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(45, 32);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Nom";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel2.Controls.Add(this.metierBar1, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.metierBar2, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.metierBar3, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.metierLabel1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.metierLabel2, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.metierLabel3, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.metierLabelLvl1, 2, 0);
+            this.tableLayoutPanel2.Controls.Add(this.metierLabelLvl2, 2, 1);
+            this.tableLayoutPanel2.Controls.Add(this.metierLabelLvl3, 2, 2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(33, 41);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(329, 100);
+            this.tableLayoutPanel2.TabIndex = 2;
+            // 
+            // metierBar1
+            // 
+            this.metierBar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metierBar1.Location = new System.Drawing.Point(68, 3);
+            this.metierBar1.Name = "metierBar1";
+            this.metierBar1.Size = new System.Drawing.Size(207, 27);
+            this.metierBar1.TabIndex = 0;
+            // 
+            // metierBar2
+            // 
+            this.metierBar2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metierBar2.Location = new System.Drawing.Point(68, 36);
+            this.metierBar2.Name = "metierBar2";
+            this.metierBar2.Size = new System.Drawing.Size(207, 27);
+            this.metierBar2.TabIndex = 1;
+            // 
+            // metierBar3
+            // 
+            this.metierBar3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metierBar3.Location = new System.Drawing.Point(68, 69);
+            this.metierBar3.Name = "metierBar3";
+            this.metierBar3.Size = new System.Drawing.Size(207, 28);
+            this.metierBar3.TabIndex = 2;
+            // 
+            // metierLabel1
+            // 
+            this.metierLabel1.AutoSize = true;
+            this.metierLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metierLabel1.Location = new System.Drawing.Point(3, 0);
+            this.metierLabel1.Name = "metierLabel1";
+            this.metierLabel1.Size = new System.Drawing.Size(59, 33);
+            this.metierLabel1.TabIndex = 3;
+            this.metierLabel1.Text = "?";
+            this.metierLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metierLabel2
+            // 
+            this.metierLabel2.AutoSize = true;
+            this.metierLabel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metierLabel2.Location = new System.Drawing.Point(3, 33);
+            this.metierLabel2.Name = "metierLabel2";
+            this.metierLabel2.Size = new System.Drawing.Size(59, 33);
+            this.metierLabel2.TabIndex = 4;
+            this.metierLabel2.Text = "?";
+            this.metierLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metierLabel3
+            // 
+            this.metierLabel3.AutoSize = true;
+            this.metierLabel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metierLabel3.Location = new System.Drawing.Point(3, 66);
+            this.metierLabel3.Name = "metierLabel3";
+            this.metierLabel3.Size = new System.Drawing.Size(59, 34);
+            this.metierLabel3.TabIndex = 5;
+            this.metierLabel3.Text = "?";
+            this.metierLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metierLabelLvl1
+            // 
+            this.metierLabelLvl1.AutoSize = true;
+            this.metierLabelLvl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metierLabelLvl1.Location = new System.Drawing.Point(281, 0);
+            this.metierLabelLvl1.Name = "metierLabelLvl1";
+            this.metierLabelLvl1.Size = new System.Drawing.Size(45, 33);
+            this.metierLabelLvl1.TabIndex = 6;
+            this.metierLabelLvl1.Text = "Lvl. 0";
+            this.metierLabelLvl1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metierLabelLvl2
+            // 
+            this.metierLabelLvl2.AutoSize = true;
+            this.metierLabelLvl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metierLabelLvl2.Location = new System.Drawing.Point(281, 33);
+            this.metierLabelLvl2.Name = "metierLabelLvl2";
+            this.metierLabelLvl2.Size = new System.Drawing.Size(45, 33);
+            this.metierLabelLvl2.TabIndex = 7;
+            this.metierLabelLvl2.Text = "Lvl. 0";
+            this.metierLabelLvl2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metierLabelLvl3
+            // 
+            this.metierLabelLvl3.AutoSize = true;
+            this.metierLabelLvl3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.metierLabelLvl3.Location = new System.Drawing.Point(281, 66);
+            this.metierLabelLvl3.Name = "metierLabelLvl3";
+            this.metierLabelLvl3.Size = new System.Drawing.Size(45, 34);
+            this.metierLabelLvl3.TabIndex = 8;
+            this.metierLabelLvl3.Text = "Lvl. 0";
+            this.metierLabelLvl3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Gray;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(12, 167);
+            this.label9.MinimumSize = new System.Drawing.Size(370, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(370, 20);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Récolter";
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Gray;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(12, 9);
+            this.label8.MinimumSize = new System.Drawing.Size(370, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(370, 20);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Métiers";
+            // 
             // invtab
             // 
             this.invtab.Controls.Add(this.invTable);
@@ -354,11 +654,13 @@
             this.invTable.Controls.Add(this.label1, 0, 0);
             this.invTable.Controls.Add(this.label2, 1, 0);
             this.invTable.Location = new System.Drawing.Point(25, 26);
+            this.invTable.MaximumSize = new System.Drawing.Size(890, 390);
+            this.invTable.MinimumSize = new System.Drawing.Size(890, 65);
             this.invTable.Name = "invTable";
             this.invTable.RowCount = 2;
             this.invTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.invTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.invTable.Size = new System.Drawing.Size(890, 305);
+            this.invTable.Size = new System.Drawing.Size(890, 65);
             this.invTable.TabIndex = 0;
             // 
             // label3
@@ -442,11 +744,20 @@
             this.tabImages.Images.SetKeyName(1, "backpack_icon.ico");
             this.tabImages.Images.SetKeyName(2, "debug-bug-icon.png");
             this.tabImages.Images.SetKeyName(3, "graph.png");
+            this.tabImages.Images.SetKeyName(4, "wheat (1).png");
             // 
             // explTrajets
             // 
             this.explTrajets.FileName = "openFileDialog1";
             this.explTrajets.InitialDirectory = "Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)";
+            // 
+            // resourcesCheckBox
+            // 
+            this.resourcesCheckBox.FormattingEnabled = true;
+            this.resourcesCheckBox.Location = new System.Drawing.Point(16, 192);
+            this.resourcesCheckBox.Name = "resourcesCheckBox";
+            this.resourcesCheckBox.Size = new System.Drawing.Size(343, 154);
+            this.resourcesCheckBox.TabIndex = 3;
             // 
             // Home
             // 
@@ -456,6 +767,7 @@
             this.Controls.Add(this.mainTabPanel);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Home";
             this.Text = "AbrakBot v0.1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Home_FormClosed);
@@ -467,6 +779,16 @@
             this.mainTabPanel.ResumeLayout(false);
             this.mainTab.ResumeLayout(false);
             this.mainTab.PerformLayout();
+            this.resourcesTab.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.invtab.ResumeLayout(false);
             this.invTable.ResumeLayout(false);
             this.invTable.PerformLayout();
@@ -516,5 +838,26 @@
         public System.Windows.Forms.ToolStripComboBox trajetsList;
         private System.Windows.Forms.ToolStripButton remoteControlButton;
         public System.Windows.Forms.ToolStripButton connectButton;
+        private System.Windows.Forms.TabPage resourcesTab;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        public System.Windows.Forms.TableLayoutPanel resourceTable;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Label label9;
+        public System.Windows.Forms.CheckedListBox resourcesCheckBox;
+        public System.Windows.Forms.ProgressBar metierBar1;
+        public System.Windows.Forms.ProgressBar metierBar2;
+        public System.Windows.Forms.ProgressBar metierBar3;
+        public System.Windows.Forms.Label metierLabel1;
+        public System.Windows.Forms.Label metierLabel2;
+        public System.Windows.Forms.Label metierLabel3;
+        public System.Windows.Forms.Label metierLabelLvl1;
+        public System.Windows.Forms.Label metierLabelLvl2;
+        public System.Windows.Forms.Label metierLabelLvl3;
     }
 }

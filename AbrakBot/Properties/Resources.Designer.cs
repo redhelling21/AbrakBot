@@ -93,6 +93,16 @@ namespace AbrakBot.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap console {
+            get {
+                object obj = ResourceManager.GetObject("console", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap down {
             get {
                 object obj = ResourceManager.GetObject("down", resourceCulture);

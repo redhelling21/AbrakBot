@@ -20,6 +20,8 @@ namespace AbrakBot
         private static int _pods;
         private static int _pods_max;
         private static string _pseudo;
+        public static List<Int32> harvestables = new List<Int32>();
+        public static List<Metier> metiers = new List<Metier>();
         public static List<Item> inventaire = new List<Item>();
 
         public static int level

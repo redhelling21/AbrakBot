@@ -95,8 +95,10 @@
       <DependentUpon>Remote.cs</DependentUpon>
     </Compile>
     <Compile Include="Globals.cs" />
+    <Compile Include="HarvestHandler.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="MapHandler.cs" />
+    <Compile Include="Metier.cs" />
     <Compile Include="MoveHandler.cs" />
     <Compile Include="PacketDispatcher.cs" />
     <Compile Include="Pathfinding.cs" />
@@ -197,6 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\down-chevron.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\console.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

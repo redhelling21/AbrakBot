@@ -183,7 +183,6 @@ namespace AbrakBot
                     return pathing;
                 current = pathCell[i];
                 child = pathCell[i + 1];
-                Globals.writeToDebugBox(child.ToString() + " -> ", System.Drawing.Color.Orange);
                 pathing += getOrientation(current, child) + Globals.cases[child];
             }
 

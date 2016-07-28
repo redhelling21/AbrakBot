@@ -1,0 +1,34 @@
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\MainWindow.g.cs
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\App.g.cs
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\AbrakBotWPF_MarkupCompile.cache
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\AbrakBotWPF_MarkupCompile.lref
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\AbrakBotWPF.exe.config
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\AbrakBotWPF.exe
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\AbrakBotWPF.pdb
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\MainWindow.baml
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\AbrakBotWPF.g.resources
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\AbrakBotWPF.Properties.Resources.resources
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\AbrakBotWPF.csproj.GenerateResource.Cache
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\AbrakBotWPF.exe
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\AbrakBotWPF.pdb
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\GalaSoft.MvvmLight.dll
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\GalaSoft.MvvmLight.Extras.dll
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\GalaSoft.MvvmLight.Platform.dll
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\System.Windows.Interactivity.dll
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\GalaSoft.MvvmLight.pdb
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\GalaSoft.MvvmLight.xml
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\GalaSoft.MvvmLight.Extras.xml
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\AbrakBotWPF.csprojResolveAssemblyReference.cache
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\GeneratedInternalTypeHelper.g.cs
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\obj\Debug\App.baml
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\Newtonsoft.Json.dll
+d:\documents\visual studio 2015\Projects\AbrakBotWPF\AbrakBotWPF\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\bin\Debug\AbrakBotWPF.exe.config
+C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.exe
+C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.pdb

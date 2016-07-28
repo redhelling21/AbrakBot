@@ -89,42 +89,10 @@ namespace AbrakBotWPF.Model.Services
             //Home.updateTSLabel(mainForm.statusStrip, mainForm.mapCoordLabel, coords);
         }
 
-        public void updateNomMetiers()
+        public void updateMetiers()
         {
-            /*switch (Player.metiers.Count)
-            {
-                case 1:
-                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[0].nom);
-                    break;
-                case 2:
-                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[0].nom);
-                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[1].nom);
-                    break;
-                case 3:
-                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[0].nom);
-                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[1].nom);
-                    Home.updateLabel(mainForm.metierLabel1, Player.metiers[2].nom);
-                    break;
-            }*/
-        }
-
-        public void updateXPMetiers()
-        {
-            /*if(Player.metiers.Count >= 1)
-            {
-                Home.updateLabel(mainForm.metierLabelLvl1, "Lvl. " + Player.metiers[0].level.ToString());
-                Home.updateBar(mainForm.metierBar1, (int)Math.Round(((float)(Player.metiers[0].xp - Player.metiers[0].xp_min) / (Player.metiers[0].xp_max - Player.metiers[0].xp_min)) * 100));
-            }
-            if (Player.metiers.Count >= 2)
-            {
-                Home.updateLabel(mainForm.metierLabelLvl2, "Lvl. " + Player.metiers[1].level.ToString());
-                Home.updateBar(mainForm.metierBar2, (int)Math.Round(((float)(Player.metiers[1].xp - Player.metiers[1].xp_min) / (Player.metiers[1].xp_max - Player.metiers[2].xp_min)) * 100));
-            }
-            if (Player.metiers.Count >= 3)
-            {
-                Home.updateLabel(mainForm.metierLabelLvl3, "Lvl. " + Player.metiers[2].level.ToString());
-                Home.updateBar(mainForm.metierBar3, (int)Math.Round(((float)(Player.metiers[2].xp - Player.metiers[2].xp_min) / (Player.metiers[2].xp_max - Player.metiers[2].xp_min)) * 100));
-            }*/
+            var msg = new PlayerJobsChangedMessage() { metiers = player.metiers };
+            Messenger.Default.Send<PlayerJobsChangedMessage>(msg);
         }
 
         public void sendMessage(string message)

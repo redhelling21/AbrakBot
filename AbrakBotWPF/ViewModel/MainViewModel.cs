@@ -5,22 +5,12 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace AbrakBotWPF.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
+    
     public class MainViewModel : ViewModelBase
     {
         //COMMANDS
@@ -30,19 +20,10 @@ namespace AbrakBotWPF.ViewModel
         public RelayCommand LaunchCommand { get; private set; }
         public Globals globals;
         public MainWindow window;
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
+        
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+            
 
             Messenger.Default.Register<AddLineToBoxMessage>
             (
@@ -53,6 +34,11 @@ namespace AbrakBotWPF.ViewModel
             (
                  this,
                  (statChangedMessage) => ReceivePlayerStatChanged(statChangedMessage)
+            );
+            Messenger.Default.Register<PlayerJobsChangedMessage>
+            (
+                 this,
+                 (jobsChangedMessage) => ReceivePlayerJobsChanged(jobsChangedMessage)
             );
             ConnectCommand = new RelayCommand(connect);
             TelecommandeCommand = new RelayCommand(telecommande);
@@ -68,6 +54,124 @@ namespace AbrakBotWPF.ViewModel
             globals.InitializeCells();
         }
 
+        #region RESSOURCES TAB
+
+        #region METIER 1
+        private string _metierBlockText1 = "?";
+        public string metierBlockText1
+        {
+            get { return _metierBlockText1; }
+            set
+            {
+                if (_metierBlockText1 == value) return;
+                _metierBlockText1 = value;
+                RaisePropertyChanged("metierBlockText1");
+            }
+        }
+
+        private string _metierBar1;
+        public string metierBar1
+        {
+            get { return _metierBar1; }
+            set
+            {
+                if (_metierBar1 == value) return;
+                _metierBar1 = value;
+                RaisePropertyChanged("metierBar1");
+            }
+        }
+
+        private string _metierLvl1 = "Lvl. 0";
+        public string metierLvl1
+        {
+            get { return _metierLvl1; }
+            set
+            {
+                if (_metierLvl1 == value) return;
+                _metierLvl1 = value;
+                RaisePropertyChanged("metierLvl1");
+            }
+        }
+        #endregion
+
+        #region METIER 2
+        private string _metierBlockText2 = "?";
+        public string metierBlockText2
+        {
+            get { return _metierBlockText2; }
+            set
+            {
+                if (_metierBlockText2 == value) return;
+                _metierBlockText2 = value;
+                RaisePropertyChanged("metierBlockText2");
+            }
+        }
+
+        private string _metierBar2;
+        public string metierBar2
+        {
+            get { return _metierBar2; }
+            set
+            {
+                if (_metierBar2 == value) return;
+                _metierBar2 = value;
+                RaisePropertyChanged("metierBar2");
+            }
+        }
+
+        private string _metierLvl2 = "Lvl. 0";
+        public string metierLvl2
+        {
+            get { return _metierLvl2; }
+            set
+            {
+                if (_metierLvl2 == value) return;
+                _metierLvl2 = value;
+                RaisePropertyChanged("metierLvl2");
+            }
+        }
+        #endregion
+
+        #region METIER 3
+        private string _metierBlockText3 = "?";
+        public string metierBlockText3
+        {
+            get { return _metierBlockText3; }
+            set
+            {
+                if (_metierBlockText3 == value) return;
+                _metierBlockText3 = value;
+                RaisePropertyChanged("metierBlockText3");
+            }
+        }
+
+        private string _metierBar3;
+        public string metierBar3
+        {
+            get { return _metierBar3; }
+            set
+            {
+                if (_metierBar3 == value) return;
+                _metierBar3 = value;
+                RaisePropertyChanged("metierBar3");
+            }
+        }
+
+        private string _metierLvl3 = "Lvl. 0";
+        public string metierLvl3
+        {
+            get { return _metierLvl3; }
+            set
+            {
+                if (_metierLvl3 == value) return;
+                _metierLvl3 = value;
+                RaisePropertyChanged("metierLvl3");
+            }
+        }
+        #endregion
+
+        #endregion
+
         //TRAJETS
         private string _selectedTrajet;
         public string selectedTrajet
@@ -82,7 +186,20 @@ namespace AbrakBotWPF.ViewModel
             }
         }
 
+        //RESSOURCES RECOLTABLES
+        private List<string> _harvestables;
+        public List<string> harvestables
+        {
+            get { return _harvestables; }
+            set
+            {
+                if (_harvestables == value) return;
+                _harvestables = value;
+                RaisePropertyChanged("harvestables");
+            }
+        }
 
+        #region STATUSBAR
         //XP
         private int _barXP = 0;
         public int barXP
@@ -223,6 +340,9 @@ namespace AbrakBotWPF.ViewModel
             }
         }
 
+        #endregion
+
+        #region TEXTBUTTONS
         //TEXT CONNECT BUTTON
         private string _connectButtonText = "Connexion";
         public string connectButtonText
@@ -246,6 +366,9 @@ namespace AbrakBotWPF.ViewModel
                 RaisePropertyChanged("startButtonText");
             }
         }
+        #endregion
+
+        #region RECEIVEMESSAGE FUNCTIONS
 
         private void ReceiveAddLineToBox(AddLineToBoxMessage action)
         {
@@ -297,6 +420,31 @@ namespace AbrakBotWPF.ViewModel
             }
         }
 
+        private void ReceivePlayerJobsChanged(PlayerJobsChangedMessage action)
+        {
+            if(action.metiers.Count >= 1)
+            {
+                metierBlockText1 = (action.metiers[0].nom != "") ? action.metiers[0].nom : "Metier inconnu"; //Temporaire
+                metierBar1 = ((int)Math.Round(((float)(action.metiers[0].xp - action.metiers[0].xp_min) / (action.metiers[0].xp_max - action.metiers[0].xp_min)) * 100)).ToString();
+                metierLvl1 = "Lvl. " + action.metiers[0].level.ToString();
+            }
+            if (action.metiers.Count >= 2)
+            {
+                metierBlockText2 = (action.metiers[1].nom != "") ? action.metiers[1].nom : "Metier inconnu"; //Temporaire
+                metierBar2 = ((int)Math.Round(((float)(action.metiers[1].xp - action.metiers[1].xp_min) / (action.metiers[0].xp_max - action.metiers[1].xp_min)) * 100)).ToString();
+                metierLvl2 = "Lvl. " + action.metiers[1].level.ToString();
+            }
+            if (action.metiers.Count >= 3)
+            {
+                metierBlockText3 = (action.metiers[2].nom != "") ? action.metiers[2].nom : "Metier inconnu"; //Temporaire
+                metierBar3 = ((int)Math.Round(((float)(action.metiers[2].xp - action.metiers[2].xp_min) / (action.metiers[0].xp_max - action.metiers[2].xp_min)) * 100)).ToString();
+                metierLvl3 = "Lvl. " + action.metiers[2].level.ToString();
+            }
+        }
+
+        #endregion
+
+        #region COMMANDS FUNCTIONS
         private void connect()
         {
             if (connectButtonText == "Connexion")
@@ -338,5 +486,6 @@ namespace AbrakBotWPF.ViewModel
                 globals.isRunning = false;
             }
         }
+        #endregion
     }
 }

@@ -48,7 +48,7 @@
             <StatusBarItem Height="25" VerticalAlignment="Top" Margin="15,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/hearts.png" Margin="0,0,5,0" />
-                    <ProgressBar x:Name="pdvBar" Height="15" Width="100" Foreground="#FFFF2C2C" Value="{Binding barPDV}"/>
+                    <ProgressBar x:Name="pdvBar" Height="15" Width="100" Foreground="#FFFF4242" Value="{Binding barPDV}" BorderBrush="#FFB8B8B8"/>
                     <TextBlock x:Name="pdvLabel" Text="{Binding percentPDV}" Margin="5,0,0,0" />
                 </StackPanel>
             </StatusBarItem>
@@ -56,21 +56,21 @@
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/favorite.png" Margin="0,0,5,0" />
                     <TextBlock x:Name="lvlLabel" Text="{Binding lvl}" Margin="5,0,5,0" />
-                    <ProgressBar x:Name="xpBar" Height="15" Width="100" Value="{Binding barXP}" Foreground="#FFFFE22C"/>
+                    <ProgressBar x:Name="xpBar" Height="15" Width="100" Value="{Binding barXP}" Foreground="#FFFFE753"/>
                     <TextBlock x:Name="xpLabel" Text="{Binding percentXP}" Margin="5,0,0,0" />
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem Height="25" VerticalAlignment="Top" Margin="15,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/balance.png" Margin="0,0,5,0" />
-                    <ProgressBar x:Name="podsBar" Height="15" Width="100" Value="{Binding barPods}" Foreground="#FF5F3800"/>
+                    <ProgressBar x:Name="podsBar" Height="15" Width="100" Value="{Binding barPods}" Foreground="#FF61451E"/>
                     <TextBlock x:Name="podsLabel" Text="{Binding percentPods}" Margin="5,0,0,0" />
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem Height="25" VerticalAlignment="Top" Margin="15,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/bolt.png" Margin="0,0,5,0" />
-                    <ProgressBar x:Name="enerBar" Height="15" Width="100" Value="{Binding barEner}" Foreground="#FF2C8CFF"/>
+                    <ProgressBar x:Name="enerBar" Height="15" Width="100" Value="{Binding barEner}" Foreground="#FF65ABFF"/>
                     <TextBlock x:Name="enerLabel" Text="{Binding percentEner}" Margin="5,0,0,0" />
                 </StackPanel>
             </StatusBarItem>
@@ -91,7 +91,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="mainBox" Height="303" VerticalAlignment="Top">
+                    <RichTextBox x:Name="mainBox" Height="303" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0"/>
@@ -109,7 +109,42 @@
                         <TextBlock Text="Ressources" />
                     </StackPanel>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="476*"/>
+                        <ColumnDefinition Width="477*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="323" Width="476">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn CanUserResize="False" Header="ID" Width="15*"/>
+                            <DataGridTextColumn Binding="{x:Null}" CanUserResize="False" ClipboardContentBinding="{x:Null}" Header="Nom" Width="60*"/>
+                            <DataGridTextColumn Binding="{x:Null}" CanUserResize="False" ClipboardContentBinding="{x:Null}" Header="Case" Width="10*"/>
+                            <DataGridTextColumn Binding="{x:Null}" CanUserResize="False" ClipboardContentBinding="{x:Null}" Header="Etat" Width="15*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid Grid.Column="1" HorizontalAlignment="Center" Height="131" VerticalAlignment="Top" Width="364" Margin="56,0,57,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="33*"/>
+                            <RowDefinition Height="33*"/>
+                            <RowDefinition Height="33*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="50*"/>
+                            <ColumnDefinition Width="20*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0" Grid.RowSpan="1" TextWrapping="Wrap" Text="{Binding metierBlockText1}" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="textBlock1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="{Binding metierBlockText2}" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="textBlock2" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="{Binding metierBlockText3}" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="textBlock3" Grid.Column="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding metierLvl1}" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="textBlock4" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="{Binding metierLvl2}" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="textBlock5" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="{Binding metierLvl3}" VerticalAlignment="Center"/>
+                        <ProgressBar Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="170" Value="{Binding metierBar1}"/>
+                        <ProgressBar Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="170" Value="{Binding metierBar2}" Margin="6,14,6,10" Grid.Row="1" Panel.ZIndex="1"/>
+                        <ProgressBar Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="170" Value="{Binding metierBar3}" Grid.Row="2"/>
+                    </Grid>
+                    <ListBox x:Name="listBox" Grid.Column="1" HorizontalAlignment="Center" Height="164" VerticalAlignment="Bottom" Width="364" Margin="56,0,57,10"/>
+                </Grid>
             </TabItem>
             <TabItem>
                 <TabItem.Header>
@@ -137,7 +172,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="debugBox" Height="303" VerticalAlignment="Top">
+                    <RichTextBox x:Name="debugBox" Height="303" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0"/>

@@ -133,7 +133,7 @@ namespace AbrakBotWPF.Model.Services
                                     }
                                     index++;
                                 }
-                                globals.updateNomMetiers();
+                                globals.updateMetiers();
                                 break;
                             case "JX":
                                 string[] metierXPArray = Data.Split('|');
@@ -156,7 +156,7 @@ namespace AbrakBotWPF.Model.Services
                                     }
                                     index2++;
                                 }
-                                globals.updateXPMetiers();
+                                globals.updateMetiers();
                                 break;
                             case "GA"://Autorisation de se déplacer
 

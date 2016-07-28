@@ -7,6 +7,7 @@ namespace AbrakBotWPF.Model.Classes
 {
     public class Config
     {
+        
         [JsonProperty]
         public static String serverIp;
         [JsonProperty]

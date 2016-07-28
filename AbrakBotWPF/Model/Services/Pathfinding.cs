@@ -159,6 +159,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
+        //recupere la case par laquelle la case actuelle a ete trouvee
         private string getParent(int cell1, int cell2)
         {
             int current = cell2;
@@ -195,6 +196,7 @@ namespace AbrakBotWPF.Model.Services
             return pathing;
         }
 
+        //Recupere les cases autour de la case actuelle
         private List<int> getChild(int cell)
         {
 

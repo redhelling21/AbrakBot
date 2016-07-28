@@ -30,16 +30,16 @@ namespace AbrakBotWPF.Model.Services
                     string donnee = "";
                     if (Data != null && Data != "")
                     {
-                        if(Data.Substring(0, 2) != "am")
+                        //On affiche pas les packets am, il y en a trop
+                        if (Data.Substring(0, 2) != "am")
                         {
                             globals.writeToDebugBox("rcv : ", "Red");
                             globals.writeToDebugBox(Data + "\n", "Black");
                         }
                         donnee = Data.Substring(0, 2);
-                        //Console.WriteLine("Donnee " + donnee);
                         switch (donnee)
                         {
-                            case "GD": //Debut de la connexion
+                            case "GD": //Concerne la map
                                 Thread.Sleep(100);
                                 string subcat = Data.Substring(2, 1);
                                 switch (subcat)
@@ -55,15 +55,12 @@ namespace AbrakBotWPF.Model.Services
                                         globals.isMoving = false;
                                         string[] map_datas = Data.Split('|');
                                         globals.currentMapId = Int32.Parse(map_datas[1]);
-                                        //TimerLaunch.Enabled = False
                                         string indice = map_datas[2];
                                         string clef = map_datas[3];
-                                        //TabUtilisateur.Listplayers.Items.Clear()
-                                        //TabUtilisateur.ListMonster.Items.Clear()
                                         globals.mapHandler.LoadMap(globals.currentMapId, indice, clef);
                                         globals.game.send("GI");
                                         break;
-                                    case "F":
+                                    case "F"://Reception des infos sur l'etat des ressources de la map
                                         string[] res_datas = Data.Split('|');
                                         if (res_datas[1].Split(';')[2] == "0")
                                         {
@@ -74,7 +71,8 @@ namespace AbrakBotWPF.Model.Services
                                         break;
                                 }
                                 break;
-                            case "GM":
+                            case "GM"://Quelque chose a bouge sur la map (monstre, joueur...)
+
                                 globals.moveHandler.handleMove(Data);
                                 break;
                             case "Ow"://Infos sur les pods
@@ -106,10 +104,10 @@ namespace AbrakBotWPF.Model.Services
                             case "al"://?
                                 globals.game.send("GC1");
                                 break;
-                            case "fC"://Nombre de combats sur la map actuelle //A REMPLIR
+                            case "fC"://Nombre de combats sur la map actuelle //TODO : A REMPLIR
                                 globals.game.send("BD");
                                 break;
-                            case "JS":
+                            case "JS"://Infos sur les metiers du perso
                                 string[] metierArray = Data.Split('|');
                                 player.harvestables.Clear();
                                 player.metiers.Clear();
@@ -135,7 +133,7 @@ namespace AbrakBotWPF.Model.Services
                                 }
                                 globals.updateMetiers();
                                 break;
-                            case "JX":
+                            case "JX"://Infos sur l'xp des metiers du perso
                                 string[] metierXPArray = Data.Split('|');
                                 int index2 = 0;
                                 foreach (string metier in metierXPArray)
@@ -208,58 +206,6 @@ namespace AbrakBotWPF.Model.Services
 				                                globals.caseActuelle = trouve;
                                             }
 
-
-                                        /*
-                                        else if (isOnMonsterTab(index, Gettok(packet, ";", 3)))
-                                        {
-                                            ListViewItem item = onMonsterTab(index, Gettok(packet, ";", 3));
-
-                                            string cherche = Gettok(packet, ";", 4);
-                                            cherche = Strings.Mid(cherche, cherche.Length - 1);
-                                            int trouve = -1;
-
-                                            for (int i = 0; i <= 1024; i++)
-                                            {
-                                                if ((cases(i) == cherche))
-                                                {
-                                                    trouve = i;
-                                                    i = 1025;
-                                                }
-                                            }
-
-                                            if (trouve != -1)
-                                                item.SubItems(1).Text = trouve.ToString;
-
-
-                                        }
-                                        else if ((.followChef))
-                                        {
-
-                                            if ((Gettok(packet, ";", 3) == .idChef))
-                                            {
-                                                string cherche = Gettok(packet, ";", 4);
-                                                cherche = Strings.Mid(cherche, cherche.Length - 1);
-                                                int trouve = -1;
-
-                                                for (int i = 0; i <= 1024; i++)
-                                                {
-                                                    if ((cases(i) == cherche))
-                                                    {
-                                                        trouve = i;
-                                                        i = 1025;
-                                                    }
-                                                }
-
-                                                if ((trouve != -1))
-                                                {
-                                                    int caseFin = trouve;
-					.SeDeplacer(caseFin);
-                                                }
-
-                                            }
-
-                                        }*/
-
                                     }
 
                                 }
@@ -271,7 +217,7 @@ namespace AbrakBotWPF.Model.Services
                                     globals.game.send("rpong");
                                 }
                                 break;
-                            case "cM"://Message chat //A TERMINER AVEC L'INSERTION D'ITEMS
+                            case "cM"://Message chat //TODO : A TERMINER AVEC L'INSERTION D'ITEMS
                                 switch (Data.Substring(2, 1))
                                 {
                                     case "K":

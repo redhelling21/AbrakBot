@@ -18,6 +18,7 @@ namespace AbrakBotWPF.Model.Services
             this.globals = glob;
         }
 
+        //Lance le deplacement vers une case
         public void SeDeplacer(int caseFin)
         {
             Thread ThreadDeplac = new Thread(SeDeplace);
@@ -28,7 +29,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-
+        //Se deplace vers une case
         private void SeDeplace()
         {
             int caseFin = CaseDuDeplacement;
@@ -36,12 +37,14 @@ namespace AbrakBotWPF.Model.Services
             {
                 globals.bloqueGA = 1;
 
+                //calucl du chemin vers la case
                 string path = "";
                 Pathfinding pather = new Pathfinding(globals);
                 path = pather.pathing(globals.mapDataActuelle, globals.caseActuelle, caseFin, true);
 
                 if (!string.IsNullOrEmpty(path))
                 {
+                    //Demande de l'autorisation du serveur pour se deplacer vers la case
                     globals.game.send("GA001" + path);
                     globals.isMoving = true;
 
@@ -53,7 +56,7 @@ namespace AbrakBotWPF.Model.Services
                     {
                         globals.wait((long)distance(globals.caseActuelle, caseFin) * 250);
                     }
-
+                    //On est arrives
                     globals.game.send("GKK0");
 
 
@@ -61,8 +64,6 @@ namespace AbrakBotWPF.Model.Services
                 else
                 {
                     globals.writeToDebugBox("Error on path from " + globals.caseActuelle + " to " + caseFin + " !\n", "Red");
-                    //TabUtilisateur.ListPlayers.Items.Clear();
-                    //TabUtilisateur.ListMonster.Items.Clear();
                     globals.game.send("GI");
 
                 }
@@ -75,7 +76,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-
+        //Lance le deplacement vers une autre map
         public void SeDeplacerMap(int caseFin)
         {
             Thread ThreadMap = new Thread(SeDeplaceMap);
@@ -86,7 +87,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-
+        //Se deplace vers une autre map
         private void SeDeplaceMap()
         {
             int caseFin = CaseDuDeplacement;
@@ -135,118 +136,16 @@ namespace AbrakBotWPF.Model.Services
                 }
 
                 globals.wait(500);
-
-                //changeDeMap = 0;
                 globals.bloqueGA = 0;
 
             }
 
         }
 
-        
-        public void ChangerMap()
-        {
-            
-            Random rand = new Random();
-
-
-            if (globals.lastChangementMap == 0)
-            {
-                int random = rand.Next(1, 4);
-                int random2 = rand.Next(1000, 9999);
-                bool fatal = false;
-                if ((random == 4))
-                {
-                    if (globals.tpHaut != -1)
-                    {
-                        SeDeplacerMap(globals.tpHaut);
-                        fatal = true;
-                        globals.lastChangementMap = 1;
-                    }
-                    else
-                    {
-                        random = rand.Next(1, 3);
-                    }
-                }
-                if ((random == 3))
-                {
-                    if (globals.tpBas != -1)
-                    {
-                        SeDeplacerMap(globals.tpBas);
-                        fatal = true;
-                        globals.lastChangementMap = 2;
-                    }
-                    else
-                    {
-                        random = rand.Next(1, 2);
-                    }
-                }
-                if ((random == 2))
-                {
-                    if (globals.tpGauche != -1)
-                    {
-                        SeDeplacerMap(globals.tpGauche);
-                        fatal = true;
-                        globals.lastChangementMap = 3;
-                    }
-                    else
-                    {
-                        random = 1;
-                    }
-                }
-                if ((random == 1))
-                {
-                    if (globals.tpDroite != -1)
-                    {
-                        SeDeplacerMap(globals.tpDroite);
-                        fatal = true;
-                        globals.lastChangementMap = 4;
-                    }
-                }
-
-            }
-            else if ((globals.lastChangementMap == 1))
-            {
-                if (globals.tpBas != -1)
-                {
-                    SeDeplacerMap(globals.tpBas);
-                    globals.lastChangementMap = 0;
-                }
-
-            }
-            else if ((globals.lastChangementMap == 2))
-            {
-                if (globals.tpHaut != -1)
-                {
-                    SeDeplacerMap(globals.tpHaut);
-                    globals.lastChangementMap = 0;
-                }
-
-            }
-            else if ((globals.lastChangementMap == 3))
-            {
-                if (globals.tpDroite != -1)
-                {
-                    SeDeplacerMap(globals.tpDroite);
-                    globals.lastChangementMap = 0;
-                }
-
-            }
-            else if ((globals.lastChangementMap == 4))
-            {
-                if (globals.tpGauche != -1)
-                {
-                    SeDeplacerMap(globals.tpGauche);
-                    globals.lastChangementMap = 0;
-                }
-
-            }
-
-        }
-
-
+        //Gere le packet de mouvement
         public void handleMove(string packet)
         {
+            //est-on en combat ?
             if (!globals.isFighting)
             {
                 string extraData = packet.Substring(2);
@@ -321,14 +220,6 @@ namespace AbrakBotWPF.Model.Services
                             int lvlCrypt = Int32.Parse(aligmentData[3]);
                             string level = (lvlCrypt - Int32.Parse(id)).ToString();
 
-                            /*var _with2 = _with1.TabUtilisateur.ListPlayers;
-
-                            _with2.Items.Add(id);
-                            _with2.Items(_with2.Items.Count - 1).SubItems.Add(nom);
-                            _with2.Items(_with2.Items.Count - 1).SubItems.Add(level);
-                            _with2.Items(_with2.Items.Count - 1).SubItems.Add(guilde);
-                            _with2.Items(_with2.Items.Count - 1).SubItems.Add(alignement);*/
-
 
 
                         }
@@ -337,11 +228,6 @@ namespace AbrakBotWPF.Model.Services
                             string cell = playerData[0];
                             string id = playerData[3];
 
-                            /*var _with3 = _with1.TabUtilisateur.ListMonster;
-
-                            _with3.Items.Add(id);
-                            _with3.Items(_with3.Items.Count - 1).SubItems.Add(cell);*/
-
 
                         }
 
@@ -349,40 +235,7 @@ namespace AbrakBotWPF.Model.Services
                     }
                     else if (datas[i] != "" && datas[i].Substring(0, 1) == "-")
                     {
-                        //var _with4 = _with1.TabUtilisateur.ListPlayers;
-                        /*
-                        string id = datas[i].Substring(1);
-                        for (int list = 0; list <= _with4.Items.Count - 1; list++)
-                        {
-                            if ((list >= _with4.Items.Count))
-                                break; // TODO: might not be correct. Was : Exit For
-                            if ((_with4.Items(list).SubItems.Count == 5))
-                            {
-                                if ((_with4.Items(list).SubItems(0).Text == id))
-                                {
-                                    _with4.Items.RemoveAt(list);
-                                    return;
-                                }
-                            }
-                        }
-
-
-                        var _with5 = _with1.TabUtilisateur.ListMonster;
-
-                        string id = Strings.Mid(datas(i), 2);
-                        for (int list = 0; list <= _with5.Items.Count - 1; list++)
-                        {
-                            if ((list >= _with5.Items.Count))
-                                break; // TODO: might not be correct. Was : Exit For
-                            if ((_with5.Items(list).SubItems.Count == 2))
-                            {
-                                if ((_with5.Items(list).SubItems(0).Text == id))
-                                {
-                                    _with5.Items.RemoveAt(list);
-                                    return;
-                                }
-                            }
-                        }*/
+                        
 
 
                     }
@@ -394,7 +247,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-
+        //Calcule la distance entre deux points
         public double distance(int pos1, int pos2)
         {
             double num18 = 0;

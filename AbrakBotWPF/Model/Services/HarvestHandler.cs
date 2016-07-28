@@ -14,6 +14,8 @@ namespace AbrakBotWPF.Model.Services
         {
             this.globals = globals;
         }
+
+        //Lance la recolte d'une case
         public void Recolter(int caseRecolte)
         {
             globals.writeToDebugBox("Recolte de " + caseRecolte + "\n", "Navy");
@@ -25,16 +27,10 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-
+        //Recolte une case
         private void Recolte()
         {
-            /* if ((TabUtilisateur.InvokeRequired))
-             {
-                 TabUtilisateur.Invoke(new ThreadDelegate(Recolte));
-
-             }
-             else
-             {*/
+            
             idRessource = globals.actualResources[caseDeRecolte];
             int caseRecolte = caseDeRecolte;
             if ((globals.bloqueGA == 0))
@@ -46,6 +42,7 @@ namespace AbrakBotWPF.Model.Services
                 string path = "";
 
                 globals.writeToDebugBox("Calcul du chemin\n", "Navy");
+                //Calcul du chemin vers la case
                 Pathfinding pather = new Pathfinding(globals);
                 if ((globals.mapDataActuelle[caseRecolte].movement == 2))
                 {
@@ -59,12 +56,13 @@ namespace AbrakBotWPF.Model.Services
 
                 if (!string.IsNullOrEmpty(path))
                 {
+                    //demande d'autorisation au serveur pour aller vers la case
                     globals.writeToDebugBox("Envoi du chemin\n", "Navy");
                     globals.game.send("GA001" + path);
                     globals.isMoving = true;
                     globals.writeToDebugBox("isMoving true\n", "Navy");
                     globals.wait((long)globals.moveHandler.distance(globals.caseActuelle, caseRecolte) * 330);
-
+                    //demande d'autorisation au serveur pour recolter la case
                     globals.game.send("GA500" + caseRecolte + ";" + idRessource);
                     globals.game.send("GKK0");
                     globals.bloqueGA = 0;
@@ -85,7 +83,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-
+        //Lance l'attente pendant que le perso recolte une ressource
         public void WaitRecolte(int tempsDeRecolte)
         {
             globals.writeToDebugBox("Attente recolte\n", "Navy");
@@ -97,7 +95,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-
+        //Attend que le perso aie fini sa recolte de ressource
         public void WaitingRecolte()
         {
             Random Rand = new Random();

@@ -23,22 +23,22 @@ namespace AbrakBotWPF.ViewModel
         
         public MainViewModel()
         {
-            
 
-            Messenger.Default.Register<AddLineToBoxMessage>
-            (
-                 this,
+
+            Messenger.Default.Register<AddLineToBoxMessage>(this,
                  (addLineMessage) => ReceiveAddLineToBox(addLineMessage)
             );
-            Messenger.Default.Register<PlayerStatChangedMessage>
-            (
-                 this,
+            Messenger.Default.Register<PlayerStatChangedMessage>(this,
                  (statChangedMessage) => ReceivePlayerStatChanged(statChangedMessage)
             );
-            Messenger.Default.Register<PlayerJobsChangedMessage>
-            (
-                 this,
+            Messenger.Default.Register<PlayerJobsChangedMessage>(this,
                  (jobsChangedMessage) => ReceivePlayerJobsChanged(jobsChangedMessage)
+            );
+            Messenger.Default.Register<MapStatChangedMessage>(this,
+                 (mapStatChangedMessage) => ReceiveMapStatChanged(mapStatChangedMessage)
+            );
+            Messenger.Default.Register<MapResourcesChangedMessage>(this,
+                 (mapResourcesChangedMessage) => ReceiveMapResourcesChanged(mapResourcesChangedMessage)
             );
             ConnectCommand = new RelayCommand(connect);
             TelecommandeCommand = new RelayCommand(telecommande);
@@ -440,6 +440,16 @@ namespace AbrakBotWPF.ViewModel
                 metierBar3 = ((int)Math.Round(((float)(action.metiers[2].xp - action.metiers[2].xp_min) / (action.metiers[0].xp_max - action.metiers[2].xp_min)) * 100)).ToString();
                 metierLvl3 = "Lvl. " + action.metiers[2].level.ToString();
             }
+        }
+
+        private void ReceiveMapStatChanged(MapStatChangedMessage action)
+        {
+            mapCoords = action.mapCoords;
+        }
+
+        private void ReceiveMapResourcesChanged(MapResourcesChangedMessage action)
+        {
+
         }
 
         #endregion

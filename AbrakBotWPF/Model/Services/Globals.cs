@@ -38,20 +38,29 @@ namespace AbrakBotWPF.Model.Services
         public string[] cases = new string[2500];
         public int bloqueGA = 0;
 
+        //Trajet
         public Dictionary<string, bool[]> listMovements = new Dictionary<string, bool[]>();
         public Dictionary<string, bool[]> listFight = new Dictionary<string, bool[]>();
         public Dictionary<string, bool[]> listHarvest = new Dictionary<string, bool[]>();
 
+        //Liste des ressources sur la carte actuelle (case, idRessource)
         public Dictionary<Int32, Int32> actualResources = new Dictionary<Int32, Int32>();
+        //Contient les équivalents entre l'id du sprite et l'id de la ressource (idSprite, idRessource)
         public Dictionary<Int32, Int32> idResourcesTranslate = new Dictionary<Int32, Int32>();
+        //Contient les mapchangers de certaines cartes buggées (idMap, idCaseChangers)
         public Dictionary<Int32, Int32[]> mapchangers = new Dictionary<Int32, Int32[]>();
+        //Contient tous les id des objets (id, nomObjet)
         public Dictionary<Int32, string> objects = new Dictionary<Int32, string>();
+        //Contient tous les id des sprites des ressources (id, nomRessource)
         public Dictionary<Int32, string> ressources = new Dictionary<Int32, string>();
+        //Contient tous les id des sorts (id, nomSort)
         public Dictionary<Int32, string> sorts = new Dictionary<Int32, string>();
+        //Contient tous les id des maps (id, coordonnees)
         public Dictionary<Int32, string> maps = new Dictionary<Int32, string>();
 
         public int nombreDeCombat = 0;
-        public int lastChangementMap = 0;
+
+        //Temps necessaire a recolter une ressource
         public int tempsRecolte;
 
         public Globals()
@@ -62,6 +71,7 @@ namespace AbrakBotWPF.Model.Services
             mapHandler = new MapHandler(this);
         }
 
+        //Recupere le chemin de l'executable
         public void setExecutionPath()
         {
             string uriString = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
@@ -69,32 +79,35 @@ namespace AbrakBotWPF.Model.Services
             execPath = uri.LocalPath;
         }
 
+        //Demande l'ecriture d'une ligne dans la box principale
         public void writeToMainBox(string text, string color)
         {
-
             var msg = new AddLineToBoxMessage() { text = text, color = color, boxType = "main" };
             Messenger.Default.Send<AddLineToBoxMessage>(msg);
-            
         }
 
+        //Demande l'ecriture d'une ligne dans la box de debug
         public void writeToDebugBox(string text, string color)
         {
-
             var msg = new AddLineToBoxMessage() { text = text, color = color, boxType = "debug" };
             Messenger.Default.Send<AddLineToBoxMessage>(msg);
         }
 
+        //Demande la mise a jour des coordonnees affichees
         public void updateMapCoords(string coords)
         {
-            //Home.updateTSLabel(mainForm.statusStrip, mainForm.mapCoordLabel, coords);
+            var msg = new MapStatChangedMessage() { mapCoords = coords };
+            Messenger.Default.Send<MapStatChangedMessage>(msg);
         }
 
+        //Demande la mise a jour des stats sur les metiers
         public void updateMetiers()
         {
             var msg = new PlayerJobsChangedMessage() { metiers = player.metiers };
             Messenger.Default.Send<PlayerJobsChangedMessage>(msg);
         }
 
+        //Demande l'envoi d'un message en jeu (commerce, recrutement, etc...)
         public void sendMessage(string message)
         {
             if(message.Substring(0, 1) == "/")
@@ -122,6 +135,7 @@ namespace AbrakBotWPF.Model.Services
             }
         }
 
+        //Beeeen... Attends
         public void wait(long ms)
         {
             double endwait = 0;
@@ -133,12 +147,13 @@ namespace AbrakBotWPF.Model.Services
             }
         }
 
-        //Fct de test
+        //Fct de test (dispose d'un bouton a elle dans l'UI) pour lancer rapidement des choses
         public void doSomethingToTest()
         {
             moveHandler.SeDeplacerMap(this.tpHaut);
         }
 
+        //Initialise une liste des cases d'une map (id en hexadecimal). Utile pour le pathfinding
         public void InitializeCells()
         {
             int Number = 0;
@@ -163,6 +178,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
+        //Recupere la liste des trajets dispos
         public string[] getTrajetList()
         {
             List<string> trajets = new List<string>();
@@ -175,6 +191,7 @@ namespace AbrakBotWPF.Model.Services
             return trajets.ToArray();
         }
 
+        //Parsing du trajet choisi
         public void setActiveTrajet(string nom)
         {
             StreamReader reader = new StreamReader(execPath + "/Trajets/" + nom);
@@ -249,6 +266,7 @@ namespace AbrakBotWPF.Model.Services
             reader.Close();
         }
 
+        //Fait bouger le personnage (utilisé uniquement par la telecommande)
         public void makeAMove(int laCase, bool isMap)
         {
             if (!isMoving)
@@ -284,49 +302,11 @@ namespace AbrakBotWPF.Model.Services
             //Home.updateTSButtonText(mainForm.statusStrip, mainForm.connectButton, "Connexion");
         }
 
-        public void clearResourceTable()
+        public void updateResourceTable()
         {
-            /*mainForm.resourceTable.Controls.Clear();
-            mainForm.resourceTable.RowCount = 0;*/
-        }
-
-        public void addRowResourceTable(int id, string nom, int cellid)
-        {
-            /*Label lab1 = new Label();
-            Label lab2 = new Label();
-            Label lab3 = new Label();
-            lab1.Text = id.ToString();
-            lab2.Text = nom;
-            lab3.Text = cellid.ToString();
-            mainForm.resourceTable.RowCount = mainForm.resourceTable.RowCount + 1;
-            mainForm.resourceTable.Controls.Add(lab1, 0, mainForm.resourceTable.RowCount - 1);
-            mainForm.resourceTable.Controls.Add(lab2, 1, mainForm.resourceTable.RowCount - 1);
-            mainForm.resourceTable.Controls.Add(lab3, 2, mainForm.resourceTable.RowCount - 1);
-            mainForm.resourceTable.Height = mainForm.resourceTable.RowCount * 35;*/
+            
         }
     }
-
-    /*public class RichTextBoxExtensions
-    {
-        public void AppendText(this RichTextBox box, string text, Color color)
-        {
-
-            if (box.InvokeRequired)
-            {
-                box.Invoke((MethodInvoker)delegate {
-                    AppendText(box, text, color);
-                });
-                return;
-            }
-            
-            box.SelectionStart = box.TextLength;
-            box.SelectionLength = 0;
-
-            box.SelectionColor = color;
-            box.AppendText(text);
-            box.SelectionColor = box.ForeColor;
-        }
-    }*/
     
 
 }

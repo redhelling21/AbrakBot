@@ -18,13 +18,15 @@ namespace AbrakBotWPF.Model.Services
             this.globals = glob;
         }
 
+        //Charge la map ayant l'id donné en parametres
         public void LoadMap(int idMap, string indice, string clef)
         {
-            
+
             globals.tpBas = -1;
             globals.tpDroite = -1;
             globals.tpGauche = -1;
             globals.tpHaut = -1;
+            //Parsing du fichier texte de la map
             StreamReader reader;
             if (clef == "")
             {
@@ -34,55 +36,61 @@ namespace AbrakBotWPF.Model.Services
             {
                 reader = new StreamReader(globals.execPath + "/Resources/txt_maps/" + idMap + "_" + indice + "X.txt");
             }
-            
+
             string mapDataText = reader.ReadToEnd();
             string mapData = mapDataText.Split('\"')[1];
             reader.Close();
             string sData;
+
             if (clef != "")
             {
+                //Si la map a besoin d'etre decryptee via une cle
                 string preparedKey = prepareKey(clef);
                 sData = decypherData(mapData, preparedKey, (int)(Convert.ToInt64(checksum(preparedKey), 16) * 2));
-            }else
+            }
+            else
             {
                 sData = mapData;
             }
 
-
+            //Recuperation des donnees de la map
             globals.mapDataActuelle = uncompressMap(sData);
-                globals.currentMapId = idMap;
-                globals.updateMapCoords("[" + globals.maps[idMap] + "]");
-                int num = 0;
-                do
+            globals.currentMapId = idMap;
+            globals.updateMapCoords("[" + globals.maps[idMap] + "]");
+            int num = 0;
+            //Recuperation des coordonnees des mapchangers
+            do
+            {
+                if (globals.mapDataActuelle[num].movement == 2)
                 {
-                    if (globals.mapDataActuelle[num].movement == 2)
+                    int num2 = getX(num);
+                    int num3 = getY(num);
+                    if ((num2 - 1) == num3)
                     {
-                        int num2 = getX(num);
-                        int num3 = getY(num);
-                        if ((num2 - 1) == num3)
+                        globals.tpGauche = num;
+                    }
+                    else if ((num2 - 0x1b) == num3)
+                    {
+                        globals.tpDroite = num;
+                    }
+                    else if ((num2 + num3) == 0x1f)
+                    {
+                        globals.tpBas = num;
+                    }
+                    else if (num3 < 0)
+                    {
+                        num3 = Math.Abs(num3);
+                        if ((num2 - num3) == 1)
                         {
-                            globals.tpGauche = num;
-                        }
-                        else if ((num2 - 0x1b) == num3)
-                        {
-                            globals.tpDroite = num;
-                        }
-                        else if ((num2 + num3) == 0x1f)
-                        {
-                            globals.tpBas = num;
-                        }
-                        else if (num3 < 0)
-                        {
-                            num3 = Math.Abs(num3);
-                            if ((num2 - num3) == 1)
-                            {
-                                globals.tpHaut = num;
-                            }
+                            globals.tpHaut = num;
                         }
                     }
-                    num++;
                 }
-                while (globals.mapDataActuelle[num+1] != null && num <= 500);
+                num++;
+            }
+            while (globals.mapDataActuelle[num + 1] != null && num <= 500);
+
+            //Si la map fait partie de la liste des maps avec des mapchangers foireux
             if (globals.mapchangers.ContainsKey(globals.currentMapId))
             {
                 if (globals.tpHaut == -1)
@@ -102,16 +110,18 @@ namespace AbrakBotWPF.Model.Services
                     globals.tpDroite = globals.mapchangers[globals.currentMapId][3];
                 }
             }
-                LoadRessources(globals.mapDataActuelle);
-            
+            LoadRessources(globals.mapDataActuelle);
+
         }
 
+        //Charge les ressources presentes sur la map
         private void LoadRessources(Cell[] spritesHandler)
         {
             List<int> list = new List<int>();
             List<string> list3 = new List<string>();
             List<bool> list2 = new List<bool>();
             string str = "a";
+            //On parse le fichier texte
             StreamReader reader = new StreamReader(globals.execPath + "/Resources/ressources.txt");
             while (str != null)
             {
@@ -139,28 +149,29 @@ namespace AbrakBotWPF.Model.Services
             }
             reader.Close();
             int num = 0;
-            globals.clearResourceTable();
             globals.actualResources.Clear();
             int num3 = 0;
+            //On remplit la liste des ressources sur la map
             do
             {
-                if(spritesHandler[num3] == null)
+                if (spritesHandler[num3] == null)
                 {
                     break;
                 }
                 if (list.Contains(spritesHandler[num3].layerObject2Num))
                 {
                     globals.actualResources.Add(num3, globals.idResourcesTranslate[spritesHandler[num3].layerObject2Num]);
-                    globals.addRowResourceTable(spritesHandler[num3].layerObject2Num, list3[list.IndexOf(spritesHandler[num3].layerObject2Num)], num3);
-                    //perso.TabUtilisateur.ListeRessources.Items[num].SubItems.Add("Non coup\x00e9");
+                    //TODO : Ajouter l'etat
                     spritesHandler[num3].object2Movement = list2[list.IndexOf(spritesHandler[num3].layerObject2Num)];
                     num++;
                 }
                 num3++;
             }
             while (num3 <= 0x3e8);
+            globals.updateResourceTable();
         }
 
+        //Prepare la cle de decryptage pour l'utiliser pour decrypter les donnees de la map
         private string prepareKey(string key)
         {
             string d = key;
@@ -179,6 +190,7 @@ namespace AbrakBotWPF.Model.Services
             return _loc3;
         }
 
+        //Decrypte les donnees de la map avec la cle
         private string decypherData(string mapData, string preparedKey, int c)
         {
             string _loc5 = "";
@@ -186,7 +198,7 @@ namespace AbrakBotWPF.Model.Services
             int _loc7 = 0;
             int _loc9 = 0;
 
-            while(_loc9 < mapData.Length)
+            while (_loc9 < mapData.Length)
             {
                 int a = (int)Convert.ToInt64(mapData.Substring(_loc9, 2), 16);
                 int b = Encoding.ASCII.GetBytes(preparedKey.Substring((_loc7 + c) % _loc6, 1))[0];
@@ -200,6 +212,7 @@ namespace AbrakBotWPF.Model.Services
             return _loc5;
         }
 
+        //Checksum
         public string checksum(string s)
         {
 
@@ -216,6 +229,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
+        //Extrait la map a partir des donnees decryptees
         public Cell[] uncompressMap(string sData)
         {
 
@@ -236,7 +250,8 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-
+        //Extrait les donnees d'une cellule a partir d'une code de 10 caracteres
+        //(la string contenant les donnees de la map est un ensemble de codes de 10 caracteres, un par cellule)
         public Cell uncompressCell(string sData)
         {
 
@@ -258,7 +273,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-
+        //Calcule l'abscisse de la case
         public int getX(int laCase)
         {
 
@@ -270,6 +285,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
+        //Calcule l'ordonnee de la case
         public int getY(int laCase)
         {
 

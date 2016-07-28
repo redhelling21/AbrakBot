@@ -25,6 +25,7 @@ namespace AbrakBotWPF.Model.Services
             this.player = player;
         }
 
+        //Traite un packet recu
         public void ReceiveData(Queue<string> pck_queue)
         {
             if (pck_queue.Count != 0)
@@ -35,9 +36,11 @@ namespace AbrakBotWPF.Model.Services
 
                     if (Data != "")
                     {
+                        //Signifie l'arrivee d'un packet
                         globals.writeToDebugBox("rcv : ", "Red");
                         globals.writeToDebugBox(Data + "\n", "Black");
                         string donnée = "", pass = Config.mdp, key = "";
+                        //Recupere les deux premieres lettres du packet.
                         try
                         {
                             donnée = Data.Substring(0, 2);
@@ -51,7 +54,6 @@ namespace AbrakBotWPF.Model.Services
                         {
                             case "HC": //Debut de la connexion
                                 Thread.Sleep(100);
-
                                 key = Data.Substring(2, 32);
                                 globals.connect.send("1.29.1");
                                 globals.connect.send(Config.username + "\n" + CryptPassword(key, pass));
@@ -94,6 +96,7 @@ namespace AbrakBotWPF.Model.Services
                                 globals.writeToDebugBox("IP : " + ip + "\n", "Purple");
                                 globals.writeToDebugBox("Port : " + port + "\n", "Purple");
                                 globals.writeToDebugBox("GUID : " + GUID + "\n", "Purple");
+                                //Deconnexion du serveur d'authentification, et connection au serveur de jeu 
                                 globals.game = new TCPPacketHandler(globals, player);
                                 globals.game.connectHandler.GUID = GUID;
                                 globals.connect.close();

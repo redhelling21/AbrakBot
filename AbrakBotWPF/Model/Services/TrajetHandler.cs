@@ -31,15 +31,19 @@ namespace AbrakBotWPF.Model.Services
             
         }
 
+        //Gere un trajet
         private void run()
         {
             while (globals.isRunning)
             {
                 Thread.Sleep(500);
+                //On attend que le perso ne bouge plus
                 while (globals.isMoving)
                 {
                     Thread.Sleep(200);
                 }
+
+                //On cherche a savoir ce qu'il faut faire sur la map actuelle (bouger, recolter, ou combattre)
                 actualCoords = globals.maps[globals.currentMapId].Replace(" ", string.Empty);
                 if (globals.listFight.ContainsKey(actualCoords))
                 {

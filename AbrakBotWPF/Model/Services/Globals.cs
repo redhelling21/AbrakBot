@@ -24,6 +24,7 @@ namespace AbrakBotWPF.Model.Services
         public bool isMoving = false;
         public bool isHarvesting = false;
         public bool isRunning = false;
+        public bool mapLoaded = false;
 
         public TCPPacketHandler connect;
         public TCPPacketHandler game;

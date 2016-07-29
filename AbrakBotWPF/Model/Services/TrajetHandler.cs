@@ -38,11 +38,12 @@ namespace AbrakBotWPF.Model.Services
             {
                 Thread.Sleep(500);
                 //On attend que le perso ne bouge plus
-                while (globals.isMoving)
+                globals.writeToDebugBox("waiting for not moving\n", "Navy");
+                while (globals.isMoving || !globals.mapLoaded)
                 {
                     Thread.Sleep(200);
                 }
-
+                globals.writeToDebugBox("end waiting\n", "Navy");
                 //On cherche a savoir ce qu'il faut faire sur la map actuelle (bouger, recolter, ou combattre)
                 actualCoords = globals.maps[globals.currentMapId].Replace(" ", string.Empty);
                 if (globals.listFight.ContainsKey(actualCoords))
@@ -57,7 +58,10 @@ namespace AbrakBotWPF.Model.Services
                     {
                         if (player.harvestables.Contains(entry.Value))
                         {
-                            cases.Add(entry.Key);
+                            if(entry.Key != 0)
+                            {
+                                cases.Add(entry.Key);
+                            }
                         }
                     }
                     globals.writeToDebugBox(cases.Count + " cases a recolter\n", "LimeGreen");
@@ -141,11 +145,6 @@ namespace AbrakBotWPF.Model.Services
                         }
                     }
                 }
-                while (globals.isMoving)
-                {
-                    Thread.Sleep(100);
-                }
-                
             }
         }
     }

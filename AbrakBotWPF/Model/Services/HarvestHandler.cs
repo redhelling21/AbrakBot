@@ -41,7 +41,7 @@ namespace AbrakBotWPF.Model.Services
 
                 string path = "";
 
-                globals.writeToDebugBox("Calcul du chemin\n", "Navy");
+                globals.writeToDebugBox("Calcul du chemin depuis " + globals.caseActuelle + " vers " + caseRecolte + "\n", "Navy");
                 //Calcul du chemin vers la case
                 Pathfinding pather = new Pathfinding(globals);
                 if ((globals.mapDataActuelle[caseRecolte].movement == 2))
@@ -61,7 +61,7 @@ namespace AbrakBotWPF.Model.Services
                     globals.game.send("GA001" + path);
                     globals.isMoving = true;
                     globals.writeToDebugBox("isMoving true\n", "Navy");
-                    globals.wait((long)globals.moveHandler.distance(globals.caseActuelle, caseRecolte) * 330);
+                    Thread.Sleep((int)globals.moveHandler.distance(globals.caseActuelle, caseRecolte) * 330);
                     //demande d'autorisation au serveur pour recolter la case
                     globals.game.send("GA500" + caseRecolte + ";" + idRessource);
                     globals.game.send("GKK0");

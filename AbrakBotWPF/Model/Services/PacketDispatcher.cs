@@ -51,7 +51,7 @@ namespace AbrakBotWPF.Model.Services
                                             globals.writeToMainBox("En jeu.\n", "Green");
                                             globals.writeToDebugBox("En jeu.\n", "Green");
                                         }
-
+                                        globals.mapLoaded = false;
                                         globals.isMoving = false;
                                         string[] map_datas = Data.Split('|');
                                         globals.currentMapId = Int32.Parse(map_datas[1]);
@@ -68,6 +68,9 @@ namespace AbrakBotWPF.Model.Services
                                                 globals.actualResources.Remove(Int32.Parse(res_datas[1].Split(';')[0]));
                                             }
                                         }
+                                        break;
+                                    case "K":
+                                        globals.mapLoaded = true;
                                         break;
                                 }
                                 break;
@@ -164,8 +167,9 @@ namespace AbrakBotWPF.Model.Services
 
                                 }else if (Data.Substring(0, 5) == "GA;4;")
                                 {
-                                    //string pate = Data.Split(';')[3];
-	                                //globals.caseActuelle = Gettok(pate, ",", 1);
+                                    string pate = Data.Split(';')[3];
+	                                globals.caseActuelle = Int32.Parse(Data.Split(',')[0]);
+                                    globals.writeToDebugBox("(Via GA;4) CaseActuelle : " + Int32.Parse(Data.Split(',')[0]) + "\n", "Orange");
 
                                 }
                                 else if (Data.Substring(0, 6) == "GA;900")
@@ -181,14 +185,23 @@ namespace AbrakBotWPF.Model.Services
                                     HarvestHandler handler = new HarvestHandler(globals);
                                     handler.WaitRecolte(tempsDeRecolte);
                                 }
+                                else if (Data.Substring(0, 7) == "GA0;501")
+                                {
+
+                                    string pate = Data.Split(';')[3];
+                                    int caseRecolte = Convert.ToInt32(pate.Split(',')[0]);
+                                    globals.actualResources.Remove(caseRecolte);
+                                    globals.isHarvesting = false;
+                                }
                                 else if (Data.Substring(0, 6) == "GA0;1;")
                                 {
 
                                     if (!globals.isFighting)
                                     {
-
-                                        
-                                            string cherche = Data.Split(';')[3];
+                                        string cherche = Data.Split(';')[3];
+                                        int id = Int32.Parse(Data.Split(';')[2]);
+                                        if (id == Config.defaultCharacterId)
+                                        {
                                             cherche = cherche.Substring(cherche.Length - 2);
                                             int trouve = -1;
 
@@ -203,9 +216,10 @@ namespace AbrakBotWPF.Model.Services
 
                                             if ((trouve != -1))
                                             {
-				                                globals.caseActuelle = trouve;
+                                                globals.caseActuelle = trouve;
+                                                globals.writeToDebugBox("(via GA0;1) CaseActuelle : " + trouve + "\n", "Orange");
                                             }
-
+                                        }
                                     }
 
                                 }

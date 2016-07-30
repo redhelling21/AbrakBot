@@ -43,6 +43,7 @@ namespace AbrakBotWPF.ViewModel
             }
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<TelecommandeViewModel>();
         }
 
         public MainViewModel Main
@@ -52,7 +53,15 @@ namespace AbrakBotWPF.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public TelecommandeViewModel Telecommande
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<TelecommandeViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

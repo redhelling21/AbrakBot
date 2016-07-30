@@ -60,3 +60,5 @@ C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\MainWindow.baml
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.g.resources
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.Properties.Resources.resources
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.csproj.GenerateResource.Cache
+C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\Telecommande.g.cs
+C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\Telecommande.baml

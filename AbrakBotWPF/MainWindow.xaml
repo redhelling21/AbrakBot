@@ -38,7 +38,7 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <StatusBar HorizontalAlignment="Left" Height="31" Margin="0,388,0,0" VerticalAlignment="Top" Width="992">
+        <StatusBar Margin="0,388,0,0">
             <StatusBarItem Height="25" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/coins.png" Margin="0,0,5,0" />
@@ -82,7 +82,7 @@
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="353" Margin="10,30,0,0" VerticalAlignment="Top" Width="959">
+        <TabControl x:Name="tabControl" Margin="10,30,23,36">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -91,7 +91,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="mainBox" Height="303" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto">
+                    <RichTextBox x:Name="mainBox" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0"/>
@@ -99,7 +99,7 @@
                         </RichTextBox.Resources>
                         <FlowDocument/>
                     </RichTextBox>
-                    <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="22" Margin="0,303,0,-2" TextWrapping="Wrap" VerticalAlignment="Top" Width="953"/>
+                    <TextBox x:Name="textBox" Margin="0,0,0,-2" TextWrapping="Wrap" Height="22" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
             <TabItem>
@@ -172,7 +172,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="debugBox" Height="303" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto">
+                    <RichTextBox x:Name="debugBox" VerticalScrollBarVisibility="Auto">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0"/>
@@ -180,7 +180,6 @@
                         </RichTextBox.Resources>
                         <FlowDocument/>
                     </RichTextBox>
-                    <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="22" Margin="0,303,0,-2" TextWrapping="Wrap" VerticalAlignment="Top" Width="953"/>
                 </Grid>
             </TabItem>
         </TabControl>

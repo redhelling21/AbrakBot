@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
+using Microsoft.Practices.ServiceLocation;
 using System.Collections.ObjectModel;
 
 namespace AbrakBotWPF.ViewModel
@@ -473,7 +474,10 @@ namespace AbrakBotWPF.ViewModel
 
         private void telecommande()
         {
-
+            var win = new Telecommande();
+            TelecommandeViewModel model = ServiceLocator.Current.GetInstance<TelecommandeViewModel>();
+            model.globals = globals;
+            win.Show();
         }
 
         private void test()

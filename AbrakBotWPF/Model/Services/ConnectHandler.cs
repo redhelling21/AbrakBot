@@ -1,4 +1,6 @@
 ﻿using AbrakBotWPF.Model.Classes;
+using AbrakBotWPF.Model.Messages;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -169,11 +171,13 @@ namespace AbrakBotWPF.Model.Services
                                         int it_qte = int.Parse(item_stats[2], System.Globalization.NumberStyles.HexNumber);
                                         if (it_id < 10565)
                                         {
-                                            player.inventaire.Add(new Item(item_stats[1], globals.objects[it_id], it_qte));
+                                            player.inventaire.Add(new Item(it_id, globals.objects[it_id], it_qte));
                                         }
                                     }
                                     
                                 }
+                                var msg = new InventoryChangedMessage() { inventory = player.inventaire };
+                                Messenger.Default.Send<InventoryChangedMessage>(msg);
                                 break;
                             case "Al": //Merde, un truc s'est mal passé
                                 switch(Data.Substring(2, 2))

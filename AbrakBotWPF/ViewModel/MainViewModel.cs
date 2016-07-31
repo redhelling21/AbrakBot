@@ -28,6 +28,7 @@ namespace AbrakBotWPF.ViewModel
         {
 
             this.actualResources = new ObservableCollection<Ressource>();
+            this.inventaire = new ObservableCollection<Item>();
             Messenger.Default.Register<AddLineToBoxMessage>(this,
                  (addLineMessage) => ReceiveAddLineToBox(addLineMessage)
             );
@@ -43,7 +44,9 @@ namespace AbrakBotWPF.ViewModel
             Messenger.Default.Register<MapResourcesChangedMessage>(this,
                  (mapResourcesChangedMessage) => ReceiveMapResourcesChanged(mapResourcesChangedMessage)
             );
-
+            Messenger.Default.Register<InventoryChangedMessage>(this,
+                 (inventoryChangedMessage) => ReceiveInventoryChanged(inventoryChangedMessage)
+            );
             ConnectCommand = new RelayCommand(connect);
             TelecommandeCommand = new RelayCommand(telecommande);
             TestCommand = new RelayCommand(test);
@@ -184,6 +187,18 @@ namespace AbrakBotWPF.ViewModel
                 if (_actualResources == value) return;
                 _actualResources = value;
                 RaisePropertyChanged("actualResources");
+            }
+        }
+
+        private ObservableCollection<Item> _inventaire;
+        public ObservableCollection<Item> inventaire
+        {
+            get { return _inventaire; }
+            set
+            {
+                if (_inventaire == value) return;
+                _inventaire = value;
+                RaisePropertyChanged("inventaire");
             }
         }
         #endregion
@@ -473,8 +488,20 @@ namespace AbrakBotWPF.ViewModel
                 this.actualResources.Add(res);
                 }
             });
-            Console.WriteLine("eee");
             
+        }
+
+        private void ReceiveInventoryChanged(InventoryChangedMessage action)
+        {
+
+            this.window.Dispatcher.Invoke(() =>
+            {
+                foreach (Item item in action.inventory)
+                {
+                    this.inventaire.Add(item);
+                }
+            });
+
         }
 
         #endregion

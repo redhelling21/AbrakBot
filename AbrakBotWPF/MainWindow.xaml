@@ -154,7 +154,15 @@
                         <TextBlock Text="Inventaire" />
                     </StackPanel>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="White">
+                    <DataGrid ItemsSource="{Binding inventaire}" x:Name="dataGrid1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" Height="303" Width="933">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="15*" Binding="{Binding id}" ClipboardContentBinding="{x:Null}" Header="ID"/>
+                            <DataGridTextColumn Width="40*" Binding="{Binding libelle}" ClipboardContentBinding="{x:Null}" Header="Nom"/>
+                            <DataGridTextColumn Width="15*" Binding="{Binding quantite}" ClipboardContentBinding="{x:Null}" Header="Quantité"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
             <TabItem>
                 <TabItem.Header>

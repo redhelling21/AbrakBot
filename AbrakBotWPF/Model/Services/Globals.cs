@@ -45,7 +45,7 @@ namespace AbrakBotWPF.Model.Services
         public Dictionary<string, bool[]> listHarvest = new Dictionary<string, bool[]>();
 
         //Liste des ressources sur la carte actuelle (case, idRessource)
-        public Dictionary<Int32, Int32> actualResources = new Dictionary<Int32, Int32>();
+        public Dictionary<Int32, Ressource> actualResources = new Dictionary<Int32, Ressource>();
         //Contient les équivalents entre l'id du sprite et l'id de la ressource (idSprite, idRessource)
         public Dictionary<Int32, Int32> idResourcesTranslate = new Dictionary<Int32, Int32>();
         //Contient les mapchangers de certaines cartes buggées (idMap, idCaseChangers)

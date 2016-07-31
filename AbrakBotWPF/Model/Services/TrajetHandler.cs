@@ -54,9 +54,9 @@ namespace AbrakBotWPF.Model.Services
                 {
                     globals.writeToDebugBox("Map de recolte\n","LimeGreen");
                     List<int> cases = new List<int>();
-                    foreach(KeyValuePair<Int32, Int32> entry in globals.actualResources)
+                    foreach(KeyValuePair<Int32, Ressource> entry in globals.actualResources)
                     {
-                        if (player.harvestables.Contains(entry.Value))
+                        if (player.harvestables.Contains(entry.Value.id))
                         {
                             if(entry.Key != 0)
                             {

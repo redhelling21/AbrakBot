@@ -1,4 +1,6 @@
 ﻿using AbrakBotWPF.Model.Classes;
+using AbrakBotWPF.Model.Messages;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -160,7 +162,8 @@ namespace AbrakBotWPF.Model.Services
                 }
                 if (list.Contains(spritesHandler[num3].layerObject2Num))
                 {
-                    globals.actualResources.Add(num3, globals.idResourcesTranslate[spritesHandler[num3].layerObject2Num]);
+                    globals.actualResources.Add(num3, new Ressource(globals.idResourcesTranslate[spritesHandler[num3].layerObject2Num], num3, globals.ressources[spritesHandler[num3].layerObject2Num], true));
+                    
                     //TODO : Ajouter l'etat
                     spritesHandler[num3].object2Movement = list2[list.IndexOf(spritesHandler[num3].layerObject2Num)];
                     num++;
@@ -168,6 +171,13 @@ namespace AbrakBotWPF.Model.Services
                 num3++;
             }
             while (num3 <= 0x3e8);
+            List<Ressource> listRes = new List<Ressource>();
+            foreach(KeyValuePair<Int32, Ressource> entry in globals.actualResources)
+            {
+                listRes.Add(entry.Value);
+            }
+            var msg = new MapResourcesChangedMessage() { ressources =  listRes};
+            Messenger.Default.Send<MapResourcesChangedMessage>(msg);
             globals.updateResourceTable();
         }
 

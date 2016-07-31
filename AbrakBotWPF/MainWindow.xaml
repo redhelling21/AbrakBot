@@ -114,13 +114,14 @@
                         <ColumnDefinition Width="476*"/>
                         <ColumnDefinition Width="477*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="323" Width="476">
+                    <DataGrid x:Name="dataGrid" ItemsSource="{Binding actualResources}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="323" Width="476" Margin="-10,0,0,0" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn CanUserResize="False" Header="ID" Width="15*"/>
-                            <DataGridTextColumn Binding="{x:Null}" CanUserResize="False" ClipboardContentBinding="{x:Null}" Header="Nom" Width="60*"/>
-                            <DataGridTextColumn Binding="{x:Null}" CanUserResize="False" ClipboardContentBinding="{x:Null}" Header="Case" Width="10*"/>
-                            <DataGridTextColumn Binding="{x:Null}" CanUserResize="False" ClipboardContentBinding="{x:Null}" Header="Etat" Width="15*"/>
+                            <DataGridTextColumn Width="15*" Binding="{Binding id}" ClipboardContentBinding="{x:Null}" Header="ID"/>
+                            <DataGridTextColumn Width="40*" Binding="{Binding libelle}" ClipboardContentBinding="{x:Null}" Header="Nom"/>
+                            <DataGridTextColumn Width="15*" Binding="{Binding caseID}" ClipboardContentBinding="{x:Null}" Header="ID Case"/>
+                            <DataGridTextColumn Width="15*" Binding="{Binding etat}" ClipboardContentBinding="{x:Null}" Header="Etat"/>
                         </DataGrid.Columns>
+
                     </DataGrid>
                     <Grid Grid.Column="1" HorizontalAlignment="Center" Height="131" VerticalAlignment="Top" Width="364" Margin="56,0,57,0">
                         <Grid.RowDefinitions>

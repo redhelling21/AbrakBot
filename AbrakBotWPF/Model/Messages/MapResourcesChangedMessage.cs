@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AbrakBotWPF.Model.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace AbrakBotWPF.Model.Messages
 {
     class MapResourcesChangedMessage
     {
-
+        public List<Ressource> ressources;
     }
 }

@@ -84,6 +84,7 @@
     <Compile Include="Model\Classes\Item.cs" />
     <Compile Include="Model\Classes\Metier.cs" />
     <Compile Include="Model\Classes\Player.cs" />
+    <Compile Include="Model\Classes\Ressource.cs" />
     <Compile Include="Model\Messages\AddLineToBoxMessage.cs" />
     <Compile Include="Model\Messages\MapResourcesChangedMessage.cs" />
     <Compile Include="Model\Messages\MapStatChangedMessage.cs" />

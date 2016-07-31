@@ -31,7 +31,7 @@ namespace AbrakBotWPF.Model.Services
         private void Recolte()
         {
             
-            idRessource = globals.actualResources[caseDeRecolte];
+            idRessource = globals.actualResources[caseDeRecolte].id;
             int caseRecolte = caseDeRecolte;
             if ((globals.bloqueGA == 0))
             {

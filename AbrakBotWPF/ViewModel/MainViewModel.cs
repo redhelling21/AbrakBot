@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Practices.ServiceLocation;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace AbrakBotWPF.ViewModel
 {
@@ -25,7 +27,7 @@ namespace AbrakBotWPF.ViewModel
         public MainViewModel()
         {
 
-
+            this.actualResources = new ObservableCollection<Ressource>();
             Messenger.Default.Register<AddLineToBoxMessage>(this,
                  (addLineMessage) => ReceiveAddLineToBox(addLineMessage)
             );
@@ -41,6 +43,7 @@ namespace AbrakBotWPF.ViewModel
             Messenger.Default.Register<MapResourcesChangedMessage>(this,
                  (mapResourcesChangedMessage) => ReceiveMapResourcesChanged(mapResourcesChangedMessage)
             );
+
             ConnectCommand = new RelayCommand(connect);
             TelecommandeCommand = new RelayCommand(telecommande);
             TestCommand = new RelayCommand(test);
@@ -171,6 +174,18 @@ namespace AbrakBotWPF.ViewModel
         }
         #endregion
 
+
+        private ObservableCollection<Ressource> _actualResources;
+        public ObservableCollection<Ressource> actualResources
+        {
+            get { return _actualResources; }
+            set
+            {
+                if (_actualResources == value) return;
+                _actualResources = value;
+                RaisePropertyChanged("actualResources");
+            }
+        }
         #endregion
 
         //TRAJETS
@@ -451,6 +466,15 @@ namespace AbrakBotWPF.ViewModel
         private void ReceiveMapResourcesChanged(MapResourcesChangedMessage action)
         {
 
+            this.window.Dispatcher.Invoke(() =>
+            {
+            foreach (Ressource res in action.ressources)
+            {
+                this.actualResources.Add(res);
+                }
+            });
+            Console.WriteLine("eee");
+            
         }
 
         #endregion

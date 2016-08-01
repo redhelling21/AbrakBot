@@ -171,7 +171,7 @@ namespace AbrakBotWPF.Model.Services
                                         int it_qte = int.Parse(item_stats[2], System.Globalization.NumberStyles.HexNumber);
                                         if (it_id < 10565)
                                         {
-                                            player.inventaire.Add(new Item(it_id, globals.objects[it_id], it_qte));
+                                            player.inventaire.Add(new Item(item_stats[0], it_id, globals.objects[it_id], it_qte));
                                         }
                                     }
                                     

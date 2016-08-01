@@ -162,7 +162,11 @@ namespace AbrakBotWPF.Model.Services
                 }
                 if (list.Contains(spritesHandler[num3].layerObject2Num))
                 {
-                    globals.actualResources.Add(num3, new Ressource(globals.idResourcesTranslate[spritesHandler[num3].layerObject2Num], num3, globals.ressources[spritesHandler[num3].layerObject2Num], true));
+                    if (globals.idResourcesTranslate.ContainsKey(spritesHandler[num3].layerObject2Num))
+                    {
+                        globals.actualResources.Add(num3, new Ressource(globals.idResourcesTranslate[spritesHandler[num3].layerObject2Num], num3, globals.ressources[spritesHandler[num3].layerObject2Num], true));
+                    }
+                    
                     
                     //TODO : Ajouter l'etat
                     spritesHandler[num3].object2Movement = list2[list.IndexOf(spritesHandler[num3].layerObject2Num)];

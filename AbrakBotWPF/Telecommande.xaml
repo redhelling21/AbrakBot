@@ -33,14 +33,19 @@
             </Button>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="100" Margin="10,289,0,0" VerticalAlignment="Top" Width="274">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="33*"/>
                 <RowDefinition Height="33*"/>
                 <RowDefinition Height="33*"/>
             </Grid.RowDefinitions>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Se déplacer sur une case (id) :" VerticalAlignment="Center"/>
-            <TextBox x:Name="textBox" Text="{Binding caseGo}" HorizontalAlignment="Center" Height="23" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-            <Button x:Name="button4" Content="Go" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="75" Command="{Binding CaseCommand}"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Se déplacer sur une case (id) :" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="32" Width="200"/>
+            <TextBox x:Name="textBox" Text="{Binding caseGo}" HorizontalAlignment="Center" Height="24" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Column="1"/>
+            <Button x:Name="button4" Content="Go" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Width="74" Command="{Binding CaseCommand}" Height="20" Grid.ColumnSpan="2"/>
+            <CheckBox IsChecked="{Binding isMapChanger, Mode=TwoWay}" x:Name="checkBox" Content="MapChanger" HorizontalAlignment="Left" Margin="23,10,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
 </Window>

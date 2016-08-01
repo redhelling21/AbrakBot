@@ -39,6 +39,17 @@ namespace AbrakBotWPF.ViewModel
             }
         }
 
+        private bool? _isMapChanger = false;
+        public bool? isMapChanger
+        {
+            get { return (_isMapChanger != null) ? _isMapChanger : false; }
+            set
+            {
+                _isMapChanger = value;
+                RaisePropertyChanged("isMapChanger");
+            }
+        }
+
         private void up()
         {
             globals.makeAMove(globals.tpHaut, true);
@@ -61,7 +72,7 @@ namespace AbrakBotWPF.ViewModel
 
         private void toCase()
         {
-            globals.makeAMove(Int32.Parse(_caseGo), false);
+            globals.makeAMove(Int32.Parse(_caseGo), _isMapChanger.HasValue ? _isMapChanger.Value : false);
         }
     }
 }

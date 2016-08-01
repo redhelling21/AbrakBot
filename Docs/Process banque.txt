@@ -1,0 +1,14 @@
+Origin		Desc.														Commentaire
+
+Client		DC + idPNJ													Cree le dialogue avec le pnj
+Serveur		DCK + idPNJ													Creation OK
+Serveur		DQ + idQuestion;parametres|idReponse;idReponse2...								Renvoie la question du pnj
+Client		DR + idQuestion;idReponse											Repond a la question du pnj
+Serveur		ECK + typeEchange												5 pour banque
+Serveur		EL + idUnique~idObjet~quantite~~;;idUnique...									Donne le contenu de la banque
+Serveur		DV														Lance l'echange
+Client		EM + O/G + +/- + idUnique|quantite										o-> objet, g->kamas; annonce l'ajout/retrait d'un element de la banque
+Serveur		EsK + O/G + +/- + idUnique|quantite|idObjet									element bien échangé
+Serveur		OR + idUnique													Retrait de l'objet de l'inventaire
+Client		EV														Fin de l'echange
+Serveur		EV														Ok fin echange

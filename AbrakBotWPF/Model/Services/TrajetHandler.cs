@@ -45,107 +45,176 @@ namespace AbrakBotWPF.Model.Services
                 }
                 globals.writeToDebugBox("end waiting\n", "Navy");
                 //On cherche a savoir ce qu'il faut faire sur la map actuelle (bouger, recolter, ou combattre)
+                
                 actualCoords = globals.maps[globals.currentMapId].Replace(" ", string.Empty);
-                if (globals.listFight.ContainsKey(actualCoords))
+                string actualCoordsOpt = "mapid(" + globals.currentMapId + ")";
+                if (globals.needsBank)
                 {
-
-                }
-                else if (globals.listHarvest.ContainsKey(actualCoords))
-                {
-                    globals.writeToDebugBox("Map de recolte\n","LimeGreen");
-                    List<int> cases = new List<int>();
-                    foreach(KeyValuePair<Int32, Ressource> entry in globals.actualResources)
+                    globals.writeToDebugBox("Trajet banque\n", "Purple");
+                    if (globals.listBanque.ContainsKey(actualCoords) || globals.listBanque.ContainsKey(actualCoordsOpt))
                     {
-                        if (player.harvestables.Contains(entry.Value.id))
+                        if (globals.listBanque.ContainsKey(actualCoordsOpt))
                         {
-                            if(entry.Key != 0)
+                            actualCoords = actualCoordsOpt;
+                        }
+                        List<int> commandes = globals.listBanque[actualCoords];
+                        Random rnd = new Random();
+                        int index = (int)Math.Round((double)rnd.Next(commandes.Count));
+
+                        switch (commandes[index])
+                        {
+                            case 10001:
+                                globals.moveHandler.SeDeplacerMap(globals.tpHaut);
+                                break;
+                            case 10002:
+                                globals.moveHandler.SeDeplacerMap(globals.tpBas);
+                                break;
+                            case 10003:
+                                globals.moveHandler.SeDeplacerMap(globals.tpGauche);
+                                break;
+                            case 10004:
+                                globals.moveHandler.SeDeplacerMap(globals.tpDroite);
+                                break;
+                            case 9999://Banque
+                                globals.writeToDebugBox("Interaction pnj\n", "Purple");
+                                globals.game.send("DC-1");
+                                emptyBag();
+                                globals.needsBank = false;
+                                break;
+                            default:
+                                globals.writeToDebugBox("Go sur la case" + commandes[index] + "\n", "Purple");
+                                globals.moveHandler.SeDeplacerMap(commandes[index]);
+                                break;
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (globals.listFight.ContainsKey(actualCoords) || globals.listFight.ContainsKey(actualCoordsOpt))
+                    {
+                        if (globals.listFight.ContainsKey(actualCoordsOpt))
+                        {
+                            actualCoords = actualCoordsOpt;
+                        }
+                    }
+                    else if (globals.listHarvest.ContainsKey(actualCoords) || globals.listHarvest.ContainsKey(actualCoordsOpt))
+                    {
+                        if (globals.listHarvest.ContainsKey(actualCoordsOpt))
+                        {
+                            actualCoords = actualCoordsOpt;
+                        }
+                        globals.writeToDebugBox("Map de recolte\n", "LimeGreen");
+                        List<int> cases = new List<int>();
+                        foreach (KeyValuePair<Int32, Ressource> entry in globals.actualResources)
+                        {
+                            if (player.harvestables.Contains(entry.Value.id))
                             {
-                                cases.Add(entry.Key);
+                                if (entry.Key != 0)
+                                {
+                                    cases.Add(entry.Key);
+                                }
                             }
                         }
-                    }
-                    globals.writeToDebugBox(cases.Count + " cases a recolter\n", "LimeGreen");
-                    HarvestHandler handler = new HarvestHandler(globals);
-                    foreach (int hcase in cases){
-                        globals.writeToDebugBox("Lancement recolte case\n", "LimeGreen");
-                        handler.Recolter(hcase);
-                        globals.isHarvesting = true;
-                        while (globals.isHarvesting)
+                        globals.writeToDebugBox(cases.Count + " cases a recolter\n", "LimeGreen");
+                        HarvestHandler handler = new HarvestHandler(globals);
+                        foreach (int hcase in cases)
                         {
+                            globals.writeToDebugBox("Lancement recolte case\n", "LimeGreen");
+                            handler.Recolter(hcase);
+                            globals.isHarvesting = true;
+                            while (globals.isHarvesting)
+                            {
+                                Thread.Sleep(200);
+                            }
+                            globals.writeToDebugBox("Case recoltee\n", "LimeGreen");
                             Thread.Sleep(200);
                         }
-                        globals.writeToDebugBox("Case recoltee\n", "LimeGreen");
-                        Thread.Sleep(200);
-                    }
-                    globals.writeToDebugBox("Changement de map\n", "LimeGreen");
-                    bool[] commandes = globals.listHarvest[actualCoords];
-                    bool isSelected = false;
-                    Random rnd = new Random();
-                    int index = -1;
-                    while (!isSelected)
-                    {
-                        int rnd0 = (int)Math.Round((double)rnd.Next(4));
-                        if (commandes[rnd0])
+                        globals.writeToDebugBox("Changement de map\n", "LimeGreen");
+                        List<int> commandes = globals.listMovements[actualCoords];
+                        bool isSelected = false;
+                        Random rnd = new Random();
+                        int index = (int)Math.Round((double)rnd.Next(commandes.Count));
+
+                        switch (commandes[index])
                         {
-                            index = rnd0;
-                            isSelected = true;
-                        }
-                    }
-                    if (index != -1)
-                    {
-                        switch (index)
-                        {
-                            case 0:
+                            case 10001:
                                 globals.moveHandler.SeDeplacerMap(globals.tpHaut);
                                 break;
-                            case 1:
+                            case 10002:
                                 globals.moveHandler.SeDeplacerMap(globals.tpBas);
                                 break;
-                            case 2:
+                            case 10003:
                                 globals.moveHandler.SeDeplacerMap(globals.tpGauche);
                                 break;
-                            case 3:
+                            case 10004:
                                 globals.moveHandler.SeDeplacerMap(globals.tpDroite);
                                 break;
+                            default:
+                                globals.moveHandler.SeDeplacerMap(commandes[index]);
+                                break;
                         }
+                    }
+                    else if (globals.listMovements.ContainsKey(actualCoords) || globals.listMovements.ContainsKey(actualCoordsOpt))
+                    {
+                        if (globals.listMovements.ContainsKey(actualCoordsOpt))
+                        {
+                            actualCoords = actualCoordsOpt;
+                        }
+                        globals.writeToDebugBox("Map mouvement\n", "LimeGreen");
+                        List<int> commandes = globals.listMovements[actualCoords];
+                        Random rnd = new Random();
+                        int index = (int)Math.Round((double)rnd.Next(commandes.Count));
+
+                        switch (commandes[index])
+                        {
+                            case 10001:
+                                globals.moveHandler.SeDeplacerMap(globals.tpHaut);
+                                break;
+                            case 10002:
+                                globals.moveHandler.SeDeplacerMap(globals.tpBas);
+                                break;
+                            case 10003:
+                                globals.moveHandler.SeDeplacerMap(globals.tpGauche);
+                                break;
+                            case 10004:
+                                globals.moveHandler.SeDeplacerMap(globals.tpDroite);
+                                break;
+                            default:
+                                globals.moveHandler.SeDeplacerMap(commandes[index]);
+                                break;
+                        }
+
                     }
                 }
-                else if (globals.listMovements.ContainsKey(actualCoords))
+                
+            }
+        }
+
+        private void emptyBag()
+        {
+            while (!globals.isInExchange)
+            {
+                globals.writeToDebugBox("Wait dialog end\n", "Purple");
+                Thread.Sleep(200);
+            }
+            List<Item> tempInv = new List<Item>(player.inventaire);
+            foreach(Item item in tempInv)
+            {
+                if (!item.isEquipped)
                 {
-                    globals.writeToDebugBox("Map mouvement\n", "LimeGreen");
-                    bool[] commandes = globals.listMovements[actualCoords];
-                    bool isSelected = false;
-                    Random rnd = new Random();
-                    int index = -1;
-                    while (!isSelected)
+                    globals.writeToDebugBox("Giving " + item.libelle + "\n", "Purple");
+                    int uniqueIDDec = int.Parse(item.uniqueID, System.Globalization.NumberStyles.HexNumber);
+                    globals.game.send("EMO+" + uniqueIDDec + "|" + item.quantite);
+                    globals.removingItem = true;
+                    while (globals.removingItem)
                     {
-                        int rnd0 = (int)Math.Round((double)rnd.Next(4));
-                        if (commandes[rnd0])
-                        {
-                            index = rnd0;
-                            isSelected = true;
-                        }
-                    }
-                    if(index != -1)
-                    {
-                        switch (index)
-                        {
-                            case 0:
-                                globals.moveHandler.SeDeplacerMap(globals.tpHaut);
-                                break;
-                            case 1:
-                                globals.moveHandler.SeDeplacerMap(globals.tpBas);
-                                break;
-                            case 2:
-                                globals.moveHandler.SeDeplacerMap(globals.tpGauche);
-                                break;
-                            case 3:
-                                globals.moveHandler.SeDeplacerMap(globals.tpDroite);
-                                break;
-                        }
+                        globals.writeToDebugBox("Waiting remove item\n", "Purple");
+                        Thread.Sleep(200);
                     }
                 }
             }
+            globals.writeToDebugBox("Inventaire vidé\n", "Purple");
         }
     }
 }

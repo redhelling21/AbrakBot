@@ -24,7 +24,11 @@ namespace AbrakBotWPF.Model.Services
         public bool isMoving = false;
         public bool isHarvesting = false;
         public bool isRunning = false;
+        public bool needsBank = false;
         public bool mapLoaded = false;
+        public bool isInDialog = false;
+        public bool isInExchange = false;
+        public bool removingItem = false;
 
         public TCPPacketHandler connect;
         public TCPPacketHandler game;
@@ -40,9 +44,10 @@ namespace AbrakBotWPF.Model.Services
         public int bloqueGA = 0;
 
         //Trajet
-        public Dictionary<string, bool[]> listMovements = new Dictionary<string, bool[]>();
-        public Dictionary<string, bool[]> listFight = new Dictionary<string, bool[]>();
-        public Dictionary<string, bool[]> listHarvest = new Dictionary<string, bool[]>();
+        public Dictionary<string, List<int>> listMovements = new Dictionary<string, List<int>>();
+        public Dictionary<string, List<int>> listFight = new Dictionary<string, List<int>>();
+        public Dictionary<string, List<int>> listHarvest = new Dictionary<string, List<int>>();
+        public Dictionary<string, List<int>> listBanque = new Dictionary<string, List<int>>();
 
         //Liste des ressources sur la carte actuelle (case, idRessource)
         public Dictionary<Int32, Ressource> actualResources = new Dictionary<Int32, Ressource>();
@@ -60,7 +65,7 @@ namespace AbrakBotWPF.Model.Services
         public Dictionary<Int32, string> maps = new Dictionary<Int32, string>();
 
         public int nombreDeCombat = 0;
-
+        public int podsPercentLimit = 35;
         //Temps necessaire a recolter une ressource
         public int tempsRecolte;
 
@@ -80,6 +85,7 @@ namespace AbrakBotWPF.Model.Services
             execPath = uri.LocalPath;
         }
 
+        #region Actions to UI
         //Demande l'ecriture d'une ligne dans la box principale
         public void writeToMainBox(string text, string color)
         {
@@ -107,6 +113,8 @@ namespace AbrakBotWPF.Model.Services
             var msg = new PlayerJobsChangedMessage() { metiers = player.metiers };
             Messenger.Default.Send<PlayerJobsChangedMessage>(msg);
         }
+
+        #endregion
 
         //Demande l'envoi d'un message en jeu (commerce, recrutement, etc...)
         public void sendMessage(string message)
@@ -179,6 +187,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
+        #region Trajet
         //Recupere la liste des trajets dispos
         public string[] getTrajetList()
         {
@@ -203,6 +212,7 @@ namespace AbrakBotWPF.Model.Services
             bool movement = false;
             bool fight = false;
             bool harvest = false;
+            bool bank = false;
             while ((line = reader.ReadLine()) != null)
             {
                 switch(line.Substring(0, 1))
@@ -216,46 +226,68 @@ namespace AbrakBotWPF.Model.Services
                                 movement = true;
                                 fight = false;
                                 harvest = false;
+                                bank = false;
                                 break;
                             case "Combat":
                                 movement = false;
                                 fight = true;
                                 harvest = false;
+                                bank = false;
                                 break;
                             case "Recolte":
                                 movement = false;
                                 fight = false;
                                 harvest = true;
+                                bank = false;
+                                break;
+                            case "Banque":
+                                movement = false;
+                                fight = false;
+                                harvest = false;
+                                bank = true;
                                 break;
                         }
                         break;
                     case "[":
                         string coords = line.Substring(1).Split(']')[0];
                         string[] commandes = line.Split('>')[1].Split('|');
-                        Dictionary<string, bool[]> list = listMovements;
+                        Dictionary<string, List<int>> list = listMovements;
                         if(fight)
                         {
                             list = listFight;
                         }else if (harvest)
                         {
                             list = listHarvest;
+                        }else if (bank)
+                        {
+                            list = listBanque;
                         }
-                        list.Add(coords, new bool[4]);
+                        list.Add(coords, new List<int>());
                         foreach (string com in commandes)
                         {
                             switch (com)
                             {
                                 case "haut":
-                                    list[coords][0] = true;
+                                    list[coords].Add(10001);
                                     break;
                                 case "bas":
-                                    list[coords][1] = true;
+                                    list[coords].Add(10002);
                                     break;
                                 case "gauche":
-                                    list[coords][2] = true;
+                                    list[coords].Add(10003);
                                     break;
                                 case "droite":
-                                    list[coords][3] = true;
+                                    list[coords].Add(10004);
+                                    break;
+                                case "banque":
+                                    list[coords].Add(9999);
+                                    break;
+                                default:
+                                    int valOut = 0;
+                                    if (Int32.TryParse(com, out valOut))
+                                    {
+                                        list[coords].Add(valOut);
+                                    }
                                     break;
                             }
                         }
@@ -266,6 +298,7 @@ namespace AbrakBotWPF.Model.Services
             writeToMainBox("Trajet " + nom + " chargé\n", "Orange");
             reader.Close();
         }
+        #endregion
 
         //Fait bouger le personnage (utilisé uniquement par la telecommande)
         public void makeAMove(int laCase, bool isMap)

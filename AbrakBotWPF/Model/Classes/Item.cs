@@ -58,12 +58,25 @@ namespace AbrakBotWPF.Model.Classes
             }
         }
 
-        public Item(string uniqueID, int id, string libelle, int quantite)
+        private bool _isEquipped; //Quantite de l'item
+        public bool isEquipped
+        {
+            get { return _isEquipped; }
+            set
+            {
+                if (_isEquipped == value) return;
+                _isEquipped = value;
+                RaisePropertyChanged("isEquipped");
+            }
+        }
+
+        public Item(string uniqueID, int id, string libelle, int quantite, bool isEquipped)
         {
             this.uniqueID = uniqueID;
             this.id = id;
             this.libelle = libelle;
             this.quantite = quantite;
+            this.isEquipped = isEquipped;
         }
     }
 }

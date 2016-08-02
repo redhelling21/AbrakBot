@@ -63,7 +63,7 @@ namespace AbrakBotWPF.Model.Services
             //Recuperation des coordonnees des mapchangers
             do
             {
-                if (globals.mapDataActuelle[num].movement == 2)
+                if (globals.mapDataActuelle[num].movement == 2 || globals.mapDataActuelle[num].movement == 6)
                 {
                     int num2 = getX(num);
                     int num3 = getY(num);

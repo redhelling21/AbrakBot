@@ -1,4 +1,6 @@
 ﻿using AbrakBotWPF.Model.Classes;
+using AbrakBotWPF.Model.Messages;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -83,7 +85,11 @@ namespace AbrakBotWPF.Model.Services
                                 string[] elems = Data.Substring(2).Split('|');
                                 player.pods_max = Int32.Parse(elems[1]);
                                 player.pods = Int32.Parse(elems[0]);
-
+                                if(Math.Round(((float)(player.pods) / player.pods_max) * 100) > globals.podsPercentLimit)
+                                {
+                                    globals.writeToMainBox("Inventaire plein à plus de " + globals.podsPercentLimit + "%. Retour à la banque.\n", "FireBrick");
+                                    globals.needsBank = true;
+                                }
                                 break;
                             case "As"://Infos détaillées sur le perso
                                 Thread.Sleep(100);
@@ -103,6 +109,30 @@ namespace AbrakBotWPF.Model.Services
                                 player.energie = Int32.Parse(en_stats[0]);
 
 
+                                break;
+                            case "AS"://Reception des infos générales du perso (nom, lvl, inventaire...)
+                                Thread.Sleep(100);
+                                string[] player_stats2 = Data.Split('|');
+                                player.pseudo = player_stats2[2];
+                                player.level = Int32.Parse(player_stats2[3]);
+                                globals.isConnected = true;
+                                string[] inv = player_stats2[10].Split(';');
+                                foreach (string item in inv)
+                                {
+                                    if (item != "")
+                                    {
+                                        string[] item_stats = item.Split('~');
+                                        int it_id = int.Parse(item_stats[1], System.Globalization.NumberStyles.HexNumber);
+                                        int it_qte = int.Parse(item_stats[2], System.Globalization.NumberStyles.HexNumber);
+                                        if (it_id < 10565)
+                                        {
+                                            player.inventaire.Add(new Item(item_stats[0], it_id, globals.objects[it_id], it_qte, (item_stats[3] != "")));
+                                        }
+                                    }
+
+                                }
+                                var msg = new InventoryChangedMessage() { inventory = player.inventaire };
+                                Messenger.Default.Send<InventoryChangedMessage>(msg);
                                 break;
                             case "al"://?
                                 globals.game.send("GC1");
@@ -267,6 +297,46 @@ namespace AbrakBotWPF.Model.Services
                                 break;
                             case "am":
                                 //Aucune idée de ce que c'est
+                                break;
+                            case "DC"://Dialog create 
+                                globals.isInDialog = true;
+                                break;
+                            case "DQ"://Question pnj
+                                int idQuestion = Int32.Parse(Data.Substring(2).Split(';')[0]);
+                                if(idQuestion == 318)//Banque
+                                {
+                                    globals.game.send("DR318|259");//Acces a la banque
+                                }
+                                break;
+                            case "EC":
+                                //Type echange
+                                break;
+                            case "DV":
+                                //Lancement echange
+                                globals.isInDialog = false;
+                                globals.isInExchange = true;
+                                break;
+                            case "Es"://Echange d'un item ok
+                                //
+                                break;
+                            case "EL"://Contenu banque
+                                //Inutile pour l'instant
+                                break;
+                            case "OR"://item remove
+                                string idUnique = Data.Substring(2);
+                                Item toDelete = null;
+                                foreach (Item item in player.inventaire)
+                                {
+                                    if(item.uniqueID == idUnique)
+                                    {
+                                        toDelete = item;
+                                    }
+                                }
+                                player.inventaire.Remove(toDelete);
+                                globals.removingItem = false;
+                                break;
+                            case "EV"://fin echange
+                                globals.isInExchange = false;
                                 break;
                             default:
                                 globals.writeToDebugBox("Case inconnu\n", "Blue");

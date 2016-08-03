@@ -171,7 +171,7 @@
                         <TextBlock Text="Rapport" />
                     </StackPanel>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="White"/>
             </TabItem>
             <TabItem>
                 <TabItem.Header>

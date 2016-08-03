@@ -131,7 +131,7 @@ namespace AbrakBotWPF.Model.Services
                             Thread.Sleep(200);
                         }
                         globals.writeToDebugBox("Changement de map\n", "LimeGreen");
-                        List<int> commandes = globals.listMovements[actualCoords];
+                        List<int> commandes = globals.listHarvest[actualCoords];
                         bool isSelected = false;
                         Random rnd = new Random();
                         int index = (int)Math.Round((double)rnd.Next(commandes.Count));

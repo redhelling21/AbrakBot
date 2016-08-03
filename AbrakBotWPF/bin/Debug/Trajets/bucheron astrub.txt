@@ -9,8 +9,8 @@
 [4,-26]->gauche
 [-3,-25]->droite
 [4,-25]->gauche
-[-3,-24]->droite
-[4,-24]->gauche
+[3,-24]->droite
+[4,-24]->haut
 [5,-24]->gauche
 [6,-24]->gauche
 [-2,-23]->haut

@@ -65,7 +65,7 @@ namespace AbrakBotWPF.Model.Services
         public Dictionary<Int32, string> maps = new Dictionary<Int32, string>();
 
         public int nombreDeCombat = 0;
-        public int podsPercentLimit = 35;
+        public int podsPercentLimit = 90;
         //Temps necessaire a recolter une ressource
         public int tempsRecolte;
 

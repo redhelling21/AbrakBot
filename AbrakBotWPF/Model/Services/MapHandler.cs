@@ -63,7 +63,7 @@ namespace AbrakBotWPF.Model.Services
             //Recuperation des coordonnees des mapchangers
             do
             {
-                if (globals.mapDataActuelle[num].movement == 2 || globals.mapDataActuelle[num].movement == 6)
+                if (globals.mapDataActuelle[num].movement == 2)
                 {
                     int num2 = getX(num);
                     int num3 = getY(num);
@@ -91,26 +91,46 @@ namespace AbrakBotWPF.Model.Services
                 num++;
             }
             while (globals.mapDataActuelle[num + 1] != null && num <= 500);
+            //recuperation avec les movement = 6
+            num = 0;
+            do
+            {
+                if (globals.mapDataActuelle[num].movement == 6)
+                {
+                    int num2 = getX(num);
+                    int num3 = getY(num);
+                    if ((num2 - 1) == num3 && globals.tpGauche == -1)
+                    {
+                        globals.tpGauche = num;
+                    }
+                    else if ((num2 - 0x1b) == num3 && globals.tpDroite == -1)
+                    {
+                        globals.tpDroite = num;
+                    }
+                    else if ((num2 + num3) == 0x1f && globals.tpBas == -1)
+                    {
+                        globals.tpBas = num;
+                    }
+                    else if (num3 < 0)
+                    {
+                        num3 = Math.Abs(num3);
+                        if ((num2 - num3) == 1 && globals.tpHaut == -1)
+                        {
+                            globals.tpHaut = num;
+                        }
+                    }
+                }
+                num++;
+            }
+            while (globals.mapDataActuelle[num + 1] != null && num <= 500);
 
             //Si la map fait partie de la liste des maps avec des mapchangers foireux
             if (globals.mapchangers.ContainsKey(globals.currentMapId))
             {
-                if (globals.tpHaut == -1)
-                {
-                    globals.tpHaut = globals.mapchangers[globals.currentMapId][0];
-                }
-                if (globals.tpBas == -1)
-                {
-                    globals.tpBas = globals.mapchangers[globals.currentMapId][1];
-                }
-                if (globals.tpGauche == -1)
-                {
-                    globals.tpGauche = globals.mapchangers[globals.currentMapId][2];
-                }
-                if (globals.tpDroite == -1)
-                {
-                    globals.tpDroite = globals.mapchangers[globals.currentMapId][3];
-                }
+                globals.tpHaut = globals.mapchangers[globals.currentMapId][0];
+                globals.tpBas = globals.mapchangers[globals.currentMapId][1];
+                globals.tpGauche = globals.mapchangers[globals.currentMapId][2];
+                globals.tpDroite = globals.mapchangers[globals.currentMapId][3];
             }
             LoadRessources(globals.mapDataActuelle);
 

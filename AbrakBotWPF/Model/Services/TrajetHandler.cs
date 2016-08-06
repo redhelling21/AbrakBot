@@ -105,36 +105,48 @@ namespace AbrakBotWPF.Model.Services
                             actualCoords = actualCoordsOpt;
                         }
                         globals.writeToDebugBox("Map de recolte\n", "LimeGreen");
-                        List<int> cases = new List<int>();
-                        foreach (KeyValuePair<Int32, Ressource> entry in globals.actualResources)
-                        {
-                            if (player.harvestables.Contains(entry.Value.id))
-                            {
-                                if (entry.Key != 0)
-                                {
-                                    cases.Add(entry.Key);
-                                }
-                            }
-                        }
-                        globals.writeToDebugBox(cases.Count + " cases a recolter\n", "LimeGreen");
+                        
+                        Random rnd = new Random();
                         HarvestHandler handler = new HarvestHandler(globals);
-                        foreach (int hcase in cases)
+                        while (globals.actualResources.Count > 0)
                         {
-                            globals.writeToDebugBox("Lancement recolte case\n", "LimeGreen");
-                            handler.Recolter(hcase);
-                            globals.isHarvesting = true;
-                            while (globals.isHarvesting)
+                            globals.writeToDebugBox("Boucle ressource\n", "LimeGreen");
+                            if (globals.needsBank)
                             {
+                                break;
+                            }
+                            int ind = (int)Math.Round((double)rnd.Next(globals.actualResources.Count));
+                            KeyValuePair<int, Ressource> entry = globals.actualResources.ElementAt(ind);
+                            if (!player.harvestables.Contains(entry.Value.id))
+                            {
+                                globals.actualResources.Remove(entry.Key);
+                            }else
+                            {
+                                globals.writeToDebugBox("Lancement recolte case\n", "LimeGreen");
+                                handler.Recolter(entry.Key);
+                                globals.isHarvesting = true;
+                                int count = 0;
+                                while (globals.isHarvesting)
+                                {
+                                    Thread.Sleep(200);
+                                    count++;
+                                    if (count >= 150)
+                                    {
+                                        globals.writeToMainBox("Timeout temps de recolte\n", "FireBrick");
+                                        globals.writeToDebugBox("Timeout temps de recolte\n", "FireBrick");
+                                        globals.isHarvesting = false;
+                                    }
+                                }
+                                globals.writeToDebugBox("Case recoltee\n", "LimeGreen");
                                 Thread.Sleep(200);
                             }
-                            globals.writeToDebugBox("Case recoltee\n", "LimeGreen");
-                            Thread.Sleep(200);
+                            
                         }
                         globals.writeToDebugBox("Changement de map\n", "LimeGreen");
                         List<int> commandes = globals.listHarvest[actualCoords];
                         bool isSelected = false;
-                        Random rnd = new Random();
-                        int index = (int)Math.Round((double)rnd.Next(commandes.Count));
+                        Random rnd2 = new Random();
+                        int index = (int)Math.Round((double)rnd2.Next(commandes.Count));
 
                         switch (commandes[index])
                         {

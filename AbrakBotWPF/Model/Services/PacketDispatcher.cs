@@ -69,6 +69,13 @@ namespace AbrakBotWPF.Model.Services
                                             if (globals.actualResources.ContainsKey(Int32.Parse(res_datas[1].Split(';')[0]))) {
                                                 globals.actualResources.Remove(Int32.Parse(res_datas[1].Split(';')[0]));
                                             }
+                                        }else
+                                        {
+                                            int caseRepop = Int32.Parse(res_datas[1].Split(';')[0]);
+                                            if (!globals.actualResources.ContainsKey(caseRepop) && globals.idResourcesTranslate.ContainsKey(globals.mapDataActuelle[caseRepop].layerObject2Num))
+                                            {
+                                                globals.actualResources.Add(caseRepop, new Ressource(globals.idResourcesTranslate[globals.mapDataActuelle[caseRepop].layerObject2Num], caseRepop, globals.ressources[globals.mapDataActuelle[caseRepop].layerObject2Num], true));
+                                            }
                                         }
                                         break;
                                     case "K":

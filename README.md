@@ -1,13 +1,20 @@
 # AbrakBot
 
 A venir :
+- Gerer quand le bot se fait piquer une ressource
+- Gestion de la réapparition des ressources
+- Log d'une recolte (annonce dans le chat)
+- Rapport (stats sur les récoltes)
+- Timeouts de placement
+- Eviter d'aller sur les cases contenant des monstres
+- Ameliorer deco / stop trajet
+- MAJ auto du status sur l'ui (harvesting, ...)
+- clic droit item inventaire
+- maj de l'inventaire au fur et a mesure de la recolte
 - Gestion des Threads complète (retrait des sleeps)
-- Gestion du retour en banque lorsque l'inventaire est plein
-- Refonte de la structure du projet pour passer sur un pattern MVP (et arr^ter de se servir de membres statiques partout).
-- Gestion du multi-compte
 
 Plus tard :
 - Gestion des métiers de craft
 - Gestion des combats
 - Gestion des zaaps
-- Passage de l'interface graphique en WPF (actuellement Winforms, trop vieux)
+- Gestion du multi-compte

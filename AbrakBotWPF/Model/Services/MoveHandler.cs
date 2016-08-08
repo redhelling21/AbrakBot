@@ -11,11 +11,13 @@ namespace AbrakBotWPF.Model.Services
     public class MoveHandler
     {
         private Globals globals;
+        private Player player;
         private int CaseDuDeplacement;
 
-        public MoveHandler(Globals glob)
+        public MoveHandler(Globals glob, Player play)
         {
             this.globals = glob;
+            this.player = play;
         }
 
         //Lance le deplacement vers une case
@@ -145,111 +147,7 @@ namespace AbrakBotWPF.Model.Services
 
         }
 
-        //Gere le packet de mouvement
-        public void handleMove(string packet)
-        {
-            //est-on en combat ?
-            if (!globals.isFighting)
-            {
-                string extraData = packet.Substring(2);
-                string[] datas = extraData.Split('|');
-
-                for (int i = 0; i <= datas.Length - 1; i++)
-                {
-
-                    if (datas[i] != "" && datas[i].Substring(0, 1) == "+")
-                    {
-                        string[] playerData = datas[i].Split(';');
-
-                        string typeS = playerData[5];
-                        int type = 0;
-                        if (typeS.Contains(","))
-                        {
-                            type = Int32.Parse(typeS.Split(',')[0]);
-                        }
-                        else
-                        {
-                            type = Int32.Parse(typeS);
-                        }
-
-
-                        if ((type > 0))
-                        {
-                            int cell = Int32.Parse(playerData[0]);
-                            int dir = Int32.Parse(playerData[1]);
-                            string id = playerData[3];
-                            string nom = playerData[4];
-                            string guilde = playerData[16];
-                            if (string.IsNullOrEmpty(guilde))
-                                guilde = "Aucune";
-
-                            string[] aligmentData = playerData[8].Split(',');
-                            int align = Int32.Parse(aligmentData[0]);
-                            int align2 = Int32.Parse(aligmentData[1]);
-                            string alignement = "";
-                            switch (align)
-                            {
-                                case 0:
-                                    alignement = "Neutre";
-                                    break;
-                                case 1:
-                                    alignement = "Bontarien";
-                                    break;
-                                case 2:
-                                    alignement = "Brakmarien";
-                                    break;
-                            }
-                            if ((string.IsNullOrEmpty(alignement)))
-                            {
-                                switch (align2)
-                                {
-                                    case 0:
-                                        alignement = "Neutre";
-                                        break;
-                                    case 1:
-                                        alignement = "Bontarien";
-                                        break;
-                                    case 2:
-                                        alignement = "Brakmarien";
-                                        break;
-                                }
-                            }
-
-                            if ((id == Config.defaultCharacterId.ToString()))
-                            {
-                                globals.caseActuelle = cell;
-                                globals.writeToDebugBox("(via GM) CaseActuelle : " + cell + "\n", "Orange");
-                            }
-
-                            int lvlCrypt = Int32.Parse(aligmentData[3]);
-                            string level = (lvlCrypt - Int32.Parse(id)).ToString();
-
-
-
-                        }
-                        else if (type == -3)
-                        {
-                            string cell = playerData[0];
-                            string id = playerData[3];
-
-
-                        }
-
-
-                    }
-                    else if (datas[i] != "" && datas[i].Substring(0, 1) == "-")
-                    {
-                        
-
-
-                    }
-
-                }
-
-            }
-
-
-        }
+        
 
         //Calcule la distance entre deux points
         public double distance(int pos1, int pos2)

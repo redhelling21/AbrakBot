@@ -59,6 +59,28 @@ namespace AbrakBotWPF.Model.Services
                 globals.idResourcesTranslate.Add(Int32.Parse(splitLine[0]), Int32.Parse(splitLine[1]));
             }
             file.Close();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                globals.sortsMin[i] = -1;
+                globals.sortsMax[i] = -1;
+            }
+
+            file = new StreamReader(uri.LocalPath + "sorts.txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                string id = line.Split(':')[0];
+                string sort = line.Split(':')[1];
+                if (line.Split(':').Length == 4)
+                {
+                    globals.sortsMin[Int32.Parse(id)] = Int32.Parse(line.Split(':')[2]);
+                    globals.sortsMax[Int32.Parse(id)] = Int32.Parse(line.Split(':')[3]);
+                }
+
+            }
+            file.Close();
+
+
         }
     }
 }

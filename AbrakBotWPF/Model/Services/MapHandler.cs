@@ -308,7 +308,7 @@ namespace AbrakBotWPF.Model.Services
         }
 
         //Calcule l'abscisse de la case
-        public int getX(int laCase)
+        public static int getX(int laCase)
         {
 
             int _loc5 = (int)Math.Floor((float)laCase / (15 * 2 - 1));
@@ -320,7 +320,7 @@ namespace AbrakBotWPF.Model.Services
         }
 
         //Calcule l'ordonnee de la case
-        public int getY(int laCase)
+        public static int getY(int laCase)
         {
 
             int _loc5 = (int)Math.Floor((float)laCase / (15 * 2 - 1));
@@ -330,6 +330,8 @@ namespace AbrakBotWPF.Model.Services
             return _loc8;
 
         }
+
+
 
 
     }

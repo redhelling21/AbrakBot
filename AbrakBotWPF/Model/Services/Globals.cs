@@ -18,22 +18,69 @@ namespace AbrakBotWPF.Model.Services
     {
         public string execPath;
         public Player player;
+
+        #region booleens d'etat
+        private bool _isFighting = false;
+        private bool _isMoving = false;
+        private bool _isHarvesting = false;
+        private bool _isInExchange = false;
+        public bool isFighting
+        {
+            get { return _isFighting; }
+            set
+            {
+                _isFighting = value;
+                var msg = new PlayerStateChangedMessage() { isFighting = _isFighting, isHarvesting = _isHarvesting, isInExchange = _isInExchange, isMoving = _isMoving };
+                Messenger.Default.Send<PlayerStateChangedMessage>(msg);
+            }
+        }
+        public bool isMoving
+        {
+            get { return _isMoving; }
+            set
+            {
+                _isMoving = value;
+                var msg = new PlayerStateChangedMessage() { isFighting = _isFighting, isHarvesting = _isHarvesting, isInExchange = _isInExchange, isMoving = _isMoving };
+                Messenger.Default.Send<PlayerStateChangedMessage>(msg);
+            }
+        }
+        public bool isHarvesting
+        {
+            get { return _isHarvesting; }
+            set
+            {
+                _isHarvesting = value;
+                var msg = new PlayerStateChangedMessage() { isFighting = _isFighting, isHarvesting = _isHarvesting, isInExchange = _isInExchange, isMoving = _isMoving };
+                Messenger.Default.Send<PlayerStateChangedMessage>(msg);
+            }
+        }
+        public bool isInExchange
+        {
+            get { return _isInExchange; }
+            set
+            {
+                _isInExchange = value;
+                var msg = new PlayerStateChangedMessage() { isFighting = _isFighting, isHarvesting = _isHarvesting, isInExchange = _isInExchange, isMoving = _isMoving };
+                Messenger.Default.Send<PlayerStateChangedMessage>(msg);
+            }
+        }
+        #endregion
+
         public bool isConnected = false;
-        public bool isFighting = false;
         public bool isInGame = false;
-        public bool isMoving = false;
-        public bool isHarvesting = false;
         public bool isRunning = false;
         public bool needsBank = false;
         public bool mapLoaded = false;
         public bool isInDialog = false;
-        public bool isInExchange = false;
         public bool removingItem = false;
+        public bool isDead = false;
+        public bool isRegenerating = false;
 
         public TCPPacketHandler connect;
         public TCPPacketHandler game;
         public MoveHandler moveHandler;
         public TrajetHandler trajetHandler;
+        public FightHandler fightHandler;
         public MapHandler mapHandler;
 
         public int caseActuelle;
@@ -61,6 +108,8 @@ namespace AbrakBotWPF.Model.Services
         public Dictionary<Int32, string> ressources = new Dictionary<Int32, string>();
         //Contient tous les id des sorts (id, nomSort)
         public Dictionary<Int32, string> sorts = new Dictionary<Int32, string>();
+        public int[] sortsMin = new int[1000];
+        public int[] sortsMax = new int[1000];
         //Contient tous les id des maps (id, coordonnees)
         public Dictionary<Int32, string> maps = new Dictionary<Int32, string>();
 
@@ -72,8 +121,9 @@ namespace AbrakBotWPF.Model.Services
         public Globals()
         {
             player = new Classes.Player();
-            moveHandler = new MoveHandler(this);
+            moveHandler = new MoveHandler(this, player);
             trajetHandler = new TrajetHandler(this, player);
+            fightHandler = new FightHandler(this, player);
             mapHandler = new MapHandler(this);
         }
 

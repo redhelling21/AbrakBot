@@ -150,6 +150,7 @@ namespace AbrakBotWPF.Model.Services
                                     Console.WriteLine("Quel perso ?");
                                     character_id = Console.ReadLine();
                                 }
+                                player.id = character_id;
                                 globals.game.send("AS" + character_id);
                                 globals.game.send("Af");
 

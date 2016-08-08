@@ -39,7 +39,10 @@
             </ToolBar>
         </ToolBarTray>
         <StatusBar Margin="0,388,0,0">
-            <StatusBarItem Height="25" VerticalAlignment="Top">
+            <StatusBarItem Height="25" VerticalAlignment="Top" Margin="5,0,0,0">
+                <TextBlock x:Name="stateLabel" Text="{Binding stateText}" FontWeight="Bold" Width="70"/>
+            </StatusBarItem>
+            <StatusBarItem Height="25" VerticalAlignment="Top" Margin="10,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/coins.png" Margin="0,0,5,0" />
                     <TextBlock x:Name="kamasLabel" Text="{Binding kamas}" />
@@ -48,7 +51,7 @@
             <StatusBarItem Height="25" VerticalAlignment="Top" Margin="15,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/hearts.png" Margin="0,0,5,0" />
-                    <ProgressBar x:Name="pdvBar" Height="15" Width="100" Foreground="#FFFF4242" Value="{Binding barPDV}" BorderBrush="#FFB8B8B8"/>
+                    <ProgressBar x:Name="pdvBar" Height="15" Width="80" Foreground="#FFFF4242" Value="{Binding barPDV}" BorderBrush="#FFB8B8B8"/>
                     <TextBlock x:Name="pdvLabel" Text="{Binding percentPDV}" Margin="5,0,0,0" />
                 </StackPanel>
             </StatusBarItem>
@@ -56,29 +59,29 @@
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/favorite.png" Margin="0,0,5,0" />
                     <TextBlock x:Name="lvlLabel" Text="{Binding lvl}" Margin="5,0,5,0" />
-                    <ProgressBar x:Name="xpBar" Height="15" Width="100" Value="{Binding barXP}" Foreground="#FFFFE753"/>
+                    <ProgressBar x:Name="xpBar" Height="15" Width="80" Value="{Binding barXP}" Foreground="#FFFFE753"/>
                     <TextBlock x:Name="xpLabel" Text="{Binding percentXP}" Margin="5,0,0,0" />
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem Height="25" VerticalAlignment="Top" Margin="15,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/balance.png" Margin="0,0,5,0" />
-                    <ProgressBar x:Name="podsBar" Height="15" Width="100" Value="{Binding barPods}" Foreground="#FF61451E"/>
+                    <ProgressBar x:Name="podsBar" Height="15" Width="80" Value="{Binding barPods}" Foreground="#FF61451E"/>
                     <TextBlock x:Name="podsLabel" Text="{Binding percentPods}" Margin="5,0,0,0" />
                 </StackPanel>
             </StatusBarItem>
             <StatusBarItem Height="25" VerticalAlignment="Top" Margin="15,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="imgs/bolt.png" Margin="0,0,5,0" />
-                    <ProgressBar x:Name="enerBar" Height="15" Width="100" Value="{Binding barEner}" Foreground="#FF65ABFF"/>
+                    <ProgressBar x:Name="enerBar" Height="15" Width="80" Value="{Binding barEner}" Foreground="#FF65ABFF"/>
                     <TextBlock x:Name="enerLabel" Text="{Binding percentEner}" Margin="5,0,0,0" />
                 </StackPanel>
             </StatusBarItem>
-            <StatusBarItem Height="25" VerticalAlignment="Top" Margin="75,0,0,0">
+            <StatusBarItem Height="25" VerticalAlignment="Top" Margin="15,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="charNameLabel" Text="{Binding pseudo}" Margin="5,0,0,0" />
                     <TextBlock Text=" - " Margin="5,0,0,0" />
-                    <TextBlock x:Name="mapCoordLabel" Text="{Binding mapCoords}" Margin="5,0,0,0" />
+                    <TextBlock x:Name="mapCoordLabel" Text="{Binding mapCoords}" Margin="5,0,0,0" FontWeight="Bold"/>
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
@@ -91,7 +94,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="mainBox" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
+                    <RichTextBox x:Name="mainBox" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20" IsReadOnly="True">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0"/>
@@ -213,7 +216,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="#FFE5E5E5">
-                    <RichTextBox x:Name="debugBox" VerticalScrollBarVisibility="Auto">
+                    <RichTextBox x:Name="debugBox" VerticalScrollBarVisibility="Auto" IsReadOnly="True">
                         <RichTextBox.Resources>
                             <Style TargetType="{x:Type Paragraph}">
                                 <Setter Property="Margin" Value="0"/>

@@ -47,6 +47,9 @@ namespace AbrakBotWPF.ViewModel
             Messenger.Default.Register<InventoryChangedMessage>(this,
                  (inventoryChangedMessage) => ReceiveInventoryChanged(inventoryChangedMessage)
             );
+            Messenger.Default.Register<PlayerStateChangedMessage>(this,
+                 (playerStateChangedMessage) => ReceivePlayerStateChanged(playerStateChangedMessage)
+            );
             ConnectCommand = new RelayCommand(connect);
             TelecommandeCommand = new RelayCommand(telecommande);
             TestCommand = new RelayCommand(test);
@@ -231,6 +234,17 @@ namespace AbrakBotWPF.ViewModel
         }
 
         #region STATUSBAR
+        //ETAT
+        private string _stateText = "Inactif";
+        public string stateText
+        {
+            get { return _stateText; }
+            set
+            {
+                _stateText = value;
+                RaisePropertyChanged("stateText");
+            }
+        }
         //XP
         private int _barXP = 0;
         public int barXP
@@ -408,6 +422,7 @@ namespace AbrakBotWPF.ViewModel
                 window.mainBox.Dispatcher.Invoke((Action)(() =>
                 {
                     window.mainBox.AppendText(action.text, action.color);
+                    window.mainBox.ScrollToEnd();
                 }));
             }
             else if (action.boxType == "debug")
@@ -415,6 +430,7 @@ namespace AbrakBotWPF.ViewModel
                 window.mainBox.Dispatcher.Invoke((Action)(() =>
                 {
                     window.debugBox.AppendText(action.text, action.color);
+                    window.debugBox.ScrollToEnd();
                 }));
             }
         }
@@ -502,6 +518,28 @@ namespace AbrakBotWPF.ViewModel
                 }
             });
 
+        }
+
+        private void ReceivePlayerStateChanged(PlayerStateChangedMessage action)
+        {
+            if (action.isInExchange)
+            {
+                stateText = "Echange";
+            }
+            else if (action.isFighting)
+            {
+                stateText = "Combat";
+            }else if (action.isMoving)
+            {
+                stateText = "Mouvement";
+            }else if (action.isHarvesting)
+            {
+                stateText = "Recolte";
+            }
+            else
+            {
+                stateText = "Inactif";
+            }
         }
 
         #endregion

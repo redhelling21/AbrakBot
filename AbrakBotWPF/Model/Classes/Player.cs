@@ -27,6 +27,7 @@ namespace AbrakBotWPF.Model.Classes
         public List<Int32> harvestables = new List<Int32>();
         public List<Metier> metiers = new List<Metier>();
         public List<Item> inventaire = new List<Item>();
+        public string id;
 
         //L'ensemble de ces proprietes envoie un message au ViewModel lorsqu'elles sont mises a jour
 

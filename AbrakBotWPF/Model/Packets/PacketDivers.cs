@@ -32,8 +32,25 @@ namespace AbrakBotWPF
                     string[] en_stats = player_stats[6].Split(',');
                     player.energie_max = Int32.Parse(en_stats[1]);
                     player.energie = Int32.Parse(en_stats[0]);
+                    
+                    player.initiative = Int32.Parse(player_stats[7]);
+                    player.prospection = Int32.Parse(player_stats[8]);
+                    player.PA = Int32.Parse(player_stats[9].Split(',')[4]);
+                    player.PM = Int32.Parse(player_stats[10].Split(',')[4]);
 
+                    string[] force_stats = player_stats[11].Split(',');
+                    string[] vita_stats = player_stats[12].Split(',');
+                    string[] sagesse_stats = player_stats[13].Split(',');
+                    string[] intel_stats = player_stats[16].Split(',');
+                    string[] chance_stats = player_stats[14].Split(',');
+                    string[] agi_stats = player_stats[15].Split(',');
 
+                    player.force = Int32.Parse(force_stats[0]) + Int32.Parse(force_stats[1]) + Int32.Parse(force_stats[2]) + Int32.Parse(force_stats[3]);
+                    player.vie = Int32.Parse(vita_stats[0]) + Int32.Parse(vita_stats[1]) + Int32.Parse(vita_stats[2]) + Int32.Parse(vita_stats[3]);
+                    player.sagesse = Int32.Parse(sagesse_stats[0]) + Int32.Parse(sagesse_stats[1]) + Int32.Parse(sagesse_stats[2]) + Int32.Parse(sagesse_stats[3]);
+                    player.intelligence = Int32.Parse(intel_stats[0]) + Int32.Parse(intel_stats[1]) + Int32.Parse(intel_stats[2]) + Int32.Parse(intel_stats[3]);
+                    player.chance = Int32.Parse(chance_stats[0]) + Int32.Parse(chance_stats[1]) + Int32.Parse(chance_stats[2]) + Int32.Parse(chance_stats[3]);
+                    player.agilite = Int32.Parse(agi_stats[0]) + Int32.Parse(agi_stats[1]) + Int32.Parse(agi_stats[2]) + Int32.Parse(agi_stats[3]);
                     break;
                 case "AS"://Reception des infos générales du perso (nom, lvl, inventaire...)
                     Thread.Sleep(100);

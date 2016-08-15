@@ -195,6 +195,21 @@
     <Resource Include="imgs\fist.png" />
     <Resource Include="imgs\settings.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\man-user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\Action_Point.png" />
+    <Resource Include="imgs\Agility.png" />
+    <Resource Include="imgs\Chance.png" />
+    <Resource Include="imgs\Health_Point.png" />
+    <Resource Include="imgs\Initiative.png" />
+    <Resource Include="imgs\Intelligence.png" />
+    <Resource Include="imgs\Movement_Point.png" />
+    <Resource Include="imgs\Strength.png" />
+    <Resource Include="imgs\Vitality.png" />
+    <Resource Include="imgs\Wisdom.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

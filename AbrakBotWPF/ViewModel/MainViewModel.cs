@@ -236,7 +236,7 @@ namespace AbrakBotWPF.ViewModel
             }
         }
 
-
+        #region REPORTTAB
         private int _resourceCount = 0;
         public int resourceCount
         {
@@ -258,6 +258,119 @@ namespace AbrakBotWPF.ViewModel
                 RaisePropertyChanged("nodeCount");
             }
         }
+        #endregion
+
+        #region PERSOTAB
+        private string _PA = "0";
+        public string PA
+        {
+            get { return _PA; }
+            set
+            {
+                _PA = value;
+                RaisePropertyChanged("PA");
+            }
+        }
+
+        private string _PM = "0";
+        public string PM
+        {
+            get { return _PM; }
+            set
+            {
+                _PM = value;
+                RaisePropertyChanged("PM");
+            }
+        }
+
+        private string _initiative = "0";
+        public string initiative
+        {
+            get { return _initiative; }
+            set
+            {
+                _initiative = value;
+                RaisePropertyChanged("initiative");
+            }
+        }
+
+        private string _prospection = "0";
+        public string prospection
+        {
+            get { return _prospection; }
+            set
+            {
+                _prospection = value;
+                RaisePropertyChanged("prospection");
+            }
+        }
+
+        private string _vie = "0";
+        public string vie
+        {
+            get { return _vie; }
+            set
+            {
+                _vie = value;
+                RaisePropertyChanged("vie");
+            }
+        }
+
+        private string _force = "0";
+        public string force
+        {
+            get { return _force; }
+            set
+            {
+                _force = value;
+                RaisePropertyChanged("force");
+            }
+        }
+
+        private string _sagesse = "0";
+        public string sagesse
+        {
+            get { return _sagesse; }
+            set
+            {
+                _sagesse = value;
+                RaisePropertyChanged("sagesse");
+            }
+        }
+
+        private string _intelligence = "0";
+        public string intelligence
+        {
+            get { return _intelligence; }
+            set
+            {
+                _intelligence = value;
+                RaisePropertyChanged("intelligence");
+            }
+        }
+
+        private string _chance = "0";
+        public string chance
+        {
+            get { return _chance; }
+            set
+            {
+                _chance = value;
+                RaisePropertyChanged("chance");
+            }
+        }
+
+        private string _agilite = "0";
+        public string agilite
+        {
+            get { return _agilite; }
+            set
+            {
+                _agilite = value;
+                RaisePropertyChanged("agilite");
+            }
+        }
+        #endregion
 
         #region STATUSBAR
         //ETAT
@@ -489,6 +602,36 @@ namespace AbrakBotWPF.ViewModel
                     break;
                 case "pseudo":
                     pseudo = action.valString;
+                    break;
+                case "PA":
+                    PA = action.value.ToString();
+                    break;
+                case "PM":
+                    PM = action.value.ToString();
+                    break;
+                case "initiative":
+                    initiative = action.value.ToString();
+                    break;
+                case "prospection":
+                    prospection = action.value.ToString();
+                    break;
+                case "vie":
+                    vie = action.value.ToString();
+                    break;
+                case "sagesse":
+                    sagesse = action.value.ToString();
+                    break;
+                case "force":
+                    force = action.value.ToString();
+                    break;
+                case "intelligence":
+                    intelligence  = action.value.ToString();
+                    break;
+                case "chance":
+                    chance = action.value.ToString();
+                    break;
+                case "agilite":
+                    agilite = action.value.ToString();
                     break;
             }
         }

@@ -24,6 +24,16 @@ namespace AbrakBotWPF.Model.Classes
         private int _pods;
         private int _pods_max;
         private string _pseudo;
+        private int _PA;
+        private int _PM;
+        private int _initiative;
+        private int _prospection;
+        private int _vie;
+        private int _sagesse;
+        private int _force;
+        private int _intelligence;
+        private int _chance;
+        private int _agilite;
         public List<Int32> harvestables = new List<Int32>();
         public List<Metier> metiers = new List<Metier>();
         public List<Item> inventaire = new List<Item>();
@@ -189,6 +199,157 @@ namespace AbrakBotWPF.Model.Classes
             {
                 _pseudo = value;
                 var msg = new PlayerStatChangedMessage() { stat = "pseudo", valString = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+        public int PA
+        {
+            get
+            {
+                return _PA;
+            }
+
+            set
+            {
+                _PA = value;
+                var msg = new PlayerStatChangedMessage() { stat = "PA", value = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+        public int PM
+        {
+            get
+            {
+                return _PM;
+            }
+
+            set
+            {
+                _PM = value;
+                var msg = new PlayerStatChangedMessage() { stat = "PM", value = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+        public int initiative
+        {
+            get
+            {
+                return _initiative;
+            }
+
+            set
+            {
+                _initiative = value;
+                var msg = new PlayerStatChangedMessage() { stat = "initiative", value = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+        public int prospection
+        {
+            get
+            {
+                return _prospection;
+            }
+
+            set
+            {
+                _prospection = value;
+                var msg = new PlayerStatChangedMessage() { stat = "prospection", value = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+
+        public int vie
+        {
+            get
+            {
+                return _vie;
+            }
+
+            set
+            {
+                _vie = value;
+                var msg = new PlayerStatChangedMessage() { stat = "vie", value = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+        public int sagesse
+        {
+            get
+            {
+                return _sagesse;
+            }
+
+            set
+            {
+                _sagesse = value;
+                var msg = new PlayerStatChangedMessage() { stat = "sagesse", value = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+        public int force
+        {
+            get
+            {
+                return _force;
+            }
+
+            set
+            {
+                _force = value;
+                var msg = new PlayerStatChangedMessage() { stat = "force", value = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+        public int intelligence
+        {
+            get
+            {
+                return _intelligence;
+            }
+
+            set
+            {
+                _intelligence = value;
+                var msg = new PlayerStatChangedMessage() { stat = "intelligence", value = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+        public int chance
+        {
+            get
+            {
+                return _chance;
+            }
+
+            set
+            {
+                _chance = value;
+                var msg = new PlayerStatChangedMessage() { stat = "chance", value = value };
+                Messenger.Default.Send<PlayerStatChangedMessage>(msg);
+            }
+        }
+
+        public int agilite
+        {
+            get
+            {
+                return _agilite;
+            }
+
+            set
+            {
+                _agilite = value;
+                var msg = new PlayerStatChangedMessage() { stat = "agilite", value = value };
                 Messenger.Default.Send<PlayerStatChangedMessage>(msg);
             }
         }

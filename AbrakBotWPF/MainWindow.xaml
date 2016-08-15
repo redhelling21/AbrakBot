@@ -6,7 +6,7 @@
         mc:Ignorable="d" 
         xmlns:local="clr-namespace:AbrakBotWPF"
         Title="AbrakBot" Height="450" Width="1000" Icon="imgs/favicon.ico"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        DataContext="{Binding Main, Source={StaticResource Locator}}" MinWidth="1000" MinHeight="450">
 
     <Grid>
         <ToolBarTray ToolBarTray.IsLocked="True" Height="25" VerticalAlignment="Top">
@@ -109,7 +109,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="imgs/wheat.png" Margin="0,0,5,0" Height="18"/>
-                        <TextBlock Text="Ressources" />
+                        <TextBlock Text="Récolte" />
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="White">
@@ -117,7 +117,7 @@
                         <ColumnDefinition Width="476*"/>
                         <ColumnDefinition Width="477*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="dataGrid" ItemsSource="{Binding actualResources}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="323" Width="476" Margin="-10,0,0,0" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGrid" ItemsSource="{Binding actualResources}" Margin="0,0,0,0" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="15*" Binding="{Binding id}" ClipboardContentBinding="{x:Null}" Header="ID"/>
                             <DataGridTextColumn Width="40*" Binding="{Binding libelle}" ClipboardContentBinding="{x:Null}" Header="Nom"/>
@@ -126,28 +126,40 @@
                         </DataGrid.Columns>
 
                     </DataGrid>
-                    <Grid Grid.Column="1" HorizontalAlignment="Center" Height="131" VerticalAlignment="Top" Width="364" Margin="56,0,57,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="33*"/>
-                            <RowDefinition Height="33*"/>
-                            <RowDefinition Height="33*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30*"/>
-                            <ColumnDefinition Width="50*"/>
-                            <ColumnDefinition Width="20*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0" Grid.RowSpan="1" TextWrapping="Wrap" Text="{Binding metierBlockText1}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="textBlock1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="{Binding metierBlockText2}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="textBlock2" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="{Binding metierBlockText3}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="textBlock3" Grid.Column="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding metierLvl1}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="textBlock4" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="{Binding metierLvl2}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="textBlock5" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="{Binding metierLvl3}" VerticalAlignment="Center"/>
-                        <ProgressBar Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="170" Value="{Binding metierBar1}"/>
-                        <ProgressBar Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="170" Value="{Binding metierBar2}" Margin="6,14,6,10" Grid.Row="1" Panel.ZIndex="1"/>
-                        <ProgressBar Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="170" Value="{Binding metierBar3}" Grid.Row="2"/>
-                    </Grid>
-                    <ListBox x:Name="listBox" Grid.Column="1" HorizontalAlignment="Center" Height="164" VerticalAlignment="Bottom" Width="364" Margin="56,0,57,10"/>
+                    <Border Grid.Column="1" Height="131" BorderBrush="#FF7A7A7A" BorderThickness="1" VerticalAlignment="Top" Margin="56,13,57,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="33*"/>
+                                <RowDefinition Height="33*"/>
+                                <RowDefinition Height="33*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="50*"/>
+                                <ColumnDefinition Width="20*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0" Grid.RowSpan="1" TextWrapping="Wrap" Text="{Binding metierBlockText1}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="{Binding metierBlockText2}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock2" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="{Binding metierBlockText3}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock3" Grid.Column="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding metierLvl1}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock4" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="{Binding metierLvl2}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock5" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="{Binding metierLvl3}" VerticalAlignment="Center"/>
+                            <ProgressBar Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="170" Value="{Binding metierBar1}"/>
+                            <ProgressBar Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="170" Value="{Binding metierBar2}" Margin="6,14,6,10" Grid.Row="1" Panel.ZIndex="1"/>
+                            <ProgressBar Grid.Column="1" HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="170" Value="{Binding metierBar3}" Grid.Row="2"/>
+                        </Grid>
+                    </Border>
+                    <ListBox x:Name="listBox" Grid.Column="1" Margin="56,149,57,10"/>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="imgs/fist.png" Margin="0,0,5,0" Height="18"/>
+                        <TextBlock Text="Combat" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="White">
                 </Grid>
             </TabItem>
             <TabItem>
@@ -158,7 +170,7 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="White">
-                    <DataGrid ItemsSource="{Binding inventaire}" x:Name="dataGrid1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" Height="303" Width="933">
+                    <DataGrid ItemsSource="{Binding inventaire}" x:Name="dataGrid1" Margin="10,10,0,0" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="15*" Binding="{Binding id}" ClipboardContentBinding="{x:Null}" Header="ID"/>
                             <DataGridTextColumn Width="40*" Binding="{Binding libelle}" ClipboardContentBinding="{x:Null}" Header="Nom"/>
@@ -175,48 +187,132 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="287*"/>
+                        <RowDefinition Height="40*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" HorizontalAlignment="Center" Height="246" VerticalAlignment="Center" Width="350" Margin="64,12,63,65">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50*"/>
-                            <ColumnDefinition Width="50*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10*"/>
-                            <RowDefinition Height="33*"/>
-                            <RowDefinition Height="33*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.ColumnSpan="2" Background="#FF7A7A7A"/>
-                        <TextBlock x:Name="textBlock16" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Combat" VerticalAlignment="Center" Foreground="White" Grid.ColumnSpan="2" FontSize="18" Height="24" Width="68" Margin="146,4,136,4"/>
-                        <TextBlock x:Name="textBlock17" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="Nb Combats" VerticalAlignment="Center" Height="16"/>
-                        <TextBlock x:Name="textBlock18" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Height="16"/>
-                        <TextBlock x:Name="textBlock19" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="XP gagnée" VerticalAlignment="Center" Height="16" Width="57"/>
-                        <TextBlock x:Name="textBlock110" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Height="16"/>
-                    </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="Center" Height="246" VerticalAlignment="Center" Width="350" Margin="64,12,63,65">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50*"/>
-                            <ColumnDefinition Width="50*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="15*"/>
-                            <RowDefinition Height="33*"/>
-                            <RowDefinition Height="33*"/>
-                            <RowDefinition Height="33*"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.ColumnSpan="2" Background="#FF7A7A7A"/>
-                        <TextBlock x:Name="textBlock6" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Recolte" VerticalAlignment="Center" Foreground="White" Grid.ColumnSpan="2" FontSize="18" Height="24" Width="68"/>
-                        <TextBlock x:Name="textBlock7" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="Ressources récoltées" VerticalAlignment="Center" Height="16"/>
-                        <TextBlock x:Name="textBlock8" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="{Binding resourceCount}" Height="16" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="textBlock9" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="XP gagnée" VerticalAlignment="Center" Height="16" Width="57"/>
-                        <TextBlock x:Name="textBlock10" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Height="16"/>
-                        <TextBlock x:Name="textBlock11" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Noeuds récoltés" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="textBlock12" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="{Binding nodeCount}" VerticalAlignment="Center"/>
-                    </Grid>
+                    <Border BorderBrush="#FF7A7A7A" BorderThickness="1" Grid.Column="0" Margin="63,18,63,19">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"/>
+                                <ColumnDefinition Width="50*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32*"/>
+                                <RowDefinition Height="64*"/>
+                                <RowDefinition Height="64*"/>
+                                <RowDefinition Height="64*"/>
+                                <RowDefinition Height="64*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.ColumnSpan="2" Background="#FF7A7A7A"/>
+                            <TextBlock x:Name="textBlock16" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Combat" VerticalAlignment="Center" Foreground="White" Grid.ColumnSpan="2" FontSize="18" Height="24" Width="68"/>
+                            <TextBlock x:Name="textBlock17" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="Nb Combats" VerticalAlignment="Center" Height="16"/>
+                            <TextBlock x:Name="textBlock18" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Height="16"/>
+                            <TextBlock x:Name="textBlock19" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" Text="XP gagnée" VerticalAlignment="Center" Height="16" Width="57"/>
+                            <TextBlock x:Name="textBlock110" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Height="16"/>
+                            <TextBlock x:Name="textBlock13" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Kamas gagnés" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock14" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="Nb. Objets gagnés" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock15" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock20" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="#FF7A7A7A" BorderThickness="1" Grid.Column="1" Margin="64,18,63,19">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50*"/>
+                                <ColumnDefinition Width="50*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="15*"/>
+                                <RowDefinition Height="33*"/>
+                                <RowDefinition Height="33*"/>
+                                <RowDefinition Height="33*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.ColumnSpan="2" Background="#FF7A7A7A"/>
+                            <TextBlock x:Name="textBlock6" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Recolte" VerticalAlignment="Center" Foreground="White" Grid.ColumnSpan="2" FontSize="18" Height="24" Width="68"/>
+                            <TextBlock x:Name="textBlock7" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="Ressources récoltées" VerticalAlignment="Center" Height="16"/>
+                            <TextBlock x:Name="textBlock8" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="{Binding resourceCount}" Height="16" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock9" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="XP gagnée" VerticalAlignment="Center" Height="16" Width="57"/>
+                            <TextBlock x:Name="textBlock10" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Height="16"/>
+                            <TextBlock x:Name="textBlock11" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Noeuds récoltés" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock12" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="{Binding nodeCount}" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button x:Name="button2" Height="25">
+                            <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
+                                <Image Source="imgs/refresh.png" Margin="0,0,5,0" />
+                                <TextBlock Text="Réinitialiser" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button x:Name="button3" Height="25">
+                            <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
+                                <Image Source="imgs/refresh.png" Margin="0,0,5,0" />
+                                <TextBlock Text="Réinitialiser" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                 </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="imgs/settings.png" Margin="0,0,5,0" Height="18"/>
+                        <TextBlock Text="Paramètres" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Border Height="246" Width="350" BorderBrush="#FF7A7A7A" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="20*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.RowSpan="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock x:Name="textBlock21" TextWrapping="Wrap" Text="Nombre de monstres par groupe : "/>
+                            <TextBox x:Name="textBox1" TextWrapping="Wrap" Text="0" Width="20" Margin="10,0,0,0"/>
+                            <TextBlock x:Name="textBlock25" TextWrapping="Wrap" Text="-" Margin="10,0,0,0"/>
+                            <TextBox x:Name="textBox2" TextWrapping="Wrap" Text="0" Width="20" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock x:Name="textBlock22" TextWrapping="Wrap" Text="Niveau des groupes : "/>
+                            <TextBox x:Name="textBox3" TextWrapping="Wrap" Text="0" Width="40" Margin="10,0,0,0"/>
+                            <TextBlock x:Name="textBlock26" TextWrapping="Wrap" Text="-" Margin="10,0,0,0"/>
+                            <TextBox x:Name="textBox4" TextWrapping="Wrap" Text="0" Width="40" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock x:Name="textBlock23" TextWrapping="Wrap" Text="Aller en banque à (%) :"/>
+                            <TextBox x:Name="textBox5" TextWrapping="Wrap" Text="0" Width="20" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock x:Name="textBlock24" TextWrapping="Wrap" Text="Se régénérer à (%) :"/>
+                            <TextBox x:Name="textBox6" TextWrapping="Wrap" Text="0" Width="20" Margin="10,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Button x:Name="button" Height="25">
+                                <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
+                                    <Image Source="imgs/refresh.png" Margin="0,0,5,0" />
+                                    <TextBlock Text="Réinitialiser" />
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="button1" Height="25" Margin="40,0,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
+                                    <Image Source="imgs/checked-mark.png" Margin="0,0,5,0" />
+                                    <TextBlock Text="Valider" />
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>
+                    </Grid>
+                </Border>
             </TabItem>
             <TabItem>
                 <TabItem.Header>

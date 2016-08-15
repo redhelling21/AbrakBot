@@ -50,6 +50,9 @@ namespace AbrakBotWPF.ViewModel
             Messenger.Default.Register<PlayerStateChangedMessage>(this,
                  (playerStateChangedMessage) => ReceivePlayerStateChanged(playerStateChangedMessage)
             );
+            Messenger.Default.Register<HarvestedResourceMessage>(this,
+                 (harvestedResourceMessage) => ReceiveHarvestedResource(harvestedResourceMessage)
+            );
             ConnectCommand = new RelayCommand(connect);
             TelecommandeCommand = new RelayCommand(telecommande);
             TestCommand = new RelayCommand(test);
@@ -230,6 +233,29 @@ namespace AbrakBotWPF.ViewModel
                 if (_harvestables == value) return;
                 _harvestables = value;
                 RaisePropertyChanged("harvestables");
+            }
+        }
+
+
+        private int _resourceCount = 0;
+        public int resourceCount
+        {
+            get { return _resourceCount; }
+            set
+            {
+                _resourceCount = value;
+                RaisePropertyChanged("resourceCount");
+            }
+        }
+
+        private int _nodeCount = 0;
+        public int nodeCount
+        {
+            get { return _nodeCount; }
+            set
+            {
+                _nodeCount = value;
+                RaisePropertyChanged("nodeCount");
             }
         }
 
@@ -499,12 +525,14 @@ namespace AbrakBotWPF.ViewModel
 
             this.window.Dispatcher.Invoke(() =>
             {
-            foreach (Ressource res in action.ressources)
-            {
-                this.actualResources.Add(res);
+                this.actualResources.Clear();
+                foreach (Ressource res in action.ressources)
+                {
+                    this.actualResources.Add(res);
                 }
             });
-            
+
+
         }
 
         private void ReceiveInventoryChanged(InventoryChangedMessage action)
@@ -512,6 +540,7 @@ namespace AbrakBotWPF.ViewModel
 
             this.window.Dispatcher.Invoke(() =>
             {
+                this.inventaire.Clear();
                 foreach (Item item in action.inventory)
                 {
                     this.inventaire.Add(item);
@@ -540,6 +569,14 @@ namespace AbrakBotWPF.ViewModel
             {
                 stateText = "Inactif";
             }
+        }
+
+        private void ReceiveHarvestedResource(HarvestedResourceMessage action)
+        {
+
+            resourceCount = resourceCount + action.qte;
+            nodeCount++;
+
         }
 
         #endregion

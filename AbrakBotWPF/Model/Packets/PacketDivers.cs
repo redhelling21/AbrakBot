@@ -90,6 +90,13 @@ namespace AbrakBotWPF
                     globals.isInDialog = false;
                     globals.isInExchange = true;
                     break;
+                case "IQ":
+                    if(packet.Substring(2).Split('|')[0] == player.id)
+                    {
+                        var msg2 = new HarvestedResourceMessage() { qte = Int32.Parse(packet.Substring(2).Split('|')[1]) };
+                        Messenger.Default.Send<HarvestedResourceMessage>(msg2);
+                    }
+                    break;
                 default:
                     globals.writeToDebugBox("Packet inconnu\n", "Blue");
                     break;

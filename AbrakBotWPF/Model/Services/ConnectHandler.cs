@@ -48,7 +48,7 @@ namespace AbrakBotWPF.Model.Services
                             donnée = Data.Substring(0, 2);
                         }catch(NullReferenceException e)
                         {
-                            globals.writeToDebugBox("Aucune données recues", "Firebrick");
+                            //globals.writeToDebugBox("Aucune données recues", "Firebrick");
                         }
                         
                         
@@ -60,9 +60,11 @@ namespace AbrakBotWPF.Model.Services
                                 globals.connect.send("1.29.1");
                                 globals.connect.send(Config.username + "\n" + CryptPassword(key, pass));
                                 globals.connect.send("Af");
+                                
                                 break;
 
                             case "Ax": //Reception de la liste des serveurs
+                                globals.isInQueue = false;
                                 Thread.Sleep(2000);
                                 if (server_id == "")
                                 {
@@ -129,9 +131,20 @@ namespace AbrakBotWPF.Model.Services
                                 globals.game.send("Agfr");
                                 globals.game.send("AL");
                                 globals.game.send("Af");
+                                Thread queueThread = new Thread(WaitConnectQueue);
+                                queueThread.IsBackground = true;
+                                globals.isInQueue = true;
+                                queueThread.Start();
                                 break;
-
+                            case "Af":
+                                string[] afList = Data.Split('|');
+                                int place = Int32.Parse(afList[0].Substring(2));
+                                int vip = Int32.Parse(afList[1]);
+                                int total = Int32.Parse(afList[2]);
+                                globals.writeToMainBox("Vous êtes " + (place-vip) + "/" + total + "(" + vip + " sont devant vous)\n", "FireBrick");
+                                break;
                             case "AL"://Reception de la liste des persos
+                                globals.isInQueue = false;
                                 Thread.Sleep(100);
                                 globals.writeToMainBox("Connecté au serveur de jeu\n", "Green");
                                 globals.writeToDebugBox("Selection personnage\n", "Blue");
@@ -268,6 +281,15 @@ namespace AbrakBotWPF.Model.Services
             } // end while
             loc5 = loc5.Substring(1);
             return loc5;
+        }
+
+        private void WaitConnectQueue()
+        {
+            while (!globals.isInQueue)
+            {
+                globals.connect.send("Af");
+                Thread.Sleep(2000);
+            }
         }
     }
 }

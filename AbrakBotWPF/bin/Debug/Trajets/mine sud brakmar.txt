@@ -1,0 +1,6 @@
+%Mouvement%
+%Recolte%
+[mapid(10227)]->448|44
+[mapid(10228)]->448
+[mapid(10229)]->44
+%Banque%

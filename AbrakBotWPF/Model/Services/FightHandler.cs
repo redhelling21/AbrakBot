@@ -19,7 +19,7 @@ namespace AbrakBotWPF.Model.Services
         private int caseDeLance;
         private int idSort = 141; //TEMPORAIRE
         private int cible = 1; //TEMPORAIRE
-        private int nombreLance = 1; //TEMPORAIRE
+        private int nombreLance = 4; //TEMPORAIRE
         private int nombreDeCombats = 0; //TEMPORAIRE
         private int tempsRegenerate = 0;
 

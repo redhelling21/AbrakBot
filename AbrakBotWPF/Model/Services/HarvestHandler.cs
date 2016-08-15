@@ -64,7 +64,7 @@ namespace AbrakBotWPF.Model.Services
                     Thread.Sleep((int)globals.moveHandler.distance(globals.caseActuelle, caseRecolte) * 330);
                     //demande d'autorisation au serveur pour recolter la case
                     globals.game.send("GA500" + caseRecolte + ";" + idRessource);
-                    globals.game.send("GKK0");
+                    globals.game.send("GKK" + globals.idActionActuelle);
                     globals.bloqueGA = 0;
                     globals.isMoving = false;
                     globals.writeToDebugBox("isMoving false\n", "Navy");
@@ -104,8 +104,8 @@ namespace AbrakBotWPF.Model.Services
             globals.isHarvesting = true;
             globals.writeToDebugBox("isharvesting true", "Navy");
             Thread.Sleep(tempsDeRecolte);
-            globals.game.send("GKK1");
-
+            globals.game.send("GKK" + globals.idActionActuelle);
+            globals.actualResources.Remove(caseDeRecolte);
             globals.isHarvesting = false;
             globals.writeToDebugBox("isharvesting false", "Navy");
         }

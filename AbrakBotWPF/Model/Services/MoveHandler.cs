@@ -59,9 +59,9 @@ namespace AbrakBotWPF.Model.Services
                         Thread.Sleep((int)distance(globals.caseActuelle, caseFin) * 250);
                     }
                     //On est arrives
-                    globals.game.send("GKK0");
+                    globals.game.send("GKK" + globals.idActionActuelle);
                     globals.caseActuelle = caseFin;
-                    globals.writeToDebugBox("(via GKK0) CaseActuelle : " + caseFin + "\n", "Orange");
+                    globals.writeToDebugBox("(via GKK) CaseActuelle : " + caseFin + "\n", "Orange");
 
                 }
                 else
@@ -127,9 +127,9 @@ namespace AbrakBotWPF.Model.Services
                         Thread.Sleep((int)distance(globals.caseActuelle, caseFin) * 250);
                     }
 
-                    globals.game.send("GKK0");
+                    globals.game.send("GKK" + globals.idActionActuelle);
                     globals.caseActuelle = caseFin;
-                    globals.writeToDebugBox("(via GKK0) CaseActuelle : " + caseFin + "\n", "Orange");
+                    globals.writeToDebugBox("(via GKK) CaseActuelle : " + caseFin + "\n", "Orange");
 
 
                 }

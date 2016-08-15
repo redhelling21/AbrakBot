@@ -1,4 +1,6 @@
 ﻿using AbrakBotWPF.Model.Classes;
+using AbrakBotWPF.Model.Messages;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +39,43 @@ namespace AbrakBotWPF
                     }
                     player.inventaire.Remove(toDelete);
                     globals.removingItem = false;
+                    var msg = new InventoryChangedMessage() { inventory = player.inventaire };
+                    Messenger.Default.Send<InventoryChangedMessage>(msg);
+                    break;
+                case "OQ":
+                    string[] qteList = packet.Split('|');
+                    string idQte = Int32.Parse(qteList[0].Substring(2)).ToString("X").ToLower();
+                    foreach (Item item in player.inventaire)
+                    {
+                        if (item.uniqueID == idQte)
+                        {
+                            item.quantite = Int32.Parse(qteList[1]);
+                        }
+                    }
+                    var msg2 = new InventoryChangedMessage() { inventory = player.inventaire };
+                    Messenger.Default.Send<InventoryChangedMessage>(msg2);
+                    break;
+                case "OA":
+                    if(packet.Substring(3, 1) == "O")
+                    {
+                        string[] onAddList = packet.Substring(4).Split('*');
+                        foreach(string str in onAddList)
+                        {
+                            string[] oaoList = str.Split('~');
+                            bool found = false;
+                            foreach (Item item in player.inventaire)
+                            {
+                                if (item.uniqueID == oaoList[0])
+                                {
+                                    item.quantite = item.quantite + Int32.Parse(oaoList[2]);
+                                }
+                            }
+                            if (found)
+                            {
+                                player.inventaire.Add(new Item(oaoList[0], int.Parse(oaoList[1], System.Globalization.NumberStyles.HexNumber), globals.objects[int.Parse(oaoList[1], System.Globalization.NumberStyles.HexNumber)], Int32.Parse(oaoList[2]), false));
+                            }
+                        }
+                    }
                     break;
             }
         }

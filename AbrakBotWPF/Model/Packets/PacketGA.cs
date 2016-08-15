@@ -28,23 +28,23 @@ namespace AbrakBotWPF
                 //.sock.Envoyer("GA902" + Gettok(packet, ";", 3));
 
             }
-            else if (packet.Length > 6 && packet.Substring(0, 7) == "GA1;501")
+            else if (packet.Length > 6 && packet.Split(';').Length > 1 && packet.Split(';')[1] == "501") //GA0;501;
             {
-
+                globals.idActionActuelle = packet.Split(';')[0].Substring(2);
                 string pate = packet.Split(';')[3];
                 int tempsDeRecolte = Convert.ToInt32(pate.Split(',')[1]);
                 HarvestHandler handler = new HarvestHandler(globals);
                 handler.WaitRecolte(tempsDeRecolte);
             }
-            else if (packet.Length > 6 && packet.Substring(0, 7) == "GA0;501")
+            /*else if (packet.Length > 6 && packet.Substring(3, 4) == ";501")
             {
 
                 string pate = packet.Split(';')[3];
                 int caseRecolte = Convert.ToInt32(pate.Split(',')[0]);
                 globals.actualResources.Remove(caseRecolte);
                 globals.isHarvesting = false;
-            }
-            else if (packet.Length > 5 && packet.Substring(0, 6) == "GA0;1;")
+            }*/
+            else if (packet.Length > 5 && packet.Split(';').Length > 1 && packet.Split(';')[1] == "1")//GA0;1;
             {
 
                 if (!globals.isFighting)
@@ -53,6 +53,7 @@ namespace AbrakBotWPF
                     int id = Int32.Parse(packet.Split(';')[2]);
                     if (id == Int32.Parse(player.id))
                     {
+                        globals.idActionActuelle = packet.Split(';')[0].Substring(2);
                         cherche = cherche.Substring(cherche.Length - 2);
                         int trouve = -1;
 
@@ -72,7 +73,6 @@ namespace AbrakBotWPF
                         }
                     }
                 }
-
             }
         }
     }

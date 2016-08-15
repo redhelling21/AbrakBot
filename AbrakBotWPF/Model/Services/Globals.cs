@@ -75,6 +75,7 @@ namespace AbrakBotWPF.Model.Services
         public bool removingItem = false;
         public bool isDead = false;
         public bool isRegenerating = false;
+        public bool isInQueue = false;
 
         public TCPPacketHandler connect;
         public TCPPacketHandler game;
@@ -89,6 +90,8 @@ namespace AbrakBotWPF.Model.Services
         public Cell[] mapDataActuelle;
         public string[] cases = new string[2500];
         public int bloqueGA = 0;
+
+        public string idActionActuelle = "0";
 
         //Trajet
         public Dictionary<string, List<int>> listMovements = new Dictionary<string, List<int>>();
@@ -114,7 +117,7 @@ namespace AbrakBotWPF.Model.Services
         public Dictionary<Int32, string> maps = new Dictionary<Int32, string>();
 
         public int nombreDeCombat = 0;
-        public int podsPercentLimit = 90;
+        public int podsPercentLimit = 70;
         //Temps necessaire a recolter une ressource
         public int tempsRecolte;
 

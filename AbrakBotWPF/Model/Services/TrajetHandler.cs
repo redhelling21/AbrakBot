@@ -108,6 +108,7 @@ namespace AbrakBotWPF.Model.Services
                         
                         Random rnd = new Random();
                         HarvestHandler handler = new HarvestHandler(globals);
+                        int count_timeout = 0;
                         while (globals.actualResources.Count > 0)
                         {
                             globals.writeToDebugBox("Boucle ressource\n", "LimeGreen");
@@ -117,7 +118,7 @@ namespace AbrakBotWPF.Model.Services
                             }
                             int ind = (int)Math.Round((double)rnd.Next(globals.actualResources.Count));
                             KeyValuePair<int, Ressource> entry = globals.actualResources.ElementAt(ind);
-                            if (!player.harvestables.Contains(entry.Value.id))
+                            if (!player.harvestables.Contains(entry.Value.id) || entry.Key == 0)
                             {
                                 globals.actualResources.Remove(entry.Key);
                             }else
@@ -135,10 +136,15 @@ namespace AbrakBotWPF.Model.Services
                                         globals.writeToMainBox("Timeout temps de recolte\n", "FireBrick");
                                         globals.writeToDebugBox("Timeout temps de recolte\n", "FireBrick");
                                         globals.isHarvesting = false;
+                                        count_timeout++;
                                     }
                                 }
                                 globals.writeToDebugBox("Case recoltee\n", "LimeGreen");
                                 Thread.Sleep(200);
+                            }
+                            if(count_timeout > 3)
+                            {
+                                break;
                             }
                             
                         }
@@ -215,18 +221,19 @@ namespace AbrakBotWPF.Model.Services
             {
                 if (!item.isEquipped)
                 {
-                    globals.writeToDebugBox("Giving " + item.libelle + "\n", "Purple");
+                    globals.writeToDebugBox("Giving " + item.quantite + " " + item.libelle + "\n", "Purple");
                     int uniqueIDDec = int.Parse(item.uniqueID, System.Globalization.NumberStyles.HexNumber);
                     globals.game.send("EMO+" + uniqueIDDec + "|" + item.quantite);
                     globals.removingItem = true;
                     while (globals.removingItem)
                     {
                         globals.writeToDebugBox("Waiting remove item\n", "Purple");
-                        Thread.Sleep(200);
+                        Thread.Sleep(1000);
                     }
                 }
             }
             globals.writeToDebugBox("Inventaire vidé\n", "Purple");
+            globals.game.send("EV");
         }
     }
 }

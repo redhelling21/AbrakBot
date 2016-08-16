@@ -114,6 +114,19 @@ namespace AbrakBotWPF
                         Messenger.Default.Send<HarvestedResourceMessage>(msg2);
                     }
                     break;
+                case "SL":
+                    string[] sorts = packet.Substring(2).Split(';');
+                    foreach(string str in sorts)
+                    {
+                        if(str != "")
+                        {
+                            string[] sort = str.Split('~');
+                            player.sorts.Add(new Model.Classes.Sort(Int32.Parse(sort[0]), globals.sorts[Int32.Parse(sort[0])], Int32.Parse(sort[1])));
+                        }
+                    }
+                    var msg3 = new SpellsChangedMessage() { spells = player.sorts };
+                    Messenger.Default.Send<SpellsChangedMessage>(msg3);
+                    break;
                 default:
                     globals.writeToDebugBox("Packet inconnu\n", "Blue");
                     break;

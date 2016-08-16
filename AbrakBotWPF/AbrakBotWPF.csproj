@@ -86,11 +86,13 @@
     <Compile Include="Model\Classes\Player.cs" />
     <Compile Include="Model\Classes\Ressource.cs" />
     <Compile Include="Model\Classes\Sort.cs" />
+    <Compile Include="Model\Classes\SortCombat.cs" />
     <Compile Include="Model\Messages\AddLineToBoxMessage.cs" />
     <Compile Include="Model\Messages\HarvestedResourceMessage.cs" />
     <Compile Include="Model\Messages\InventoryChangedMessage.cs" />
     <Compile Include="Model\Messages\MapResourcesChangedMessage.cs" />
     <Compile Include="Model\Messages\MapStatChangedMessage.cs" />
+    <Compile Include="Model\Messages\SpellsChangedMessage.cs" />
     <Compile Include="Model\Packets\PacketDivers.cs" />
     <Compile Include="Model\Packets\PacketEchange.cs" />
     <Compile Include="Model\Packets\PacketGA.cs" />
@@ -209,6 +211,12 @@
     <Resource Include="imgs\Strength.png" />
     <Resource Include="imgs\Vitality.png" />
     <Resource Include="imgs\Wisdom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="imgs\error.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

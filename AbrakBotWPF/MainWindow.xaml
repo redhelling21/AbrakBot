@@ -5,8 +5,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d" 
         xmlns:local="clr-namespace:AbrakBotWPF"
-        Title="AbrakBot" Height="450" Width="1000" Icon="imgs/favicon.ico"
-        DataContext="{Binding Main, Source={StaticResource Locator}}" MinWidth="1000" MinHeight="450">
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        Title="AbrakBot" Width="1000" Icon="imgs/favicon.ico"
+        DataContext="{Binding Main, Source={StaticResource Locator}}" Height="450" MinHeight="450" MinWidth="1000">
 
     <Grid>
         <ToolBarTray ToolBarTray.IsLocked="True" Height="25" VerticalAlignment="Top">
@@ -139,7 +141,7 @@
                             <RowDefinition Height="20*"/>
                             <RowDefinition Height="20*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock x:Name="textBlock27" TextWrapping="Wrap" Text="NomDuPerso" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" Grid.ColumnSpan="2" Margin="188,12"/>
+                        <TextBlock x:Name="textBlock27" TextWrapping="Wrap" Text="{Binding pseudo}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" Grid.ColumnSpan="2" Margin="188,12"/>
                         
                         <StackPanel Grid.Row="2" Grid.RowSpan="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <Image Source="imgs/Action_Point.png" Margin="0,0,5,0" Height="20"/>
@@ -192,10 +194,20 @@
                         <TextBlock x:Name="textBlock48" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding chance}" VerticalAlignment="Center" Margin="5,0,0,2"/>
                         <TextBlock x:Name="textBlock49" Grid.Column="1" Grid.Row="10" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding agilite}" VerticalAlignment="Center" Margin="5,0,0,2"/>
                     </Grid>
-                    <DataGrid x:Name="dataGrid2" Grid.Column="1"/>
-                    <Button x:Name="button4" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="285,28,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
-                    <Button x:Name="button5" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="171,28,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
+                    <DataGrid x:Name="dataGrid2" Grid.Column="1" ItemsSource="{Binding sorts}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionMode="Single" SelectedItem="{Binding selectedSpell, Mode=TwoWay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="15*" Binding="{Binding id}" ClipboardContentBinding="{x:Null}" Header="ID"/>
+                            <DataGridTextColumn Width="40*" Binding="{Binding libelle}" ClipboardContentBinding="{x:Null}" Header="Nom"/>
+                            <DataGridTextColumn Width="15*" Binding="{Binding niveau}" ClipboardContentBinding="{x:Null}" Header="Niveau"/>
+                        </DataGrid.Columns>
 
+                    </DataGrid>
+                    <Button x:Name="button4" Height="25" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Background="White" Command="{Binding AddToRoutineCommand}">
+                        <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
+                            <Image Source="imgs/add.png" Margin="0,0,5,0" />
+                            <TextBlock Text="Ajouter à la routine de combat" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </TabItem>
             <TabItem>
@@ -253,6 +265,42 @@
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Background="White">
+                    <DataGrid x:Name="dataGrid3" ItemsSource="{Binding sortsCombat, Mode=TwoWay}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionMode="Single" SelectedItem="{Binding selectedSpellFight, Mode=TwoWay}">
+                        
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="5*" ClipboardContentBinding="{x:Null}" Header="Suppr.">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="connectButton" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Command="{Binding DataContext.DeleteSpellFightCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}">
+                                            <Image Source="imgs/error.png" Margin="0,0,0,0" />
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Width="15*" Binding="{Binding id}" ClipboardContentBinding="{x:Null}" Header="ID"/>
+                            <DataGridTextColumn Width="40*" Binding="{Binding libelle}" ClipboardContentBinding="{x:Null}" Header="Nom"/>
+                            <DataGridTemplateColumn Width="20*" ClipboardContentBinding="{x:Null}" Header="Cible">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox SelectedValue="{Binding target, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                                            
+                                            <ComboBoxItem Name="cbi1">Ennemi</ComboBoxItem>
+                                            <ComboBoxItem Name="cbi2">Soi-même</ComboBoxItem>
+                                            <ComboBoxItem Name="cbi3">Invocation</ComboBoxItem>
+                                        </ComboBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="20*" ClipboardContentBinding="{x:Null}" Header="Ordre">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Text="{Binding priorite, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem>
@@ -390,13 +438,13 @@
                             <TextBox x:Name="textBox6" TextWrapping="Wrap" Text="0" Width="20" Margin="10,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Button x:Name="button" Height="25">
+                            <Button x:Name="button" Height="25" Background="White">
                                 <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
                                     <Image Source="imgs/refresh.png" Margin="0,0,5,0" />
                                     <TextBlock Text="Réinitialiser" />
                                 </StackPanel>
                             </Button>
-                            <Button x:Name="button1" Height="25" Margin="40,0,0,0">
+                            <Button x:Name="button1" Height="25" Margin="40,0,0,0" Background="White">
                                 <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
                                     <Image Source="imgs/checked-mark.png" Margin="0,0,5,0" />
                                     <TextBlock Text="Valider" />

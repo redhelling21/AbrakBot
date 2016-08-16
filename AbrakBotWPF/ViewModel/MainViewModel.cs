@@ -10,6 +10,8 @@ using Microsoft.Practices.ServiceLocation;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Threading;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace AbrakBotWPF.ViewModel
 {
@@ -21,6 +23,8 @@ namespace AbrakBotWPF.ViewModel
         public RelayCommand TelecommandeCommand { get; private set; }
         public RelayCommand TestCommand { get; private set; }
         public RelayCommand LaunchCommand { get; private set; }
+        public RelayCommand AddToRoutineCommand { get; private set; }
+        public RelayCommand DeleteSpellFightCommand { get; private set; }
         public Globals globals;
         public MainWindow window;
         
@@ -28,6 +32,9 @@ namespace AbrakBotWPF.ViewModel
         {
 
             this.actualResources = new ObservableCollection<Ressource>();
+            this.sorts = new ObservableCollection<Sort>();
+            this.sortsCombat = new ObservableCollection<SortCombat>();
+            this.sortsCombat.CollectionChanged += sortsCombatsChanged;
             this.inventaire = new ObservableCollection<Item>();
             Messenger.Default.Register<AddLineToBoxMessage>(this,
                  (addLineMessage) => ReceiveAddLineToBox(addLineMessage)
@@ -53,10 +60,15 @@ namespace AbrakBotWPF.ViewModel
             Messenger.Default.Register<HarvestedResourceMessage>(this,
                  (harvestedResourceMessage) => ReceiveHarvestedResource(harvestedResourceMessage)
             );
+            Messenger.Default.Register<SpellsChangedMessage>(this,
+                 (spellsChangedMessage) => ReceiveSpellsChanged(spellsChangedMessage)
+            );
             ConnectCommand = new RelayCommand(connect);
             TelecommandeCommand = new RelayCommand(telecommande);
             TestCommand = new RelayCommand(test);
             LaunchCommand = new RelayCommand(launch);
+            AddToRoutineCommand = new RelayCommand(addSpellToFightingRoutine);
+            DeleteSpellFightCommand = new RelayCommand(deleteSpellFight);
         }
 
         public void initializeGlobals()
@@ -236,6 +248,32 @@ namespace AbrakBotWPF.ViewModel
             }
         }
 
+        #region FIGHTTAB
+        private ObservableCollection<SortCombat> _sortsCombat;
+        public ObservableCollection<SortCombat> sortsCombat
+        {
+            get { return _sortsCombat; }
+            set
+            {
+                if (_sortsCombat == value) return;
+                _sortsCombat = value;
+                RaisePropertyChanged("sortsCombat");
+            }
+        }
+
+        private SortCombat _selectedSpellFight;
+        public SortCombat selectedSpellFight
+        {
+            get { return _selectedSpellFight; }
+            set
+            {
+                if (_selectedSpellFight == value) return;
+                _selectedSpellFight = value;
+                RaisePropertyChanged("selectedSpellFight");
+            }
+        }
+        #endregion
+
         #region REPORTTAB
         private int _resourceCount = 0;
         public int resourceCount
@@ -261,6 +299,31 @@ namespace AbrakBotWPF.ViewModel
         #endregion
 
         #region PERSOTAB
+
+        private ObservableCollection<Sort> _sorts;
+        public ObservableCollection<Sort> sorts
+        {
+            get { return _sorts; }
+            set
+            {
+                if (_sorts == value) return;
+                _sorts = value;
+                RaisePropertyChanged("sorts");
+            }
+        }
+
+        private Sort _selectedSpell;
+        public Sort selectedSpell
+        {
+            get { return _selectedSpell; }
+            set
+            {
+                if (_selectedSpell == value) return;
+                _selectedSpell = value;
+                RaisePropertyChanged("selectedSpell");
+            }
+        }
+
         private string _PA = "0";
         public string PA
         {
@@ -692,6 +755,20 @@ namespace AbrakBotWPF.ViewModel
 
         }
 
+        private void ReceiveSpellsChanged(SpellsChangedMessage action)
+        {
+
+            this.window.Dispatcher.Invoke(() =>
+            {
+                this.sorts.Clear();
+                foreach (Sort sort in action.spells)
+                {
+                    this.sorts.Add(sort);
+                }
+            });
+
+        }
+
         private void ReceivePlayerStateChanged(PlayerStateChangedMessage action)
         {
             if (action.isInExchange)
@@ -741,6 +818,23 @@ namespace AbrakBotWPF.ViewModel
             }
         }
 
+        private void deleteSpellFight()
+        {
+            if(_selectedSpellFight != null)
+            {
+                sortsCombat.Remove(_selectedSpellFight);
+                //RaisePropertyChanged("sortsCombat");
+            }
+        }
+
+        private void addSpellToFightingRoutine()
+        {
+            if (selectedSpell != null)
+            {
+                this.sortsCombat.Add(new SortCombat(selectedSpell.id, selectedSpell.libelle, selectedSpell.niveau, 1000, "Ennemi"));
+            }
+        }
+
         private void telecommande()
         {
             var win = new Telecommande();
@@ -751,8 +845,31 @@ namespace AbrakBotWPF.ViewModel
 
         private void test()
         {
-            barXP = 50;
-            barPDV = 75;
+            globals.doSomethingToTest();
+        }
+
+        private void updateRoutine(object sender, PropertyChangedEventArgs e)
+        {
+            globals.player.sortsCombat = new List<SortCombat>(_sortsCombat);
+        }
+
+        private void sortsCombatsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            globals.player.sortsCombat = new List<SortCombat>(_sortsCombat);
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (SortCombat sort in e.OldItems)
+                {
+                    sort.PropertyChanged -= updateRoutine;
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (SortCombat sort in e.NewItems)
+                {
+                    sort.PropertyChanged += updateRoutine;
+                }
+            }
         }
 
         private void launch()

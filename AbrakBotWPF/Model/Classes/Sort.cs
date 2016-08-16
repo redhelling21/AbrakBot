@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,49 @@ using System.Threading.Tasks;
 
 namespace AbrakBotWPF.Model.Classes
 {
-    class Sort
+    public class Sort : ObservableObject
     {
-        public int id;
-        public int nbTours;
-        public int PA;
+        private int _id;
+        public int id
+        {
+            get { return _id; }
+            set
+            {
+                if (_id == value) return;
+                _id = value;
+                RaisePropertyChanged("id");
+            }
+        }
+
+        private string _libelle;
+        public string libelle
+        {
+            get { return _libelle; }
+            set
+            {
+                if (_libelle == value) return;
+                _libelle = value;
+                RaisePropertyChanged("libelle");
+            }
+        }
+
+        private int _niveau;
+        public int niveau
+        {
+            get { return _niveau; }
+            set
+            {
+                if (_niveau == value) return;
+                _niveau = value;
+                RaisePropertyChanged("niveau");
+            }
+        }
+
+        public Sort(int id, string libelle, int niveau)
+        {
+            this.id = id;
+            this.libelle = libelle;
+            this.niveau = niveau;
+        }
     }
 }

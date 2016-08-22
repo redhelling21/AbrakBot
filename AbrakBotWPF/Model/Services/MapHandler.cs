@@ -32,11 +32,11 @@ namespace AbrakBotWPF.Model.Services
             StreamReader reader;
             if (clef == "")
             {
-                reader = new StreamReader(globals.execPath + "/Resources/txt_maps/" + idMap + "_" + indice + ".txt");
+                reader = new StreamReader(Globals.execPath + "/Resources/txt_maps/" + idMap + "_" + indice + ".txt");
             }
             else
             {
-                reader = new StreamReader(globals.execPath + "/Resources/txt_maps/" + idMap + "_" + indice + "X.txt");
+                reader = new StreamReader(Globals.execPath + "/Resources/txt_maps/" + idMap + "_" + indice + "X.txt");
             }
 
             string mapDataText = reader.ReadToEnd();
@@ -144,7 +144,7 @@ namespace AbrakBotWPF.Model.Services
             List<bool> list2 = new List<bool>();
             string str = "a";
             //On parse le fichier texte
-            StreamReader reader = new StreamReader(globals.execPath + "/Resources/ressources.txt");
+            StreamReader reader = new StreamReader(Globals.execPath + "/Resources/ressources.txt");
             while (str != null)
             {
                 str = reader.ReadLine();

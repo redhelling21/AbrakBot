@@ -94,3 +94,4 @@ C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.Propert
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.csproj.GenerateResource.Cache
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.exe
 C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.pdb
+C:\Users\Hellong\Source\Repos\AbrakBot\AbrakBotWPF\obj\Debug\AbrakBotWPF.csprojResolveAssemblyReference.cache

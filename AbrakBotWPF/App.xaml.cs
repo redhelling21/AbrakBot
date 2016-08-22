@@ -27,6 +27,10 @@ namespace AbrakBotWPF
             {
                 win.trajetList.Items.Add(str);
             }
+            foreach (string str in model.globals.getConfigList())
+            {
+                win.characterList.Items.Add(str);
+            }
             win.Show();
         }
     }

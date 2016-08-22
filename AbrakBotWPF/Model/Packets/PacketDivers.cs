@@ -128,7 +128,7 @@ namespace AbrakBotWPF
                     Messenger.Default.Send<SpellsChangedMessage>(msg3);
                     break;
                 default:
-                    globals.writeToDebugBox("Packet inconnu\n", "Blue");
+                    //globals.writeToDebugBox("Packet inconnu\n", "Blue");
                     break;
             }
         }

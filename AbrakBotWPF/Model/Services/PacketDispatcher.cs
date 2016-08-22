@@ -52,7 +52,7 @@ namespace AbrakBotWPF
                     }
                     else
                     {
-                        globals.writeToDebugBox("Aucune données reçues\n", "Firebrick");
+                        //globals.writeToDebugBox("Aucune données reçues\n", "Firebrick");
                     }
                 }
             }

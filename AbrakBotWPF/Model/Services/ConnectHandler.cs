@@ -233,7 +233,7 @@ namespace AbrakBotWPF.Model.Services
                                 break;
                            
                             default:
-                                globals.writeToDebugBox("Case inconnu\n", "Blue");
+                                //globals.writeToDebugBox("Case inconnu\n", "Blue");
                                 break;
 
                         }

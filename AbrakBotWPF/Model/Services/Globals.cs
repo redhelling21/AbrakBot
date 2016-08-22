@@ -16,7 +16,7 @@ namespace AbrakBotWPF.Model.Services
 {
     public class Globals
     {
-        public string execPath;
+        public static string execPath;
         public Player player;
 
         #region booleens d'etat
@@ -115,6 +115,14 @@ namespace AbrakBotWPF.Model.Services
         public int[] sortsMax = new int[1000];
         //Contient tous les id des maps (id, coordonnees)
         public Dictionary<Int32, string> maps = new Dictionary<Int32, string>();
+
+        public List<MonsterGroup> monsterGroups = new List<MonsterGroup>();
+
+        public int nbMinMonstres = 0;
+        public int nbMaxMonstres = 8;
+        public int lvlMinMonstres = 0;
+        public int lvlMaxMonstres = 9999;
+        public int percentRegen = 0;
 
         public int nombreDeCombat = 0;
         public int podsPercentLimit = 70;
@@ -389,9 +397,22 @@ namespace AbrakBotWPF.Model.Services
             //Home.updateTSButtonText(mainForm.statusStrip, mainForm.connectButton, "Connexion");
         }
 
+        //Recupere la liste des trajets dispos
+        public string[] getConfigList()
+        {
+            List<string> confs = new List<string>();
+            string[] array = Directory.GetFiles(execPath + "/Configs").Where(name => name.EndsWith(".json")).ToArray<string>();
+            foreach (string str in array)
+            {
+                string[] split = str.Split('\\');
+                confs.Add(split[split.Length - 1]);
+            }
+            return confs.ToArray();
+        }
+
         public void updateResourceTable()
         {
-            
+
         }
     }
     

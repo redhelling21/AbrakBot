@@ -90,10 +90,16 @@ namespace AbrakBotWPF
                         }
                         else if (type == -3)
                         {
-                            string cell = playerData[0];
-                            string id = playerData[3];
-
-
+                            //Groupe de monstres
+                            string[] levels = playerData[7].Split(',');
+                            int levelTotal = 0;
+                            int nbMonstres = 0;
+                            foreach(string str in levels)
+                            {
+                                levelTotal += Int32.Parse(str);
+                                nbMonstres += 1;
+                            }
+                            globals.monsterGroups.Add(new Model.Classes.MonsterGroup(Int32.Parse(playerData[0].Substring(1)), levelTotal, Int32.Parse(playerData[3]), nbMonstres));
                         }
 
 

@@ -13,6 +13,7 @@
     <Grid>
         <ToolBarTray ToolBarTray.IsLocked="True" Height="25" VerticalAlignment="Top">
             <ToolBar x:Name="toolBar" Height="25" VerticalAlignment="Top" Margin="0,0,-982,-12">
+                <ComboBox x:Name="characterList" Height="20" Margin="0" VerticalAlignment="Top" Width="120" SelectedItem="{Binding Path=selectedCharacter, Mode=TwoWay}"/>
                 <Button x:Name="connectButton" Height="20" VerticalAlignment="Top" Width="102" Command="{Binding ConnectCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="imgs/link.png" Margin="0,0,5,0" />
@@ -142,7 +143,7 @@
                             <RowDefinition Height="20*"/>
                         </Grid.RowDefinitions>
                         <TextBlock x:Name="textBlock27" TextWrapping="Wrap" Text="{Binding pseudo}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" Grid.ColumnSpan="2" Margin="188,12"/>
-                        
+
                         <StackPanel Grid.Row="2" Grid.RowSpan="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                             <Image Source="imgs/Action_Point.png" Margin="0,0,5,0" Height="20"/>
                             <TextBlock x:Name="textBlock30" TextWrapping="Wrap" Text="PA" Margin="0,0,10,0"/>
@@ -266,7 +267,7 @@
                 </TabItem.Header>
                 <Grid Background="White">
                     <DataGrid x:Name="dataGrid3" ItemsSource="{Binding sortsCombat, Mode=TwoWay}" Margin="0,0,0,0" AutoGenerateColumns="False" SelectionMode="Single" SelectedItem="{Binding selectedSpellFight, Mode=TwoWay}">
-                        
+
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Width="5*" ClipboardContentBinding="{x:Null}" Header="Suppr.">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -283,7 +284,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <ComboBox SelectedValue="{Binding target, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
-                                            
+
                                             <ComboBoxItem Name="cbi1">Ennemi</ComboBoxItem>
                                             <ComboBoxItem Name="cbi2">Soi-même</ComboBoxItem>
                                             <ComboBoxItem Name="cbi3">Invocation</ComboBoxItem>
@@ -343,22 +344,25 @@
                                 <ColumnDefinition Width="50*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="32*"/>
-                                <RowDefinition Height="64*"/>
-                                <RowDefinition Height="64*"/>
-                                <RowDefinition Height="64*"/>
-                                <RowDefinition Height="64*"/>
+                                <RowDefinition Height="27*"/>
+                                <RowDefinition Height="54*"/>
+                                <RowDefinition Height="54*"/>
+                                <RowDefinition Height="54*"/>
+                                <RowDefinition Height="54*"/>
+                                <RowDefinition Height="54*"/>
                             </Grid.RowDefinitions>
                             <StackPanel Grid.ColumnSpan="2" Background="#FF7A7A7A"/>
-                            <TextBlock x:Name="textBlock16" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Combat" VerticalAlignment="Center" Foreground="White" Grid.ColumnSpan="2" FontSize="18" Height="24" Width="68"/>
+                            <TextBlock x:Name="textBlock16" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Combat" VerticalAlignment="Center" Foreground="White" Grid.ColumnSpan="2" FontSize="18" Height="24" Width="68" Margin="140,2,140,1"/>
                             <TextBlock x:Name="textBlock17" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="Nb Combats" VerticalAlignment="Center" Height="16"/>
-                            <TextBlock x:Name="textBlock18" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Height="16"/>
-                            <TextBlock x:Name="textBlock19" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" Text="XP gagnée" VerticalAlignment="Center" Height="16" Width="57"/>
-                            <TextBlock x:Name="textBlock110" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center" Height="16"/>
+                            <TextBlock x:Name="textBlock18" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="{Binding fightCount}" VerticalAlignment="Center" Height="16"/>
+                            <TextBlock x:Name="textBlock19" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" Text="XP gagnée" VerticalAlignment="Center" Height="16" Width="58"/>
+                            <TextBlock x:Name="textBlock110" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="4" TextWrapping="Wrap" Text="{Binding xpCount}" VerticalAlignment="Center" Height="16"/>
                             <TextBlock x:Name="textBlock13" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Kamas gagnés" VerticalAlignment="Center"/>
                             <TextBlock x:Name="textBlock14" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="Nb. Objets gagnés" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="textBlock15" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center"/>
-                            <TextBlock x:Name="textBlock20" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock15" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Text="{Binding objectCount}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock20" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="{Binding kamasCount}" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock28" HorizontalAlignment="Center" Grid.Row="5" TextWrapping="Wrap" Text="Durée moyenne des Cbt." VerticalAlignment="Center"/>
+                            <TextBlock x:Name="textBlock29" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="5" TextWrapping="Wrap" Text="{Binding dureeCount}" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
                     <Border BorderBrush="#FF7A7A7A" BorderThickness="1" Grid.Column="1" Margin="64,18,63,19">
@@ -416,35 +420,36 @@
                             <RowDefinition Height="20*"/>
                             <RowDefinition Height="20*"/>
                             <RowDefinition Height="20*"/>
+                            <RowDefinition Height="20*"/>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" Grid.RowSpan="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock x:Name="textBlock21" TextWrapping="Wrap" Text="Nombre de monstres par groupe : "/>
-                            <TextBox x:Name="textBox1" TextWrapping="Wrap" Text="0" Width="20" Margin="10,0,0,0"/>
+                            <TextBox x:Name="textBox1" TextWrapping="Wrap" Text="{Binding nbMinMonstres, Mode=TwoWay}" Width="20" Margin="10,0,0,0"/>
                             <TextBlock x:Name="textBlock25" TextWrapping="Wrap" Text="-" Margin="10,0,0,0"/>
-                            <TextBox x:Name="textBox2" TextWrapping="Wrap" Text="0" Width="20" Margin="10,0,0,0"/>
+                            <TextBox x:Name="textBox2" TextWrapping="Wrap" Text="{Binding nbMaxMonstres, Mode=TwoWay}" Width="20" Margin="10,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock x:Name="textBlock22" TextWrapping="Wrap" Text="Niveau des groupes : "/>
-                            <TextBox x:Name="textBox3" TextWrapping="Wrap" Text="0" Width="40" Margin="10,0,0,0"/>
+                            <TextBox x:Name="textBox3" TextWrapping="Wrap" Text="{Binding lvlMinMonstres, Mode=TwoWay}" Width="40" Margin="10,0,0,0"/>
                             <TextBlock x:Name="textBlock26" TextWrapping="Wrap" Text="-" Margin="10,0,0,0"/>
-                            <TextBox x:Name="textBox4" TextWrapping="Wrap" Text="0" Width="40" Margin="10,0,0,0"/>
+                            <TextBox x:Name="textBox4" TextWrapping="Wrap" Text="{Binding lvlMaxMonstres, Mode=TwoWay}" Width="40" Margin="10,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock x:Name="textBlock23" TextWrapping="Wrap" Text="Aller en banque à (%) :"/>
-                            <TextBox x:Name="textBox5" TextWrapping="Wrap" Text="0" Width="20" Margin="10,0,0,0"/>
+                            <TextBox x:Name="textBox5" TextWrapping="Wrap" Text="{Binding percentBank, Mode=TwoWay}" Width="20" Margin="10,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock x:Name="textBlock24" TextWrapping="Wrap" Text="Se régénérer à (%) :"/>
-                            <TextBox x:Name="textBox6" TextWrapping="Wrap" Text="0" Width="20" Margin="10,0,0,0"/>
+                            <TextBox x:Name="textBox6" TextWrapping="Wrap" Text="{Binding percentRegen, Mode=TwoWay}" Width="20" Margin="10,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.RowSpan="1" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Button x:Name="button" Height="25" Background="White">
+                            <Button x:Name="button" Height="25" Background="White" Command="{Binding ResetConfigCommand}">
                                 <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
                                     <Image Source="imgs/refresh.png" Margin="0,0,5,0" />
                                     <TextBlock Text="Réinitialiser" />
                                 </StackPanel>
                             </Button>
-                            <Button x:Name="button1" Height="25" Margin="40,0,0,0" Background="White">
+                            <Button x:Name="button1" Height="25" Margin="40,0,0,0" Background="White" Command="{Binding SaveConfigCommand}">
                                 <StackPanel Orientation="Horizontal" Margin="3,3,3,3">
                                     <Image Source="imgs/checked-mark.png" Margin="0,0,5,0" />
                                     <TextBlock Text="Valider" />
@@ -452,6 +457,12 @@
                             </Button>
 
                         </StackPanel>
+                        <Button x:Name="button5" Height="25" Margin="0,0,0,0" Background="White" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding SaveConfigFileCommand}">
+                            <StackPanel Orientation="Horizontal" Margin="3,2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Source="imgs/save.png" Margin="0,0,5,0" />
+                                <TextBlock Text="Sauver dans le fichier de config" />
+                            </StackPanel>
+                        </Button>
                     </Grid>
                 </Border>
             </TabItem>

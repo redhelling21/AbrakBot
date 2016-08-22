@@ -25,6 +25,7 @@ namespace AbrakBotWPF
                     }
                     globals.mapLoaded = false;
                     globals.isMoving = false;
+                    globals.monsterGroups.Clear();
                     string[] map_datas = packet.Split('|');
                     globals.currentMapId = Int32.Parse(map_datas[1]);
                     string indice = map_datas[2];
@@ -55,6 +56,7 @@ namespace AbrakBotWPF
                     break;
                 case "K":
                     globals.mapLoaded = true;
+                    
                     break;
             }
         }

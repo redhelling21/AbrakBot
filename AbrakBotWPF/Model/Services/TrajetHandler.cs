@@ -50,7 +50,6 @@ namespace AbrakBotWPF.Model.Services
                 string actualCoordsOpt = "mapid(" + globals.currentMapId + ")";
                 if (globals.needsBank)
                 {
-                    globals.writeToDebugBox("Trajet banque\n", "Purple");
                     if (globals.listBanque.ContainsKey(actualCoords) || globals.listBanque.ContainsKey(actualCoordsOpt))
                     {
                         if (globals.listBanque.ContainsKey(actualCoordsOpt))
@@ -76,13 +75,11 @@ namespace AbrakBotWPF.Model.Services
                                 globals.moveHandler.SeDeplacerMap(globals.tpDroite);
                                 break;
                             case 9999://Banque
-                                globals.writeToDebugBox("Interaction pnj\n", "Purple");
                                 globals.game.send("DC-1");
                                 emptyBag();
                                 globals.needsBank = false;
                                 break;
                             default:
-                                globals.writeToDebugBox("Go sur la case" + commandes[index] + "\n", "Purple");
                                 globals.moveHandler.SeDeplacerMap(commandes[index]);
                                 break;
                         }
@@ -97,6 +94,67 @@ namespace AbrakBotWPF.Model.Services
                         {
                             actualCoords = actualCoordsOpt;
                         }
+                        
+                        Random rnd = new Random();
+                        while (globals.monsterGroups.Count > 0)
+                        {
+                            Thread.Sleep(500);
+                            if (globals.needsBank)
+                            {
+                                break;
+                            }
+                            int ind = (int)Math.Round((double)rnd.Next(globals.monsterGroups.Count));
+                            MonsterGroup grp = globals.monsterGroups[ind];
+                            if (grp.level > globals.lvlMaxMonstres || grp.level < globals.lvlMinMonstres || grp.nbMonstres > globals.nbMaxMonstres || grp.nbMonstres < globals.nbMinMonstres)
+                            {
+                                globals.monsterGroups.Remove(grp);
+                            }
+                            else
+                            {
+                                if (globals.caseActuelle != grp.caseGroupe & grp.caseGroupe != -1)
+                                {
+                                    globals.writeToMainBox("(Info) Monstre trouvé : " + grp.nbMonstres + ", niveau total : " + grp.level + "\n", "Black");
+                                    globals.moveHandler.SeDeplacer(grp.caseGroupe);
+                                    Thread.Sleep(4000);
+                                    while (globals.isFighting)
+                                    {
+                                        Thread.Sleep(2000);
+                                    }
+                                    if (globals.monsterGroups.Contains(grp))
+                                    {
+                                        globals.monsterGroups.Remove(grp);
+                                    }
+                                }else
+                                {
+                                    globals.monsterGroups.Remove(grp);
+                                }
+                            }
+
+                        }
+                        globals.writeToDebugBox("Changement de map\n", "LimeGreen");
+                        List<int> commandes = globals.listFight[actualCoords];
+                        Random rnd2 = new Random();
+                        int index = (int)Math.Round((double)rnd2.Next(commandes.Count));
+
+                        switch (commandes[index])
+                        {
+                            case 10001:
+                                globals.moveHandler.SeDeplacerMap(globals.tpHaut);
+                                break;
+                            case 10002:
+                                globals.moveHandler.SeDeplacerMap(globals.tpBas);
+                                break;
+                            case 10003:
+                                globals.moveHandler.SeDeplacerMap(globals.tpGauche);
+                                break;
+                            case 10004:
+                                globals.moveHandler.SeDeplacerMap(globals.tpDroite);
+                                break;
+                            default:
+                                globals.moveHandler.SeDeplacerMap(commandes[index]);
+                                break;
+                        }
+
                     }
                     else if (globals.listHarvest.ContainsKey(actualCoords) || globals.listHarvest.ContainsKey(actualCoordsOpt))
                     {
@@ -104,14 +162,12 @@ namespace AbrakBotWPF.Model.Services
                         {
                             actualCoords = actualCoordsOpt;
                         }
-                        globals.writeToDebugBox("Map de recolte\n", "LimeGreen");
                         
                         Random rnd = new Random();
                         HarvestHandler handler = new HarvestHandler(globals);
                         int count_timeout = 0;
                         while (globals.actualResources.Count > 0)
                         {
-                            globals.writeToDebugBox("Boucle ressource\n", "LimeGreen");
                             if (globals.needsBank)
                             {
                                 break;
@@ -123,7 +179,6 @@ namespace AbrakBotWPF.Model.Services
                                 globals.actualResources.Remove(entry.Key);
                             }else
                             {
-                                globals.writeToDebugBox("Lancement recolte case\n", "LimeGreen");
                                 handler.Recolter(entry.Key);
                                 globals.isHarvesting = true;
                                 int count = 0;
@@ -134,12 +189,10 @@ namespace AbrakBotWPF.Model.Services
                                     if (count >= 150)
                                     {
                                         globals.writeToMainBox("Timeout temps de recolte\n", "FireBrick");
-                                        globals.writeToDebugBox("Timeout temps de recolte\n", "FireBrick");
                                         globals.isHarvesting = false;
                                         count_timeout++;
                                     }
                                 }
-                                globals.writeToDebugBox("Case recoltee\n", "LimeGreen");
                                 Thread.Sleep(200);
                             }
                             if(count_timeout > 3)
@@ -179,7 +232,6 @@ namespace AbrakBotWPF.Model.Services
                         {
                             actualCoords = actualCoordsOpt;
                         }
-                        globals.writeToDebugBox("Map mouvement\n", "LimeGreen");
                         List<int> commandes = globals.listMovements[actualCoords];
                         Random rnd = new Random();
                         int index = (int)Math.Round((double)rnd.Next(commandes.Count));
@@ -213,7 +265,6 @@ namespace AbrakBotWPF.Model.Services
         {
             while (!globals.isInExchange)
             {
-                globals.writeToDebugBox("Wait dialog end\n", "Purple");
                 Thread.Sleep(200);
             }
             List<Item> tempInv = new List<Item>(player.inventaire);

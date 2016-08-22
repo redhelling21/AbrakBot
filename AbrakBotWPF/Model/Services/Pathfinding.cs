@@ -166,13 +166,19 @@ namespace AbrakBotWPF.Model.Services
             List<int> pathCell = new List<int>();
             pathCell.Add(current);
 
-            while (!(current == cell1))
+            while (!(current == cell1) && current != 0)
             {
                 pathCell.Add(parentlist[current]);
                 current = parentlist[current];
             }
-
-            return getPath(pathCell);
+            if(current == 0)
+            {
+                return "";
+            }else
+            {
+                return getPath(pathCell);
+            }
+            
         }
 
 

@@ -1,0 +1,18 @@
+{
+	"serverIp":"164.132.201.117",
+	"serverPort":5547,
+	"defaultServerId":4002,
+	"defaultCharacterId":353463,
+	"username":"amibot2",
+	"mdp":"fibonacci21",
+	"sortsCombat":[
+		{"priorite":1000,"target":"Ennemi","id":141,"libelle":"Pression","niveau":5},
+		{"priorite":1000,"target":"Ennemi","id":141,"libelle":"Pression","niveau":5}
+	],
+	"nbMinMonstres":0,
+	"nbMaxMonstres":8,
+	"lvlMinMonstres":0,
+	"lvlMaxMonstres":9999,
+	"percentRegen":0,
+	"podsPercentLimit":70
+}

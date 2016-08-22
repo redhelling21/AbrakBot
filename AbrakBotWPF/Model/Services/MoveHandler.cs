@@ -67,6 +67,7 @@ namespace AbrakBotWPF.Model.Services
                 else
                 {
                     globals.writeToDebugBox("Error on path from " + globals.caseActuelle + " to " + caseFin + " !\n", "Red");
+                    globals.writeToMainBox("Error on path from " + globals.caseActuelle + " to " + caseFin + " !\n", "Red");
                     globals.game.send("GI");
 
                 }
@@ -136,6 +137,7 @@ namespace AbrakBotWPF.Model.Services
                 else
                 {
                     globals.writeToDebugBox("Error on path from " + globals.caseActuelle + " to " + caseFin + " !", "Red");
+                    globals.writeToMainBox("Error on path from " + globals.caseActuelle + " to " + caseFin + " !\n", "Red");
                     globals.game.send("GI");
 
                 }

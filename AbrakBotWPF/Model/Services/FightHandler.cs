@@ -1,4 +1,6 @@
 ﻿using AbrakBotWPF.Model.Classes;
+using AbrakBotWPF.Model.Messages;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +19,9 @@ namespace AbrakBotWPF.Model.Services
         private int toFrappe;
         private int toHeal;
         private int caseDeLance;
-        private int idSort = 141; //TEMPORAIRE
-        private int cible = 1; //TEMPORAIRE
-        private int nombreLance = 4; //TEMPORAIRE
+        //private int idSort = 141; //TEMPORAIRE
+        //private int cible = 1; //TEMPORAIRE
+        //private int nombreLance = 4; //TEMPORAIRE
         private int nombreDeCombats = 0; //TEMPORAIRE
         private int tempsRegenerate = 0;
 
@@ -236,60 +238,65 @@ namespace AbrakBotWPF.Model.Services
                 string lID = packet.Split('|')[0].Substring(3);
                 if ((lID == player.id))
                 {
-
-                    if ((idSort != 0))
+                    //Lancement du tour
+                    foreach(SortCombat sort in player.sortsCombat.OrderBy(o => o.priorite).ToList())
                     {
-                        if (cible == 1)
+                        if ((sort.id != 0))
                         {
-                            caseDeLance = toFrappe;
-                        }
-                        else if (cible == 2)
-                        {
-                            caseDeLance = toHeal;
-                        }
-                        else if (cible == 3)
-                        {
-                            caseDeLance = globals.caseActuelle;
-                        }
-
-                        int maxAvance = 1;
-
-                        if (globals.sortsMin[idSort] != -1)
-                        {
-                            maxAvance = globals.sortsMin[idSort];
-                        }
-
-                        if ((goalDistance(globals.caseActuelle, caseDeLance) > maxAvance))
-                        {
-                            Pathfinding pather = new Pathfinding(globals);
-                            string path = pather.pathing(globals.mapDataActuelle, globals.caseActuelle, caseDeLance, false, true, 3); //TEMPORAIRE (NB PM)
-                            globals.game.send("GA001" + path);
-                            globals.game.send("GKK0");
-                        }
-
-                        if (globals.sortsMax[idSort] != -1)
-                        {
-                            int distNeed = globals.sortsMax[idSort] + 1;
-                            if (goalDistance(globals.caseActuelle, caseDeLance) <= distNeed)
+                            if (sort.target == "Ennemi")
                             {
-                                for (int i = 0; i < nombreLance; i++)
+                                caseDeLance = toFrappe;
+                            }
+                            else if (sort.target == "Invocation")
+                            {
+                                caseDeLance = toHeal;
+                            }
+                            else if (sort.target == "Soi-même")
+                            {
+                                caseDeLance = globals.caseActuelle;
+                            }
+
+                            int maxAvance = 1;
+
+                            if (globals.sortsMin[sort.id] != -1)
+                            {
+                                maxAvance = globals.sortsMin[sort.id];
+                            }
+
+                            if ((goalDistance(globals.caseActuelle, caseDeLance) > maxAvance))
+                            {
+                                Pathfinding pather = new Pathfinding(globals);
+                                string path = pather.pathing(globals.mapDataActuelle, globals.caseActuelle, caseDeLance, false, true, player.PM); //TEMPORAIRE (NB PM)
+                                if(path != "")
                                 {
-                                    globals.game.send("GA300" + idSort + ";" + caseDeLance);
+                                    globals.game.send("GA001" + path);
+                                    Thread.Sleep(2000);
+                                    globals.game.send("GKK0");
+                                }else
+                                {
+                                    globals.writeToMainBox("Error on path from " + globals.caseActuelle + " to " + caseDeLance + " !\n", "Red");
+                                }
+                            }
+
+                            if (globals.sortsMax[sort.id] != -1)
+                            {
+                                int distNeed = globals.sortsMax[sort.id] + 1;
+                                if (goalDistance(globals.caseActuelle, caseDeLance) <= distNeed)
+                                {
+                                    globals.game.send("GA300" + sort.id + ";" + caseDeLance);
+                                    
                                     globals.game.send("GKK0");
                                 }
                             }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < nombreLance; i++)
+                            else
                             {
-                                globals.game.send("GA300" + idSort + ";" + caseDeLance);
+                                globals.game.send("GA300" + sort.id + ";" + caseDeLance);
+                                
                                 globals.game.send("GKK0");
                             }
                         }
-
+                        Thread.Sleep(1000);
                     }
-
                     globals.game.send("Gt");
 
                 }
@@ -300,7 +307,6 @@ namespace AbrakBotWPF.Model.Services
             {
                 string lowlPacket = packet.Substring(3);
                 globals.game.send("GKK" + lowlPacket.Split('|')[0]);
-
             }
             else if (packet.Length > 2 && packet.Substring(0, 2) == "GE")
             {
@@ -311,6 +317,10 @@ namespace AbrakBotWPF.Model.Services
                     _with1.changeDeMap = 1;
                 }*/
                 //_with1.TimerLaunch.Enabled = false;
+                string[] fightStats = packet.Substring(2).Split('|');
+                string[] fightStats2 = fightStats[3].Split(';');
+                var msg = new EndedFightMessage() { duree = Int32.Parse(fightStats[0].Split(';')[0]), xp = Int32.Parse(fightStats2[8]), kamas = Int32.Parse(fightStats2[12]), objects = fightStats2[11].Split(',').Length };
+                Messenger.Default.Send<EndedFightMessage>(msg);
                 globals.isFighting = false;
                 globals.game.send("GC1");
                 Thread.Sleep(500);
@@ -323,12 +333,14 @@ namespace AbrakBotWPF.Model.Services
                         globals.game.send("eU1");
                         Regenerate(Quota * 1000);
                     }
-                    /*if ((nombreDeCombats >= AuBoutDeCombats) & (ChangerDeMap) & _with1.enRegen == 0)
-                    {
-                        _with1.ChangerMap();
-                    }*/
+                /*if ((nombreDeCombats >= AuBoutDeCombats) & (ChangerDeMap) & _with1.enRegen == 0)
+                {
+                    _with1.ChangerMap();
+                }*/
                 //}
                 //_with1.TimerLaunch.Enabled = true;
+                /*var msg = new AddLineToBoxMessage() { text = text, color = color, boxType = "main" };
+                Messenger.Default.Send<AddLineToBoxMessage>(msg);*/
 
             }
             else if (packet.Substring(0, 2) == "GV")

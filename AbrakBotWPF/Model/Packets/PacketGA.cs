@@ -1,4 +1,5 @@
-﻿using AbrakBotWPF.Model.Services;
+﻿using AbrakBotWPF.Model.Classes;
+using AbrakBotWPF.Model.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,29 @@ namespace AbrakBotWPF
                         {
                             globals.caseActuelle = trouve;
                             globals.writeToDebugBox("(via GA0;1) CaseActuelle : " + trouve + "\n", "Orange");
+                        }
+                    }else if(id > 0)
+                    {
+                        cherche = cherche.Substring(cherche.Length - 2);
+                        int trouve = -1;
+
+                        for (int j = 0; j <= 1024; j++)
+                        {
+                            if ((globals.cases[j] == cherche))
+                            {
+                                trouve = j;
+                                j = 1025;
+                            }
+                        }
+                        if ((trouve != -1))
+                        {
+                            foreach(MonsterGroup grp in globals.monsterGroups)
+                            {
+                                if(grp.id == id)
+                                {
+                                    grp.caseGroupe = trouve;
+                                }
+                            }
                         }
                     }
                 }

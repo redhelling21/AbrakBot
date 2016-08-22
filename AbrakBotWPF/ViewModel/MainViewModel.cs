@@ -25,6 +25,9 @@ namespace AbrakBotWPF.ViewModel
         public RelayCommand LaunchCommand { get; private set; }
         public RelayCommand AddToRoutineCommand { get; private set; }
         public RelayCommand DeleteSpellFightCommand { get; private set; }
+        public RelayCommand SaveConfigCommand { get; private set; }
+        public RelayCommand ResetConfigCommand { get; private set; }
+        public RelayCommand SaveConfigFileCommand { get; private set; }
         public Globals globals;
         public MainWindow window;
         
@@ -63,17 +66,22 @@ namespace AbrakBotWPF.ViewModel
             Messenger.Default.Register<SpellsChangedMessage>(this,
                  (spellsChangedMessage) => ReceiveSpellsChanged(spellsChangedMessage)
             );
+            Messenger.Default.Register<EndedFightMessage>(this,
+                 (endedFightMessage) => ReceiveEndedFight(endedFightMessage)
+            );
             ConnectCommand = new RelayCommand(connect);
             TelecommandeCommand = new RelayCommand(telecommande);
             TestCommand = new RelayCommand(test);
             LaunchCommand = new RelayCommand(launch);
             AddToRoutineCommand = new RelayCommand(addSpellToFightingRoutine);
             DeleteSpellFightCommand = new RelayCommand(deleteSpellFight);
+            SaveConfigCommand = new RelayCommand(saveConfig);
+            ResetConfigCommand = new RelayCommand(resetConfig);
+            SaveConfigFileCommand = new RelayCommand(saveConfigFile);
         }
 
         public void initializeGlobals()
         {
-            Config.load();
             globals.setExecutionPath();
             ResourceLoader.load(globals);
             globals.InitializeCells();
@@ -235,6 +243,22 @@ namespace AbrakBotWPF.ViewModel
             }
         }
 
+        //PERSO A CONNECTER
+        private string _selectedCharacter;
+        public string selectedCharacter
+        {
+            get { return _selectedCharacter; }
+            set
+            {
+                if (_selectedCharacter == value) return;
+                _selectedCharacter = value;
+                RaisePropertyChanged("selectedCharacter");
+                Config.load(selectedCharacter);
+                applyConfig();
+                globals.writeToMainBox("Configuration chargée !\n", "Orange");
+            }
+        }
+
         //RESSOURCES RECOLTABLES
         private List<string> _harvestables;
         public List<string> harvestables
@@ -247,6 +271,76 @@ namespace AbrakBotWPF.ViewModel
                 RaisePropertyChanged("harvestables");
             }
         }
+
+        #region CONFIGTAB
+
+        private int _nbMinMonstres = 0;
+        public int nbMinMonstres
+        {
+            get { return _nbMinMonstres; }
+            set
+            {
+                _nbMinMonstres = value;
+                RaisePropertyChanged("nbMinMonstres");
+            }
+        }
+
+        private int _nbMaxMonstres = 8;
+        public int nbMaxMonstres
+        {
+            get { return _nbMaxMonstres; }
+            set
+            {
+                _nbMaxMonstres = value;
+                RaisePropertyChanged("nbMaxMonstres");
+            }
+        }
+
+        private int _lvlMinMonstres = 0;
+        public int lvlMinMonstres
+        {
+            get { return _lvlMinMonstres; }
+            set
+            {
+                _lvlMinMonstres = value;
+                RaisePropertyChanged("lvlMinMonstres");
+            }
+        }
+
+        private int _lvlMaxMonstres = 9999;
+        public int lvlMaxMonstres
+        {
+            get { return _lvlMaxMonstres; }
+            set
+            {
+                _lvlMaxMonstres = value;
+                RaisePropertyChanged("lvlMaxMonstres");
+            }
+        }
+
+        private int _percentBank = 70;
+        public int percentBank
+        {
+            get { return _percentBank; }
+            set
+            {
+                _percentBank = value;
+                RaisePropertyChanged("percentBank");
+            }
+        }
+
+        private int _percentRegen = 0;
+        public int percentRegen
+        {
+            get { return _percentRegen; }
+            set
+            {
+                _percentRegen = value;
+                RaisePropertyChanged("percentRegen");
+            }
+        }
+
+        #endregion
 
         #region FIGHTTAB
         private ObservableCollection<SortCombat> _sortsCombat;
@@ -275,6 +369,8 @@ namespace AbrakBotWPF.ViewModel
         #endregion
 
         #region REPORTTAB
+
+        #region RECOLTE
         private int _resourceCount = 0;
         public int resourceCount
         {
@@ -296,6 +392,66 @@ namespace AbrakBotWPF.ViewModel
                 RaisePropertyChanged("nodeCount");
             }
         }
+        #endregion
+
+        #region COMBAT
+
+        private int _objectCount = 0;
+        public int objectCount
+        {
+            get { return _objectCount; }
+            set
+            {
+                _objectCount = value;
+                RaisePropertyChanged("objectCount");
+            }
+        }
+
+        private int _kamasCount = 0;
+        public int kamasCount
+        {
+            get { return _kamasCount; }
+            set
+            {
+                _kamasCount = value;
+                RaisePropertyChanged("kamasCount");
+            }
+        }
+
+        private int _fightCount = 0;
+        public int fightCount
+        {
+            get { return _fightCount; }
+            set
+            {
+                _fightCount = value;
+                RaisePropertyChanged("fightCount");
+            }
+        }
+
+        private int _xpCount = 0;
+        public int xpCount
+        {
+            get { return _xpCount; }
+            set
+            {
+                _xpCount = value;
+                RaisePropertyChanged("xpCount");
+            }
+        }
+
+        private float _dureeCount = 0;
+        public float dureeCount
+        {
+            get { return _dureeCount/_fightCount; }
+            set
+            {
+                _dureeCount = value;
+                RaisePropertyChanged("dureeCount");
+            }
+        }
+        #endregion
+
         #endregion
 
         #region PERSOTAB
@@ -799,6 +955,15 @@ namespace AbrakBotWPF.ViewModel
 
         }
 
+        private void ReceiveEndedFight(EndedFightMessage action)
+        {
+            this.kamasCount += action.kamas;
+            this.dureeCount += action.duree;
+            this.xpCount += action.xp;
+            this.fightCount += 1;
+            this.objectCount += action.objects;
+        }
+
         #endregion
 
         #region COMMANDS FUNCTIONS
@@ -846,6 +1011,45 @@ namespace AbrakBotWPF.ViewModel
         private void test()
         {
             globals.doSomethingToTest();
+        }
+
+        private void saveConfig()
+        {
+            globals.podsPercentLimit = percentBank;
+            globals.percentRegen = percentRegen;
+            globals.nbMaxMonstres = nbMaxMonstres;
+            globals.nbMinMonstres = nbMinMonstres;
+            globals.lvlMaxMonstres = lvlMaxMonstres;
+            globals.lvlMinMonstres = lvlMinMonstres;
+        }
+
+        private void resetConfig()
+        {
+            percentBank = Config.podsPercentLimit;
+            percentRegen = Config.percentRegen;
+            nbMaxMonstres = Config.nbMaxMonstres;
+            nbMinMonstres = Config.nbMinMonstres;
+            lvlMaxMonstres = Config.lvlMaxMonstres;
+            lvlMinMonstres = Config.lvlMinMonstres;
+        }
+
+        private void applyConfig()
+        {
+            percentBank = Config.podsPercentLimit;
+            percentRegen = Config.percentRegen;
+            nbMaxMonstres = Config.nbMaxMonstres;
+            nbMinMonstres = Config.nbMinMonstres;
+            lvlMaxMonstres = Config.lvlMaxMonstres;
+            lvlMinMonstres = Config.lvlMinMonstres;
+            foreach(SortCombat sort in Config.sortsCombat)
+            {
+                this.sortsCombat.Add(sort);
+            }
+        }
+
+        private void saveConfigFile()
+        {
+            Config.save(selectedCharacter);
         }
 
         private void updateRoutine(object sender, PropertyChangedEventArgs e)

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace AbrakBotWPF
 {
-    public partial class PacketDispatcher
+    public partial class ServerAgent
     {
         private void handleMessage(string packet)
         {
             switch (packet.Substring(2, 1))
             {
-                case "K":
+                /*case "K":
                     string sub = packet.Substring(3, 1);
                     string[] parts = packet.Split('|');
                     switch (sub)
@@ -39,8 +39,9 @@ namespace AbrakBotWPF
                     {
                         globals.writeToMainBox("Le joueur n'existe pas ou n'est pas en ligne", "Firebrick");
                     }
-                    break;
+                    break;*/
             }
+            toClient.send(packet);
         }
     }
 }

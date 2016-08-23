@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AbrakBotWPF
 {
-    public partial class PacketDispatcher
+    public partial class ServerAgent
     {
         private void handleJob(string packet)
         {
@@ -63,6 +63,7 @@ namespace AbrakBotWPF
                     globals.updateMetiers();
                     break;
             }
+            toClient.send(packet);
         }
     }
 }

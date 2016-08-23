@@ -13,7 +13,7 @@ namespace AbrakBotWPF.Model.Services
 {
     public class TCPPacketHandler
     {
-        private Globals globals;
+        /*private Globals globals;
         private TcpClient tcpclient ;
         //private static string Data = null;
         public bool shouldStop = false;
@@ -114,6 +114,6 @@ namespace AbrakBotWPF.Model.Services
                 tcpclient.Close();
                 nstream.Close();
             }
-        }
+        }*/
     }
 }

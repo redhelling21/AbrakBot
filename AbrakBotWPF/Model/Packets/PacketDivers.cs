@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AbrakBotWPF
 {
-    public partial class PacketDispatcher
+    public partial class ServerAgent
     {
         private void handleDivers(string packet)
         {
@@ -76,19 +76,6 @@ namespace AbrakBotWPF
                     var msg = new InventoryChangedMessage() { inventory = player.inventaire };
                     Messenger.Default.Send<InventoryChangedMessage>(msg);
                     break;
-                case "al"://?
-                    globals.game.send("GC1");
-                    break;
-                case "fC"://Nombre de combats sur la map actuelle //TODO : A REMPLIR
-                    globals.game.send("BD");
-                    break;
-                case "rp"://Pas trop sur, je crois que c'est un genre de ping régulier
-                    if (packet.Substring(2, 3) == "ong")
-                    {
-                        globals.game.send("rpong");
-                    }
-                    break;
-
                 case "am":
                     //Aucune idée de ce que c'est
                     break;
@@ -99,7 +86,7 @@ namespace AbrakBotWPF
                     int idQuestion = Int32.Parse(packet.Substring(2).Split(';')[0]);
                     if (idQuestion == 318)//Banque
                     {
-                        globals.game.send("DR318|259");//Acces a la banque
+                        globals.serverGame.send("DR318|259");//Acces a la banque
                     }
                     break;
                 case "DV":
@@ -131,6 +118,7 @@ namespace AbrakBotWPF
                     //globals.writeToDebugBox("Packet inconnu\n", "Blue");
                     break;
             }
+            toClient.send(packet);
         }
     }
 }

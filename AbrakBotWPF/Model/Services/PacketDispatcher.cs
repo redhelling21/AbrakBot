@@ -14,7 +14,7 @@ namespace AbrakBotWPF
 {
     public partial class PacketDispatcher
     {
-        public Globals globals;
+        /*public Globals globals;
         private Player player;
 
         public PacketDispatcher(Globals globals, Player player)
@@ -48,6 +48,7 @@ namespace AbrakBotWPF
                         else if (Data.Substring(0, 2) == "cM") { handleMessage(Data); }//TODO : gestion de l'insertion d'items
                         else if (Data.Substring(0, 1) == "O") { handleInventaire(Data); }
                         else if (Data.Substring(0, 1) == "G") { handleCombat(Data); }
+                        else if (Data.Substring(0, 1) == "A") { handleConnect(Data); }
                         else { handleDivers(Data); }
                     }
                     else
@@ -56,6 +57,6 @@ namespace AbrakBotWPF
                     }
                 }
             }
-        }
+        }*/
     }
 }

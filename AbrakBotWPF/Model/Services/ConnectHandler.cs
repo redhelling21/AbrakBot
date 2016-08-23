@@ -14,7 +14,7 @@ namespace AbrakBotWPF.Model.Services
 {
     public class ConnectHandler
     {
-        public string GUID = "";
+        /*public string GUID = "";
         private string server_id = Config.defaultServerId.HasValue ? Config.defaultServerId.Value.ToString(CultureInfo.InvariantCulture) : "";
         private string character_id = Config.defaultCharacterId.HasValue ? Config.defaultCharacterId.Value.ToString(CultureInfo.InvariantCulture) : "";
 
@@ -28,6 +28,7 @@ namespace AbrakBotWPF.Model.Services
         }
 
         //Traite un packet recu
+        
         public void ReceiveData(Queue<string> pck_queue)
         {
             if (pck_queue.Count != 0)
@@ -101,13 +102,13 @@ namespace AbrakBotWPF.Model.Services
                                 globals.writeToDebugBox("Port : " + port + "\n", "Purple");
                                 globals.writeToDebugBox("GUID : " + GUID + "\n", "Purple");
                                 //Deconnexion du serveur d'authentification, et connection au serveur de jeu 
-                                globals.game = new TCPPacketHandler(globals, player);
-                                globals.game.connectHandler.GUID = GUID;
+                                globals.serverGame = new TCPPacketHandler(globals, player);
+                                globals.serverGame.connectHandler.GUID = GUID;
                                 globals.connect.close();
                                 globals.connect.shouldStop = true;
                                 globals.writeToMainBox("Connexion au serveur de jeu...\n", "Green");
                                 globals.writeToDebugBox("Connexion au serveur de jeu...\n", "Green");
-                                globals.game.Handle(ip, Int32.Parse(port));
+                                globals.serverGame.Handle(ip, Int32.Parse(port));
                              
                                 Thread.Sleep(100);
                                 break;
@@ -115,22 +116,22 @@ namespace AbrakBotWPF.Model.Services
                             case "HG"://?
                                 Thread.Sleep(100);
 
-                                globals.game.send("AT" + GUID);
+                                globals.serverGame.send("AT" + GUID);
                                 break;
 
                             case "AT"://?
                                 Thread.Sleep(100);
 
-                                globals.game.send("Ak0");
-                                globals.game.send("AV");
+                                globals.serverGame.send("Ak0");
+                                globals.serverGame.send("AV");
                                 break;
 
                             case "AV"://?
                                 Thread.Sleep(100);
 
-                                globals.game.send("Agfr");
-                                globals.game.send("AL");
-                                globals.game.send("Af");
+                                globals.serverGame.send("Agfr");
+                                globals.serverGame.send("AL");
+                                globals.serverGame.send("Af");
                                 Thread queueThread = new Thread(WaitConnectQueue);
                                 queueThread.IsBackground = true;
                                 globals.isInQueue = true;
@@ -164,8 +165,8 @@ namespace AbrakBotWPF.Model.Services
                                     character_id = Console.ReadLine();
                                 }
                                 player.id = character_id;
-                                globals.game.send("AS" + character_id);
-                                globals.game.send("Af");
+                                globals.serverGame.send("AS" + character_id);
+                                globals.serverGame.send("Af");
 
                                 break;
 
@@ -290,6 +291,6 @@ namespace AbrakBotWPF.Model.Services
                 globals.connect.send("Af");
                 Thread.Sleep(2000);
             }
-        }
+        }*/
     }
 }

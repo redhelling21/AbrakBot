@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbrakBotWPF
 {
-    public partial class PacketDispatcher
+    public partial class ServerAgent
     {
         private void handleEchange(string packet)
         {
@@ -25,6 +25,7 @@ namespace AbrakBotWPF
                     globals.isInExchange = false;
                     break;
             }
+            toClient.send(packet);
         }
     }
 }

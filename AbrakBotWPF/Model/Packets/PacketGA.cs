@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AbrakBotWPF
 {
-    public partial class PacketDispatcher
+    public partial class ServerAgent
     {
         private void handleGA(string packet)
         {
@@ -98,6 +98,7 @@ namespace AbrakBotWPF
                     }
                 }
             }
+            toClient.send(packet);
         }
     }
 }

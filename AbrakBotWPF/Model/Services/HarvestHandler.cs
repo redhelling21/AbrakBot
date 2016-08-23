@@ -55,12 +55,12 @@ namespace AbrakBotWPF.Model.Services
                 if (!string.IsNullOrEmpty(path))
                 {
                     //demande d'autorisation au serveur pour aller vers la case
-                    globals.game.send("GA001" + path);
+                    globals.serverGame.send("GA001" + path);
                     globals.isMoving = true;
                     Thread.Sleep((int)globals.moveHandler.distance(globals.caseActuelle, caseRecolte) * 330);
                     //demande d'autorisation au serveur pour recolter la case
-                    globals.game.send("GA500" + caseRecolte + ";" + idRessource);
-                    globals.game.send("GKK" + globals.idActionActuelle);
+                    globals.serverGame.send("GA500" + caseRecolte + ";" + idRessource);
+                    globals.serverGame.send("GKK" + globals.idActionActuelle);
                     globals.bloqueGA = 0;
                     globals.isMoving = false;
                 }
@@ -93,7 +93,7 @@ namespace AbrakBotWPF.Model.Services
             int tempsDeRecolte = globals.tempsRecolte;
             globals.isHarvesting = true;
             Thread.Sleep(tempsDeRecolte);
-            globals.game.send("GKK" + globals.idActionActuelle);
+            globals.serverGame.send("GKK" + globals.idActionActuelle);
             globals.actualResources.Remove(caseDeRecolte);
             globals.isHarvesting = false;
         }

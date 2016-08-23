@@ -57,6 +57,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -95,6 +97,9 @@
     <Compile Include="Model\Messages\MapResourcesChangedMessage.cs" />
     <Compile Include="Model\Messages\MapStatChangedMessage.cs" />
     <Compile Include="Model\Messages\SpellsChangedMessage.cs" />
+    <Compile Include="Model\Network\ClientAgent.cs" />
+    <Compile Include="Model\Network\ServerAgent.cs" />
+    <Compile Include="Model\Packets\PacketConnect.cs" />
     <Compile Include="Model\Packets\PacketDivers.cs" />
     <Compile Include="Model\Packets\PacketEchange.cs" />
     <Compile Include="Model\Packets\PacketGA.cs" />
@@ -107,6 +112,7 @@
     <Compile Include="Model\Packets\PacketJob.cs" />
     <Compile Include="Model\Packets\PacketMessage.cs" />
     <Compile Include="Model\Packets\PacketMouvement.cs" />
+    <Compile Include="Model\Services\ClickOnPointTool.cs" />
     <Compile Include="Model\Services\ConnectHandler.cs" />
     <Compile Include="Model\Services\FightHandler.cs" />
     <Compile Include="Model\Services\Globals.cs" />

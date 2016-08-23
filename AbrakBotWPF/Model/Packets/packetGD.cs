@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AbrakBotWPF
 {
-    public partial class PacketDispatcher
+    public partial class ServerAgent
     {
         private void handleGD(string packet)
         {
@@ -31,7 +31,7 @@ namespace AbrakBotWPF
                     string indice = map_datas[2];
                     string clef = map_datas[3];
                     globals.mapHandler.LoadMap(globals.currentMapId, indice, clef);
-                    globals.game.send("GI");
+                    globals.serverGame.send("GI");
                     break;
                 case "F"://Reception des infos sur l'etat des ressources de la map
                     string[] res_datas = packet.Split('|');
@@ -59,6 +59,7 @@ namespace AbrakBotWPF
                     
                     break;
             }
+            toClient.send(packet);
         }
     }
 }

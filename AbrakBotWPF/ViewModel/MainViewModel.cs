@@ -972,14 +972,14 @@ namespace AbrakBotWPF.ViewModel
             if (connectButtonText == "Connexion")
             {
                 connectButtonText = "Déconnexion";
-                globals.connect = new TCPPacketHandler(globals, globals.player);
-                globals.connect.Handle(Config.serverIp, Config.serverPort);
+                globals.connect();
             }
             else
             {
+                //TODO : FAUX, IL FAUT AUSSI DECO LE GAME
                 connectButtonText = "Connexion";
-                globals.connect.close();
-                globals.connect.shouldStop = true;
+                //globals.connect.close();
+                //globals.connect.shouldStop = true;
             }
         }
 

@@ -47,7 +47,7 @@ namespace AbrakBotWPF.Model.Services
                 if (!string.IsNullOrEmpty(path))
                 {
                     //Demande de l'autorisation du serveur pour se deplacer vers la case
-                    globals.game.send("GA001" + path);
+                    globals.serverGame.send("GA001" + path);
                     globals.isMoving = true;
 
                     if ((distance(globals.caseActuelle, caseFin) < 6))
@@ -59,7 +59,7 @@ namespace AbrakBotWPF.Model.Services
                         Thread.Sleep((int)distance(globals.caseActuelle, caseFin) * 250);
                     }
                     //On est arrives
-                    globals.game.send("GKK" + globals.idActionActuelle);
+                    globals.serverGame.send("GKK" + globals.idActionActuelle);
                     globals.caseActuelle = caseFin;
                     globals.writeToDebugBox("(via GKK) CaseActuelle : " + caseFin + "\n", "Orange");
 
@@ -68,7 +68,7 @@ namespace AbrakBotWPF.Model.Services
                 {
                     globals.writeToDebugBox("Error on path from " + globals.caseActuelle + " to " + caseFin + " !\n", "Red");
                     globals.writeToMainBox("Error on path from " + globals.caseActuelle + " to " + caseFin + " !\n", "Red");
-                    globals.game.send("GI");
+                    globals.serverGame.send("GI");
 
                 }
 
@@ -116,7 +116,7 @@ namespace AbrakBotWPF.Model.Services
 
                 if (!string.IsNullOrEmpty(path))
                 {
-                    globals.game.send("GA001" + path);
+                    globals.serverGame.send("GA001" + path);
                     globals.isMoving = true;
 
                     if ((distance(globals.caseActuelle, caseFin) < 6))
@@ -128,7 +128,7 @@ namespace AbrakBotWPF.Model.Services
                         Thread.Sleep((int)distance(globals.caseActuelle, caseFin) * 250);
                     }
 
-                    globals.game.send("GKK" + globals.idActionActuelle);
+                    globals.serverGame.send("GKK" + globals.idActionActuelle);
                     globals.caseActuelle = caseFin;
                     globals.writeToDebugBox("(via GKK) CaseActuelle : " + caseFin + "\n", "Orange");
 
@@ -138,7 +138,7 @@ namespace AbrakBotWPF.Model.Services
                 {
                     globals.writeToDebugBox("Error on path from " + globals.caseActuelle + " to " + caseFin + " !", "Red");
                     globals.writeToMainBox("Error on path from " + globals.caseActuelle + " to " + caseFin + " !\n", "Red");
-                    globals.game.send("GI");
+                    globals.serverGame.send("GI");
 
                 }
 

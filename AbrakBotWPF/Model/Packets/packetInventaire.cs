@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AbrakBotWPF
 {
-    public partial class PacketDispatcher
+    public partial class ServerAgent
     {
         private void handleInventaire(string packet)
         {
@@ -78,6 +78,7 @@ namespace AbrakBotWPF
                     }
                     break;
             }
+            toClient.send(packet);
         }
     }
 }

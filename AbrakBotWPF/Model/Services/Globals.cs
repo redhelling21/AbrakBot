@@ -1,21 +1,43 @@
 ﻿using AbrakBotWPF.Model.Classes;
 using AbrakBotWPF.Model.Messages;
+using AbrakBotWPF.Model.Network;
 using AbrakBotWPF.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace AbrakBotWPF.Model.Services
 {
     public class Globals
     {
+        #region MACRO
+        [DllImport("user32.dll")]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, Int32 nCmdShow);
+        [DllImport("user32.dll")]
+        public static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+        [DllImport("User32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);
+
+
+        public const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        public const int MOUSEEVENTF_LEFTUP = 0x04;
+        public const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+        public const int MOUSEEVENTF_RIGHTUP = 0x10;
+        #endregion
+
         public static string execPath;
         public Player player;
 
@@ -77,8 +99,12 @@ namespace AbrakBotWPF.Model.Services
         public bool isRegenerating = false;
         public bool isInQueue = false;
 
-        public TCPPacketHandler connect;
-        public TCPPacketHandler game;
+        public ClientAgent clientConnect;
+        public ClientAgent clientGame;
+        public ServerAgent serverConnect;
+        public ServerAgent serverGame;
+        //public TCPPacketHandler connect;
+        //public TCPPacketHandler game;
         public MoveHandler moveHandler;
         public TrajetHandler trajetHandler;
         public FightHandler fightHandler;
@@ -136,6 +162,7 @@ namespace AbrakBotWPF.Model.Services
             trajetHandler = new TrajetHandler(this, player);
             fightHandler = new FightHandler(this, player);
             mapHandler = new MapHandler(this);
+            
         }
 
         //Recupere le chemin de l'executable
@@ -144,6 +171,31 @@ namespace AbrakBotWPF.Model.Services
             string uriString = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
             Uri uri = new Uri(uriString);
             execPath = uri.LocalPath;
+        }
+
+        public void connect()
+        {
+            serverConnect = new ServerAgent(this, player);
+            serverGame = new ServerAgent(this, player);
+            Process.Start(@"C:\Program Files (x86)\Abrak\Dofus.exe");
+            Thread.Sleep(3500);
+            Process[] processes = Process.GetProcessesByName("dofus.dll");
+            SetForegroundWindow(processes[0].MainWindowHandle);
+            ClickOnPointTool.ClickOnPoint(processes[0].MainWindowHandle, new Point(700, 165));
+            Thread.Sleep(2500);
+            SendKeys.SendWait(Config.username);
+            Thread.Sleep(200);
+            SendKeys.SendWait("{TAB}");
+            Thread.Sleep(200);
+            SendKeys.SendWait(Config.mdp);
+            Thread.Sleep(200);
+            SendKeys.SendWait("{ENTER}");
+            SendKeys.Flush();
+
+            clientConnect = new ClientAgent("127.0.0.1", 5547, this);
+            clientConnect.toServ = serverConnect;
+            serverConnect.toClient = clientConnect;
+            serverConnect.Handle(Config.serverIp, Config.serverPort);
         }
 
         #region Actions to UI
@@ -176,7 +228,7 @@ namespace AbrakBotWPF.Model.Services
         }
 
         #endregion
-
+        /*
         //Demande l'envoi d'un message en jeu (commerce, recrutement, etc...)
         public void sendMessage(string message)
         {
@@ -203,7 +255,7 @@ namespace AbrakBotWPF.Model.Services
             {
                 this.game.send("BM*|" + message + "|");
             }
-        }
+        }*/
 
         //Beeeen... Attends
         public void wait(long ms)

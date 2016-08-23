@@ -75,7 +75,7 @@ namespace AbrakBotWPF.Model.Services
                                 globals.moveHandler.SeDeplacerMap(globals.tpDroite);
                                 break;
                             case 9999://Banque
-                                globals.game.send("DC-1");
+                                globals.serverGame.send("DC-1");
                                 emptyBag();
                                 globals.needsBank = false;
                                 break;
@@ -274,7 +274,7 @@ namespace AbrakBotWPF.Model.Services
                 {
                     globals.writeToDebugBox("Giving " + item.quantite + " " + item.libelle + "\n", "Purple");
                     int uniqueIDDec = int.Parse(item.uniqueID, System.Globalization.NumberStyles.HexNumber);
-                    globals.game.send("EMO+" + uniqueIDDec + "|" + item.quantite);
+                    globals.serverGame.send("EMO+" + uniqueIDDec + "|" + item.quantite);
                     globals.removingItem = true;
                     while (globals.removingItem)
                     {
@@ -284,7 +284,7 @@ namespace AbrakBotWPF.Model.Services
                 }
             }
             globals.writeToDebugBox("Inventaire vidé\n", "Purple");
-            globals.game.send("EV");
+            globals.serverGame.send("EV");
         }
     }
 }
